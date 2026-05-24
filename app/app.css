@@ -4193,6 +4193,12 @@ article.markdown-section {
   align-items: stretch;
 }
 
+.dpr-chat-composer {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .dpr-chat-inline-tag {
   flex: 0 0 120px;
   min-width: 120px;
@@ -4211,19 +4217,25 @@ article.markdown-section {
   height: 124px;
   min-height: 124px;
   line-height: 1.5;
+  padding-right: 112px;
+  padding-bottom: 42px;
 }
 
 .dpr-chat-send-btn {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2;
   flex: 0 0 auto;
   background: #dff8e7 !important;
   color: #237542 !important;
   border-color: #bdeccf !important;
-  padding: 6px 10px !important;
-  min-width: 96px;
+  padding: 6px 12px !important;
+  min-width: 86px;
   height: auto;
-  min-height: 124px;
-  border-radius: 6px;
-  white-space: nowrap;
+  min-height: 30px;
+  border-radius: 999px !important;
+  box-shadow: 0 6px 16px rgba(36, 117, 66, 0.12);
   margin: 0;
   white-space: nowrap;
   display: inline-flex;
@@ -4248,9 +4260,16 @@ article.markdown-section {
 }
 
 .dpr-chat-send-btn.dpr-btn-loading {
-  color: #fff !important;
-  background: #8ab8e8 !important;
-  border-color: #8ab8e8 !important;
+  color: #2f5f9f !important;
+  background: #eef6ff !important;
+  border-color: #bdd7f6 !important;
+  box-shadow: 0 6px 16px rgba(47, 95, 159, 0.12);
+}
+
+.dpr-chat-send-btn.dpr-btn-loading .dpr-mini-spinner {
+  border-color: rgba(47, 95, 159, 0.22);
+  border-top-color: #2f5f9f;
+  border-right-color: #2f5f9f;
 }
 
 @media (max-width: 700px) {
@@ -4263,9 +4282,13 @@ article.markdown-section {
   .dpr-chat-row {
     flex-wrap: wrap;
   }
+  .dpr-chat-inline-desc textarea {
+    padding-right: 12px;
+    padding-bottom: 48px;
+  }
   .dpr-chat-send-btn {
-    min-height: 40px;
-    margin-left: auto;
+    min-height: 32px;
+    margin-left: 0;
   }
 }
 

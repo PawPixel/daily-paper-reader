@@ -1832,7 +1832,7 @@ window.SubscriptionsSmartQuery = (function () {
       btn.disabled = true;
       btn.classList.add('dpr-btn-loading');
       const label = btn.querySelector('.dpr-chat-send-label');
-      if (label) label.textContent = '生成中...';
+      if (label) label.textContent = '生成中';
       return;
     }
     btn.disabled = false;
@@ -2177,20 +2177,22 @@ window.SubscriptionsSmartQuery = (function () {
       </div>
       <div class="dpr-modal-actions dpr-chat-action-area">
         <div class="dpr-chat-row dpr-chat-main-row">
-          <label class="dpr-chat-label dpr-chat-inline-desc">
-            <span class="dpr-chat-label-text">检索需求</span>
-            <textarea id="dpr-chat-desc-input" rows="5" placeholder="请在这里像和 ChatGPT 对话一样描述你的检索需求。例如：&#10;请帮我查找强化学习和符号回归相关的论文&#10;请帮我查找可解释的强化学习驱动符号回归方程发现论文">${escapeHtml(
-              modalState.inputDesc || '',
-            )}</textarea>
-          </label>
-          <button
-            class="arxiv-tool-btn dpr-chat-send-btn ${actionMeta.className}"
-            data-action="chat-send"
-            ${modalState.pending ? 'disabled' : ''}
-          >
-            <span class="dpr-chat-send-label">${actionMeta.label}</span>
-            <span class="dpr-mini-spinner" aria-hidden="true"></span>
-          </button>
+          <div class="dpr-chat-composer">
+            <label class="dpr-chat-label dpr-chat-inline-desc">
+              <span class="dpr-chat-label-text">检索需求</span>
+              <textarea id="dpr-chat-desc-input" rows="5" placeholder="请在这里像和 ChatGPT 对话一样描述你的检索需求。例如：&#10;请帮我查找强化学习和符号回归相关的论文&#10;请帮我查找可解释的强化学习驱动符号回归方程发现论文">${escapeHtml(
+                modalState.inputDesc || '',
+              )}</textarea>
+            </label>
+            <button
+              class="arxiv-tool-btn dpr-chat-send-btn ${actionMeta.className}"
+              data-action="chat-send"
+              ${modalState.pending ? 'disabled' : ''}
+            >
+              <span class="dpr-chat-send-label">${actionMeta.label}</span>
+              <span class="dpr-mini-spinner" aria-hidden="true"></span>
+            </button>
+          </div>
         </div>
         <div id="dpr-chat-inline-status" class="dpr-chat-inline-status">${escapeHtml(modalState.chatStatus || '')}</div>
       </div>
