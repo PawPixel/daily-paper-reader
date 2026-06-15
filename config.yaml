@@ -25,3 +25,54 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: opd-rl
+      description: 请帮我查找 opd（on policy distillation）和 agentic RL 相关论文，这些都与大模型相关。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: on policy distillation
+          keyword_cn: 在线策略蒸馏
+          query: on policy distillation for large language models
+        - keyword: agentic reinforcement learning
+          keyword_cn: 主体强化学习
+          query: agentic reinforcement learning with large language models
+        - keyword: large language model agents
+          keyword_cn: 大语言模型智能体
+          query: large language model agents using reinforcement learning
+        - keyword: language model alignment
+          keyword_cn: 语言模型对齐
+          query: alignment of language models using reinforcement learning
+      intent_queries:
+        - query: papers on policy distillation in large language model training
+          query_cn: 关于大语言模型训练中策略蒸馏的论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: research on agentic reinforcement learning for llm agents
+          query_cn: 关于面向大语言模型智能体的主体强化学习研究
+          enabled: true
+          source: manual
+          note: ''
+        - query: combining distillation and reinforcement learning for language agents
+          query_cn: 结合蒸馏和强化学习的语言智能体方法
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-06-15T01:37:01.294Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
