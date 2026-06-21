@@ -1,51 +1,47 @@
 {
   "mode": "standard",
-  "generated_at": "2026-06-21T15:29:49.911025+00:00",
+  "generated_at": "2026-06-21T16:12:48.604868+00:00",
   "stats": {
     "mode": "standard",
     "tag_count": 1,
-    "deep_divecandidates": 29,
+    "deep_divecandidates": 22,
     "deep_cap": 6,
-    "deep_selected": 19,
-    "quick_candidates": 20,
+    "deep_selected": 12,
+    "quick_candidates": 23,
     "quick_skim_target": 11,
     "quick_selected": 11
   },
   "deep_dive": [
     {
-      "id": "2606.14691v1",
+      "id": "2606.16222v1",
       "source": "arxiv",
-      "title": "CORA: Analyzing and bridging thinking-answer gap in Multimodal RLVR via Consistency-Oriented Reasoning Alignment",
-      "abstract": "Reinforcement learning with verifiable rewards (RLVR) has successfully elicited the reasoning capabilities of large language models, motivating its extension to multimodal scenarios. Existing methods primarily focus on improving the visual coverage of reasoning traces and mitigating visual hallucinations, but underestimate the semantic inconsistency between the reasoning process and the final answer. In this paper, we delve into thinking-answer inconsistency in RLVR for large vision-language models (LVLMs), showing thorough analyses of rollouts collected throughout Group Relative Policy Optimization (GRPO) training process and post-RLVR evaluation outputs that this issue persists during training and remains present during inference. Motivated by the analysis, we propose Consistency-Oriented Reasoning Alignment (CORA), which introduces thinking-answer semantic consistency into RLVR through a lightweight plug-and-play consistency reward model, and further incorporates Hybrid Reward Advantage Splitting (HRAS) to stably coordinate task and consistency optimization. Extensive experiments across representative multimodal reasoning benchmarks and mainstream LVLMs show that CORA improves task performance while effectively mitigating thinking-answer inconsistency, leading to more faithful reasoning traces.",
+      "title": "Latent Thought Flow: Efficient Latent Reasoning in Large Language Models",
+      "abstract": "Large Language Models (LLMs) increasingly rely on intermediate reasoning, yet explicit Chain-of-Thought (CoT) suffers from a linguistic space bottleneck: each thought must be decoded into tokens, causing high inference overhead. Latent reasoning moves deliberation into continuous space, but existing methods mostly learn deterministic or reward-maximizing paths, lacking a principled way to allocate probability across trajectories with different correctness and costs. We propose Latent Thought Flow (LTF), which models reasoning as variable-length continuous trajectories and trains a sampler to match a reward-induced posterior over answer quality and computation cost. We instantiate this with a continuous GFlowNet using stochastic latent transitions. To handle sparse answer supervision, we introduce an Entropy-Weighted Subtrajectory Balance objective for intermediate rewards and a reference-prior regularizer to anchor exploration. Experiments under finetuning and transfer learning settings show that LTF outperforms explicit CoT and latent reasoning baselines, improving accuracy by 9.5% while reducing reasoning length by 27.2% on average compared with strong latent reasoning baselines.",
       "authors": [
-        "Jiayue Cao",
-        "Zhicong Lu",
-        "Xuehan Sun",
-        "Wei Jia",
-        "Hongling Zheng",
-        "Changyuan Tian",
-        "Zichuan Lin",
-        "Wenqian Lv",
-        "Nayu Liu"
+        "Xiandong Zou",
+        "Jing Huang",
+        "Jianshu Li",
+        "Pan Zhou"
       ],
-      "primary_category": "cs.CL",
+      "primary_category": "cs.AI",
       "categories": [
-        "cs.CL"
+        "cs.AI",
+        "cs.LG"
       ],
-      "published": "2026-06-12T17:54:59+00:00",
-      "link": "https://arxiv.org/pdf/2606.14691v1",
+      "published": "2026-06-15T05:02:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.16222v1",
       "tags": [
         "keyword:llm-papers",
         "query:llm-papers"
       ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "bridges thinking-answer gap in multimodal RLVR",
-      "llm_evidence_cn": "弥合多模态RLVR中思维与答案的差距",
-      "llm_evidence": "弥合多模态RLVR中思维与答案的差距",
-      "canonical_evidence": "弥合多模态RLVR中思维与答案的差距",
-      "llm_tldr_en": "CORA reveals thinking-answer inconsistency in multimodal RLVR; proposes consistency-oriented reasoning alignment to bridge the gap.",
-      "llm_tldr_cn": "本文深入分析多模态RLVR中的思维-答案不一致性问题，指出现有方法忽略推理过程与最终答案的语义差异。提出一致性导向推理对齐方法（CORA），通过GRPO训练和评估验证该问题持续存在，所提方法有效缩小差距，提升推理可靠性。",
-      "llm_tldr": "本文深入分析多模态RLVR中的思维-答案不一致性问题，指出现有方法忽略推理过程与最终答案的语义差异。提出一致性导向推理对齐方法（CORA），通过GRPO训练和评估验证该问题持续存在，所提方法有效缩小差距，提升推理可靠性。",
+      "llm_score": 10.0,
+      "llm_evidence_en": "efficient latent reasoning via continuous trajectories and reward-induced posterior",
+      "llm_evidence_cn": "通过连续轨迹和奖励后验实现高效潜在推理",
+      "llm_evidence": "通过连续轨迹和奖励后验实现高效潜在推理",
+      "canonical_evidence": "通过连续轨迹和奖励后验实现高效潜在推理",
+      "llm_tldr_en": "Latent Thought Flow models reasoning as variable-length continuous trajectories and trains a sampler to match a reward-induced posterior, enabling efficient latent reasoning.",
+      "llm_tldr_cn": "显式思维链导致高推理开销。潜在推理将计算移至连续空间，但缺乏基于正确性和成本分配概率的原则性方法。本文提出潜在思维流（LTF），将推理建模为变长连续轨迹，训练采样器匹配奖励诱导的后验分布，并实例化为连续GFlowNet。LTF在保持性能的同时显著降低推理成本。",
+      "llm_tldr": "显式思维链导致高推理开销。潜在推理将计算移至连续空间，但缺乏基于正确性和成本分配概率的原则性方法。本文提出潜在思维流（LTF），将推理建模为变长连续轨迹，训练采样器匹配奖励诱导的后验分布，并实例化为连续GFlowNet。LTF在保持性能的同时显著降低推理成本。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -55,34 +51,35 @@
       "selection_source": "fresh_fetch"
     },
     {
-      "id": "2606.15080v1",
+      "id": "2606.16360v1",
       "source": "arxiv",
-      "title": "AdaMame: A Training Recipe for Adaptive Multilingual Reasoning",
-      "abstract": "While Large Reasoning Models (LRMs) show strong performance in English, they often fail to reason in the language of the query, a phenomenon known as language collapse. Existing RL-based fixes typically add a binary language fidelity reward to the accuracy objective, yet still incur trade-off in accuracy, mid-trace code-switching, and excessive token usage. In this work, we propose AdaMame, a two-stage training recipe for multilingual mathematical reasoning that addresses these limitations by adaptively aligning the reasoning language to the query language without compromising accuracy. The first SFT stage fine-tunes on naturally occurring reasoning traces across five languages to establish multilingual reasoning capability. In the subsequent RL stage, we introduce AdaMame-GRPO, an adaptation of Group Relative Policy Optimization (GRPO) in which a query-conditioned alignment factor grows progressively during training, guiding the model to first explore diverse reasoning languages before exploiting reasoning in the query language. Evaluated across two benchmarks, two LRMs, and 12 languages, AdaMame-GRPO achieves Pareto-optimal performance across reasoning accuracy, language fidelity, and token efficiency over all baselines, with the strongest gains on out-of-domain, lower-resource languages.",
+      "title": "Tyler: Typed Latent Reasoning for Language Models -- When to Think, What to Compute, and How Much to Allocate",
+      "abstract": "Chain-of-thought (CoT) prompting improves reasoning in large language models (LLMs) by externalizing intermediate computation as discrete text tokens, but this textual interface also introduces redundancy and inference overhead. Latent reasoning offers a promising alternative by carrying part of the computation in continuous representations. However, existing methods typically predefine when latent computation is invoked and how it is allocated during decoding, leaving a key problem unresolved: when to invoke latent computation, what type of computation to perform, and how much budget to allocate. We propose \\textbf{Ty}ped \\textbf{L}at\\textbf{e}nt \\textbf{R}easoning (Tyler), a typed and budget-aware framework for latent reasoning during autoregressive decoding. Tyler learns a policy that, at each decoding step, chooses between emitting a text token and switching to a latent computation module specialized for a particular reasoning function. Once invoked, an operator maps the current reasoning state into latent tokens that support global planning, local state updates, or reusable procedural abstraction. Across extensive experiments on three backbone LLMs, Tyler improves accuracy by up to 14.49 points over CoT and by up to 4.30 points over the strongest competing baseline. It further generalizes across diverse reasoning domains and achieves the best final-stage performance with the lowest forgetting.",
       "authors": [
-        "Dayeon Ki",
-        "Kevin Duh",
-        "Marine Carpuat"
+        "Hanyu Lin",
+        "Min Cai",
+        "Jiawei Wen",
+        "Haodi Zhang"
       ],
       "primary_category": "cs.CL",
       "categories": [
         "cs.CL",
         "cs.AI"
       ],
-      "published": "2026-06-13T03:22:35+00:00",
-      "link": "https://arxiv.org/pdf/2606.15080v1",
+      "published": "2026-06-15T07:56:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.16360v1",
       "tags": [
         "keyword:llm-papers",
         "query:llm-papers"
       ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "proposes a training recipe to improve multilingual reasoning in LLMs",
-      "llm_evidence_cn": "提出训练方案改进LLM多语言推理能力",
-      "llm_evidence": "提出训练方案改进LLM多语言推理能力",
-      "canonical_evidence": "提出训练方案改进LLM多语言推理能力",
-      "llm_tldr_en": "AdaMame: two-stage training (SFT+RL) for multilingual reasoning, adaptively aligning reasoning language to query without accuracy loss.",
-      "llm_tldr_cn": "本文提出AdaMame两阶段训练方法，先通过有监督微调建立多语言推理能力，再通过强化学习自适应对齐推理语言与查询语言，有效解决语言崩溃问题。实验显示在多种语言数学推理任务上，该方法在保持准确率的同时减少了语言切换和标记浪费。",
-      "llm_tldr": "本文提出AdaMame两阶段训练方法，先通过有监督微调建立多语言推理能力，再通过强化学习自适应对齐推理语言与查询语言，有效解决语言崩溃问题。实验显示在多种语言数学推理任务上，该方法在保持准确率的同时减少了语言切换和标记浪费。",
+      "llm_score": 10.0,
+      "llm_evidence_en": "typed latent reasoning with budget-aware allocation for LLMs",
+      "llm_evidence_cn": "带预算感知的潜在推理类型化分配",
+      "llm_evidence": "带预算感知的潜在推理类型化分配",
+      "canonical_evidence": "带预算感知的潜在推理类型化分配",
+      "llm_tldr_en": "Tyler introduces typed and budget-aware latent reasoning, deciding when to think, what to compute, and how much to allocate for efficient LLM reasoning.",
+      "llm_tldr_cn": "显式思维链存在冗余和开销，潜在推理虽具潜力但现有方法预定义调用时机和分配。本文提出Tyler，一个类型化且预算感知的潜在推理框架，动态决策何时调用潜在计算、执行何种计算类型以及分配多少资源。在推理任务上的实验显示，Tyler能有效减少冗余计算并提升效率。",
+      "llm_tldr": "显式思维链存在冗余和开销，潜在推理虽具潜力但现有方法预定义调用时机和分配。本文提出Tyler，一个类型化且预算感知的潜在推理框架，动态决策何时调用潜在计算、执行何种计算类型以及分配多少资源。在推理任务上的实验显示，Tyler能有效减少冗余计算并提升效率。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -92,33 +89,49 @@
       "selection_source": "fresh_fetch"
     },
     {
-      "id": "2606.15160v1",
+      "id": "2606.14502v1",
       "source": "arxiv",
-      "title": "DLWM: Diverse Latent World Models for Efficient Multimodal Reasoning",
-      "abstract": "Reasoning capabilities of multimodal large language models (MLLMs) have improved considerably in recent years. Existing approaches typically rely on explicit chain-of-thought or continuous latent-space trajectories to enhance multi-step reasoning. However, these methods generally assume that an input admits a single latent interpretation and unfold reasoning along a fixed path or under a uniform computation budget. In real-world multimodal settings, visual observations are often subject to occlusion, blur, viewpoint variation, or semantic ambiguity, giving rise to multiple plausible interpretations. A uniform reasoning strategy not only limits the model's ability to explore multiple hypotheses but also incurs high memory usage and rollout cost. We present DLWM (Diverse Latent World Models), a multimodal reasoning framework that combines latent-space reasoning with reinforcement learning. First, we construct a set of diverse latent world hypotheses in continuous latent space, each capturing a different plausible interpretation of the visual input, and unfold latent reasoning independently on each hypothesis. An orthogonality-based diversity regularizer explicitly prevents hypothesis collapse. Second, we formulate the latent reasoning process as a resource-constrained sequential decision problem and introduce a resource-aware reinforcement learning policy that adaptively allocates computation across hypotheses, dynamically deciding whether to expand, terminate, or merge reasoning paths, thereby substantially reducing memory footprint and improving rollout efficiency. Experiments on multiple multimodal reasoning benchmarks demonstrate that DLWM outperforms existing methods by 2-5 points in accuracy while reducing memory usage by 24%.",
+      "title": "From Chatbot to Digital Colleague: The Paradigm Shift Toward Persistent Autonomous AI",
+      "abstract": "Large Language Models (LLMs) are undergoing a fundamental transformation from conversational generators into integrated AI systems capable of reasoning, action, memory, and self-improvement. We conceptualize this transition as a shift from Chatbot to Digital Colleague: from conversational answers to persistent work. We organize this transition along two tightly coupled dimensions. First, at the cognitive core level, LLMs are advancing from Chatbot-era \"fast thinking\" systems driven by next-token prediction toward Thinking LLMs that leverage inference-time computation, Chain-of-Thought reasoning, reflection, process supervision, and reinforcement learning to support more deliberate and reliable cognition. Second, at the tool-augmented task execution level, LLMs are progressing from tool-calling Agents that invoke external resources in an ad hoc manner toward OpenClaw-style workstation systems (OpenClaw) equipped with persistent Workspaces, skills, verification loops, and governance. The \"Workspace + Skill\" paradigm makes episodic tool use colleague-like via state persistence, reusable procedures, task closure, and experience reuse. We examine data construction shifts from instruction-response pairs to State-Action-Observation trajectories and evaluation from static benchmarks to sandboxed, auditable, self-evolving AI ecosystems.",
       "authors": [
-        "David Huang",
-        "Lianlei Shan"
+        "Yongheng Zhang",
+        "Ziang Liu",
+        "Jiaxuan Zhu",
+        "Shuai Wang",
+        "Xiangqi Chen",
+        "Haojing Huang",
+        "Jiayi Kuang",
+        "Siyu Chen",
+        "Ao Shen",
+        "Hao Wu",
+        "Qiufeng Wang",
+        "Qian-Wen Zhang",
+        "Junnan Dong",
+        "Wenhao Jiang",
+        "Ying Shen",
+        "Hai-Tao Zheng",
+        "Yinghui Li",
+        "Di Yin",
+        "Xing Sun",
+        "Philip S. Yu"
       ],
-      "primary_category": "cs.CV",
+      "primary_category": "cs.AI",
       "categories": [
-        "cs.CV",
-        "cs.LG"
+        "cs.AI"
       ],
-      "published": "2026-06-13T07:12:46+00:00",
-      "link": "https://arxiv.org/pdf/2606.15160v1",
+      "published": "2026-06-12T14:33:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.14502v1",
       "tags": [
-        "keyword:llm-papers",
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "proposes diverse latent world models to improve multimodal reasoning",
-      "llm_evidence_cn": "提出多样化潜在世界模型改进多模态推理",
-      "llm_evidence": "提出多样化潜在世界模型改进多模态推理",
-      "canonical_evidence": "提出多样化潜在世界模型改进多模态推理",
-      "llm_tldr_en": "Introduces Diverse Latent World Models (DLWM) for efficient multimodal reasoning by exploring multiple latent interpretations, reducing memory and rollout cost.",
-      "llm_tldr_cn": "本文提出多样化潜在世界模型（DLWM），针对多模态推理中单一潜在解释的局限性，通过探索多种潜在解释并动态分配计算资源，提高了推理效率和准确性。在多个多模态基准上，DLWM优于现有方法，同时降低了内存和生成成本，为多模态推理的规模化提供了新思路。",
-      "llm_tldr": "本文提出多样化潜在世界模型（DLWM），针对多模态推理中单一潜在解释的局限性，通过探索多种潜在解释并动态分配计算资源，提高了推理效率和准确性。在多个多模态基准上，DLWM优于现有方法，同时降低了内存和生成成本，为多模态推理的规模化提供了新思路。",
+      "llm_evidence_en": "Discusses LLM reasoning improvement via CoT, reflection, and RL",
+      "llm_evidence_cn": "讨论通过思维链、反思和强化学习改进LLM推理",
+      "llm_evidence": "讨论通过思维链、反思和强化学习改进LLM推理",
+      "canonical_evidence": "讨论通过思维链、反思和强化学习改进LLM推理",
+      "llm_tldr_en": "This paper conceptualizes the evolution from chatbots to persistent autonomous AI, focusing on improving LLM reasoning through inference-time computation, chain-of-thought, reflection, process supervision, and reinforcement learning.",
+      "llm_tldr_cn": "当前大型语言模型正从对话生成器转向具备推理、行动和记忆能力的自主AI系统。本文提出了一种范式转变，强调通过推理时计算、思维链、反思、过程监督和强化学习来增强模型的推理能力，从而实现更可靠和深思熟虑的认知。这为后续改进LLM推理提供了系统性的视角和方法论框架。",
+      "llm_tldr": "当前大型语言模型正从对话生成器转向具备推理、行动和记忆能力的自主AI系统。本文提出了一种范式转变，强调通过推理时计算、思维链、反思、过程监督和强化学习来增强模型的推理能力，从而实现更可靠和深思熟虑的认知。这为后续改进LLM推理提供了系统性的视角和方法论框架。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -154,13 +167,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "analyzes diversity collapse in RLVR for LLM reasoning improvement",
-      "llm_evidence_cn": "分析RLVR中多样性崩溃对LLM推理改进的影响",
-      "llm_evidence": "分析RLVR中多样性崩溃对LLM推理改进的影响",
-      "canonical_evidence": "分析RLVR中多样性崩溃对LLM推理改进的影响",
-      "llm_tldr_en": "Formalizes diversity collapse in RLVR as overtraining; shows that once a problem saturates, further updates narrow reasoning boundary.",
-      "llm_tldr_cn": "本文通过过训练视角形式化RLVR中的多样性崩溃问题，指出当问题贡献饱和后，进一步更新不再扩大推理边界，反而集中概率质量于少数轨迹。实验表明标准设置下少量生成即可导致饱和，为改进推理训练策略提供了理论指导。",
-      "llm_tldr": "本文通过过训练视角形式化RLVR中的多样性崩溃问题，指出当问题贡献饱和后，进一步更新不再扩大推理边界，反而集中概率质量于少数轨迹。实验表明标准设置下少量生成即可导致饱和，为改进推理训练策略提供了理论指导。",
+      "llm_evidence_en": "Analyzes diversity collapse in RLVR for LLM reasoning, directly addressing reasoning improvement",
+      "llm_evidence_cn": "分析RLVR中LLM推理的多样性崩溃，直接关联推理改进",
+      "llm_evidence": "分析RLVR中LLM推理的多样性崩溃，直接关联推理改进",
+      "canonical_evidence": "分析RLVR中LLM推理的多样性崩溃，直接关联推理改进",
+      "llm_tldr_en": "This paper formalizes diversity collapse in reinforcement learning with verifiable rewards (RLVR) for LLM reasoning as overtraining, showing that once a problem saturates, updates narrow the reasoning boundary.",
+      "llm_tldr_cn": "强化学习与可验证奖励（RLVR）虽能提升LLM推理能力，但常导致多样性崩溃：Pass@1提高而Pass@k下降。本文从过训练角度形式化了这一现象：一旦问题饱和，后续更新不再扩展解空间，反而集中概率质量于少数轨迹。这揭示了当前RLVR方法的局限性，为设计更有效的推理强化学习算法提供了理论基础。",
+      "llm_tldr": "强化学习与可验证奖励（RLVR）虽能提升LLM推理能力，但常导致多样性崩溃：Pass@1提高而Pass@k下降。本文从过训练角度形式化了这一现象：一旦问题饱和，后续更新不再扩展解空间，反而集中概率质量于少数轨迹。这揭示了当前RLVR方法的局限性，为设计更有效的推理强化学习算法提供了理论基础。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -200,130 +213,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "strategic trajectory reasoning via discriminative estimation for verifiable reinforcement learning",
-      "llm_evidence_cn": "通过判别估计进行战略轨迹推理以实现可验证强化学习",
-      "llm_evidence": "通过判别估计进行战略轨迹推理以实现可验证强化学习",
-      "canonical_evidence": "通过判别估计进行战略轨迹推理以实现可验证强化学习",
-      "llm_tldr_en": "STRIDE introduces discriminative estimation to identify beneficial strategic patterns in reasoning trajectories, providing denser and more verifiable rewards for RLVR.",
-      "llm_tldr_cn": "现有可验证强化学习（RLVR）方法仅基于最终答案分配稀疏奖励，忽略中间步骤贡献。STRIDE提出基于判别估计的战略轨迹推理，识别有益的策略模式并赋予相应奖励。在数学推理任务上，STRIDE比GRPO等方法取得更高准确率。该方法为LLM推理的细粒度强化学习提供了新途径。",
-      "llm_tldr": "现有可验证强化学习（RLVR）方法仅基于最终答案分配稀疏奖励，忽略中间步骤贡献。STRIDE提出基于判别估计的战略轨迹推理，识别有益的策略模式并赋予相应奖励。在数学推理任务上，STRIDE比GRPO等方法取得更高准确率。该方法为LLM推理的细粒度强化学习提供了新途径。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.16118v1",
-      "source": "arxiv",
-      "title": "Know Your Limits : On the Faithfulness of LLMs as Solvers and Autoformalizers in Legal Reasoning",
-      "abstract": "Large Language Models (LLMs) achieve strong performance on reasoning tasks, but whether this reflects faithful logical inference or heuristic approximation remains unclear. We study this question in legal entailment by comparing three paradigms, including pure LLM classification, LLM-based Formal Reasoning, and solver-based Formal Reasoning using the Z3 SMT solver, on a re-annotated subset of ContractNLI across five LLMs. Our re-annotation reveals a systematic and measurable gap between pragmatic legal interpretation and strict formal entailment, where a substantial proportion of legally sound inferences are not formally grounded without additional unstated assumptions. While introducing formal structure improves accuracy, with LLM-based Formal Reasoning achieving the highest benchmark performance, we show that this gain does not imply faithful reasoning. We identify three recurring failure modes: scope laundering, where LLMs report solver-inconsistent classifications without executing the underlying formal reasoning, producing conclusions that appear logically grounded but are not; implicit constraint blindness, where LLMs overlook logical constraints present in formal representations; and program synthesis failures, where LLMs generate incorrect Z3 code despite structured prompting. Critically, scope laundering persists across all models, raising serious concerns about the faithfulness of LLM-based formal reasoning as a proxy for symbolic execution. These results reveal a fundamental gap between benchmark accuracy and logical faithfulness.",
-      "authors": [
-        "Olivia Peiyu Wang",
-        "Sanna Wong-Toropainen",
-        "Daneshvar Amrollahi",
-        "Ryan Bai",
-        "Tashvi Bansal",
-        "Arush Garg",
-        "Leilani H. Gilpin"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.CL",
-        "cs.LO"
-      ],
-      "published": "2026-06-15T02:14:49+00:00",
-      "link": "https://arxiv.org/pdf/2606.16118v1",
-      "tags": [
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "investigates faithfulness of LLM reasoning in legal entailment",
-      "llm_evidence_cn": "研究LLM在法律推理中的忠实性",
-      "llm_evidence": "研究LLM在法律推理中的忠实性",
-      "canonical_evidence": "研究LLM在法律推理中的忠实性",
-      "llm_tldr_en": "Examines whether LLMs perform faithful logical inference in legal reasoning; finds a gap between pragmatic and formal entailment; formal structure improves accuracy but reveals limitations.",
-      "llm_tldr_cn": "本文探讨大型语言模型在法律推理中是否进行忠实逻辑推理，通过对比纯LLM分类、LLM形式推理和求解器形式推理三种范式，发现在法律解释与严格形式蕴含之间存在系统性差距。引入形式化结构虽能提升准确率，但也暴露了模型在形式推理上的局限性。研究为提升LLM推理可靠性提供了重要洞察。",
-      "llm_tldr": "本文探讨大型语言模型在法律推理中是否进行忠实逻辑推理，通过对比纯LLM分类、LLM形式推理和求解器形式推理三种范式，发现在法律解释与严格形式蕴含之间存在系统性差距。引入形式化结构虽能提升准确率，但也暴露了模型在形式推理上的局限性。研究为提升LLM推理可靠性提供了重要洞察。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.16222v1",
-      "source": "arxiv",
-      "title": "Latent Thought Flow: Efficient Latent Reasoning in Large Language Models",
-      "abstract": "Large Language Models (LLMs) increasingly rely on intermediate reasoning, yet explicit Chain-of-Thought (CoT) suffers from a linguistic space bottleneck: each thought must be decoded into tokens, causing high inference overhead. Latent reasoning moves deliberation into continuous space, but existing methods mostly learn deterministic or reward-maximizing paths, lacking a principled way to allocate probability across trajectories with different correctness and costs. We propose Latent Thought Flow (LTF), which models reasoning as variable-length continuous trajectories and trains a sampler to match a reward-induced posterior over answer quality and computation cost. We instantiate this with a continuous GFlowNet using stochastic latent transitions. To handle sparse answer supervision, we introduce an Entropy-Weighted Subtrajectory Balance objective for intermediate rewards and a reference-prior regularizer to anchor exploration. Experiments under finetuning and transfer learning settings show that LTF outperforms explicit CoT and latent reasoning baselines, improving accuracy by 9.5% while reducing reasoning length by 27.2% on average compared with strong latent reasoning baselines.",
-      "authors": [
-        "Xiandong Zou",
-        "Jing Huang",
-        "Jianshu Li",
-        "Pan Zhou"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI",
-        "cs.LG"
-      ],
-      "published": "2026-06-15T05:02:46+00:00",
-      "link": "https://arxiv.org/pdf/2606.16222v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "efficient latent reasoning in LLMs via continuous trajectories",
-      "llm_evidence_cn": "通过连续轨迹在潜在空间实现高效LLM推理",
-      "llm_evidence": "通过连续轨迹在潜在空间实现高效LLM推理",
-      "canonical_evidence": "通过连续轨迹在潜在空间实现高效LLM推理",
-      "llm_tldr_en": "Proposes Latent Thought Flow (LTF), modeling reasoning as continuous latent trajectories trained via GFlowNet to match a reward-induced posterior.",
-      "llm_tldr_cn": "本文提出潜在思维流（LTF），将推理建模为可变长度连续轨迹，并用连续GFlowNet训练采样器以匹配基于奖励的后验分布。该方法避免了显式思维链的令牌瓶颈，在保持推理质量的同时显著降低了计算成本。",
-      "llm_tldr": "本文提出潜在思维流（LTF），将推理建模为可变长度连续轨迹，并用连续GFlowNet训练采样器以匹配基于奖励的后验分布。该方法避免了显式思维链的令牌瓶颈，在保持推理质量的同时显著降低了计算成本。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.16360v1",
-      "source": "arxiv",
-      "title": "Tyler: Typed Latent Reasoning for Language Models -- When to Think, What to Compute, and How Much to Allocate",
-      "abstract": "Chain-of-thought (CoT) prompting improves reasoning in large language models (LLMs) by externalizing intermediate computation as discrete text tokens, but this textual interface also introduces redundancy and inference overhead. Latent reasoning offers a promising alternative by carrying part of the computation in continuous representations. However, existing methods typically predefine when latent computation is invoked and how it is allocated during decoding, leaving a key problem unresolved: when to invoke latent computation, what type of computation to perform, and how much budget to allocate. We propose \\textbf{Ty}ped \\textbf{L}at\\textbf{e}nt \\textbf{R}easoning (Tyler), a typed and budget-aware framework for latent reasoning during autoregressive decoding. Tyler learns a policy that, at each decoding step, chooses between emitting a text token and switching to a latent computation module specialized for a particular reasoning function. Once invoked, an operator maps the current reasoning state into latent tokens that support global planning, local state updates, or reusable procedural abstraction. Across extensive experiments on three backbone LLMs, Tyler improves accuracy by up to 14.49 points over CoT and by up to 4.30 points over the strongest competing baseline. It further generalizes across diverse reasoning domains and achieves the best final-stage performance with the lowest forgetting.",
-      "authors": [
-        "Hanyu Lin",
-        "Min Cai",
-        "Jiawei Wen",
-        "Haodi Zhang"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL",
-        "cs.AI"
-      ],
-      "published": "2026-06-15T07:56:05+00:00",
-      "link": "https://arxiv.org/pdf/2606.16360v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "proposes typed latent reasoning for LLMs",
-      "llm_evidence_cn": "提出类型化潜在推理方法改进LLM推理",
-      "llm_evidence": "提出类型化潜在推理方法改进LLM推理",
-      "canonical_evidence": "提出类型化潜在推理方法改进LLM推理",
-      "llm_tldr_en": "Tyler proposes a typed and budget-aware latent reasoning framework that learns when to invoke latent computation, what type to perform, and how much budget to allocate, improving LLM reasoning efficiency and effectiveness.",
-      "llm_tldr_cn": "现有链式思维推理存在冗余和开销，潜在推理虽能缓解但缺乏自适应调度。Tyler提出类型化潜在推理框架，通过可学习的控制器决定何时调用潜在计算、执行何种类型以及分配多少预算。实验表明该方法在多重推理任务上优于基线，同时降低推理成本。该工作为LLM的灵活高效推理提供了新范式。",
-      "llm_tldr": "现有链式思维推理存在冗余和开销，潜在推理虽能缓解但缺乏自适应调度。Tyler提出类型化潜在推理框架，通过可学习的控制器决定何时调用潜在计算、执行何种类型以及分配多少预算。实验表明该方法在多重推理任务上优于基线，同时降低推理成本。该工作为LLM的灵活高效推理提供了新范式。",
+      "llm_evidence_en": "discriminative estimation for verifiable RL improves LLM reasoning",
+      "llm_evidence_cn": "用于可验证RL的判别式估计改进LLM推理",
+      "llm_evidence": "用于可验证RL的判别式估计改进LLM推理",
+      "canonical_evidence": "用于可验证RL的判别式估计改进LLM推理",
+      "llm_tldr_en": "STRIDE introduces discriminative trajectory-level estimation to provide finer-grained rewards in RLVR, improving reasoning in LLMs.",
+      "llm_tldr_cn": "现有RLVR方法稀疏奖励且对令牌统一处理。STRIDE通过判别式估计区分有益和有害推理模式，提供更细粒度学习信号。实验表明该方法在数学推理任务上优于基线，有效提升了LLM的推理能力。",
+      "llm_tldr": "现有RLVR方法稀疏奖励且对令牌统一处理。STRIDE通过判别式估计区分有益和有害推理模式，提供更细粒度学习信号。实验表明该方法在数学推理任务上优于基线，有效提升了LLM的推理能力。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -355,54 +251,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Scales LLM reasoning learning from minimal labels via semi-supervised verification",
-      "llm_evidence_cn": "通过半监督验证从极少量标签扩展大语言模型推理学习",
-      "llm_evidence": "通过半监督验证从极少量标签扩展大语言模型推理学习",
-      "canonical_evidence": "通过半监督验证从极少量标签扩展大语言模型推理学习",
-      "llm_tldr_en": "A semi-supervised framework trains a lightweight verifier on few labeled samples to filter high-confidence reasoning traces for scaling LLM reasoning.",
-      "llm_tldr_cn": "生成中间推理轨迹的方法通常需要大量正确标注来验证质量。本文提出半监督框架，仅用少量标注样本训练轻量级推理正确性分类器，再通过基于熵的置信度阈值筛选可靠轨迹用于训练。实验表明，该方法能以极低标注成本显著提升LLM推理能力。",
-      "llm_tldr": "生成中间推理轨迹的方法通常需要大量正确标注来验证质量。本文提出半监督框架，仅用少量标注样本训练轻量级推理正确性分类器，再通过基于熵的置信度阈值筛选可靠轨迹用于训练。实验表明，该方法能以极低标注成本显著提升LLM推理能力。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.17053v1",
-      "source": "arxiv",
-      "title": "Context-Aware RL for Agentic and Multimodal LLMs",
-      "abstract": "Large language models (LLMs) often fail when answering requires identifying a small but decisive piece of evidence within a long or complex context, such as a single line in a tool trace or a subtle detail in an image. We propose ContextRL, a context-aware reinforcement learning (RL) method that improves long-horizon reasoning and multimodal performance through an \\emph{indirect} auxiliary objective. Instead of supervising only the final answer, ContextRL presents the model with a query, an answer, and two highly similar contexts, and rewards it for selecting the context that supports the query--answer pair, thereby encouraging fine-grained grounding. We construct contrastive context data in two domains: for coding agents, trajectories serve as contexts, yielding 1k pairs built via condition filtering; for multimodal reasoning, images serve as contexts, yielding 7K pairs built via generative editing and similarity search. ContextRL achieves average gains of +2.2% over standard GRPO on 5 long-horizon benchmarks, and +1.8% across 12 diverse visual question answering benchmarks. To disentangle the effect of the proposed objective from that of additional data, we compare against data-augmentation baselines that repurpose the same contrastive contexts as standard query--context--answer examples. These baselines provide little to no improvement, showing that the gains arise from the proposed context-selection objective rather than from the contrastive data alone.",
-      "authors": [
-        "Peiyang Xu",
-        "Bangzheng Li",
-        "Sijia Liu",
-        "Karthik R. Narasimhan",
-        "Pramod Viswanath",
-        "Prateek Mittal",
-        "Xingyu Fu"
-      ],
-      "primary_category": "cs.CL",
-      "categories": [
-        "cs.CL",
-        "cs.CV"
-      ],
-      "published": "2026-06-15T17:59:28+00:00",
-      "link": "https://arxiv.org/pdf/2606.17053v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "improves LLM reasoning via context-aware RL with contrastive context selection",
-      "llm_evidence_cn": "通过上下文感知强化学习和对比上下文选择提升大模型推理",
-      "llm_evidence": "通过上下文感知强化学习和对比上下文选择提升大模型推理",
-      "canonical_evidence": "通过上下文感知强化学习和对比上下文选择提升大模型推理",
-      "llm_tldr_en": "LLMs struggle with fine-grained evidence in long contexts; ContextRL uses RL with contrastive context pairs to improve long-horizon reasoning and multimodality.",
-      "llm_tldr_cn": "大型语言模型在处理长上下文或复杂图像时，往往难以定位关键证据。本文提出ContextRL，一种上下文感知强化学习方法，通过间接辅助目标：在查询、答案和两个相似上下文中选择正确的支持上下文，来鼓励细粒度定位。在代码智能体和多模态数据集上构建对比上下文对，实验表明该方法显著提升了长程推理和多模态性能。",
-      "llm_tldr": "大型语言模型在处理长上下文或复杂图像时，往往难以定位关键证据。本文提出ContextRL，一种上下文感知强化学习方法，通过间接辅助目标：在查询、答案和两个相似上下文中选择正确的支持上下文，来鼓励细粒度定位。在代码智能体和多模态数据集上构建对比上下文对，实验表明该方法显著提升了长程推理和多模态性能。",
+      "llm_evidence_en": "semi-supervised framework with verifier scales LLM reasoning from minimal labels",
+      "llm_evidence_cn": "半监督框架结合验证器从少量标注扩展LLM推理",
+      "llm_evidence": "半监督框架结合验证器从少量标注扩展LLM推理",
+      "canonical_evidence": "半监督框架结合验证器从少量标注扩展LLM推理",
+      "llm_tldr_en": "Proposes a semi-supervised framework using a lightweight verifier to judge reasoning traces, enabling LLM reasoning improvement with minimal labeled data.",
+      "llm_tldr_cn": "现有推理方法依赖大量正确标注。本文提出半监督框架，训练轻量级正确性分类器判断推理轨迹有效性，并通过熵过滤高置信度样本。实验表明该方法能用极少标注数据有效扩展LLM推理能力。",
+      "llm_tldr": "现有推理方法依赖大量正确标注。本文提出半监督框架，训练轻量级正确性分类器判断推理轨迹有效性，并通过熵过滤高置信度样本。实验表明该方法能用极少标注数据有效扩展LLM推理能力。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -434,13 +289,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Measures consistency in LLM logical reasoning via structural uncertainty",
-      "llm_evidence_cn": "通过结构不确定性量化大语言模型逻辑推理的一致性",
-      "llm_evidence": "通过结构不确定性量化大语言模型逻辑推理的一致性",
-      "canonical_evidence": "通过结构不确定性量化大语言模型逻辑推理的一致性",
-      "llm_tldr_en": "Structural uncertainty framework assesses reasoning consistency by analyzing stability of self-preference-induced rankings over sampled solutions.",
-      "llm_tldr_cn": "现有方法仅通过输出分散度评估LLM推理可靠性，忽视了推理候选排序的一致性。本文提出结构不确定性框架，对每个查询生成多个候选解，让模型自评偏好并聚合排序稳定性。该方法能有效检测不一致的推理路径，为提升推理可靠性提供新信号。",
-      "llm_tldr": "现有方法仅通过输出分散度评估LLM推理可靠性，忽视了推理候选排序的一致性。本文提出结构不确定性框架，对每个查询生成多个候选解，让模型自评偏好并聚合排序稳定性。该方法能有效检测不一致的推理路径，为提升推理可靠性提供新信号。",
+      "llm_evidence_en": "Proposes structural uncertainty to quantify and improve consistency in LLM logical reasoning",
+      "llm_evidence_cn": "提出结构不确定性方法量化并提升LLM逻辑推理一致性",
+      "llm_evidence": "提出结构不确定性方法量化并提升LLM逻辑推理一致性",
+      "canonical_evidence": "提出结构不确定性方法量化并提升LLM逻辑推理一致性",
+      "llm_tldr_en": "Proposes structural uncertainty, a framework using self-preference rankings to measure reasoning consistency, enabling better evaluation and improvement of LLM logical reasoning.",
+      "llm_tldr_cn": "该论文针对LLM在多步演绎推理中推理路径不稳定、矛盾的问题，提出结构不确定性（structural uncertainty）框架，通过模型对自身生成候选解进行成对偏好排序来评估推理一致性。该方法弥补了传统输出分散度指标的不足，为提升LLM推理可靠性提供新视角。实验表明结构不确定性有效反映推理质量，有助于指导推理改进。",
+      "llm_tldr": "该论文针对LLM在多步演绎推理中推理路径不稳定、矛盾的问题，提出结构不确定性（structural uncertainty）框架，通过模型对自身生成候选解进行成对偏好排序来评估推理一致性。该方法弥补了传统输出分散度指标的不足，为提升LLM推理可靠性提供新视角。实验表明结构不确定性有效反映推理质量，有助于指导推理改进。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -469,13 +324,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "reinforcement-guided latent refinement for reliable LLM reasoning",
-      "llm_evidence_cn": "强化引导的潜在状态细化实现可靠LLM推理",
-      "llm_evidence": "强化引导的潜在状态细化实现可靠LLM推理",
-      "canonical_evidence": "强化引导的潜在状态细化实现可靠LLM推理",
-      "llm_tldr_en": "ReLAR iteratively refines hidden states before decoding using reinforcement learning, with learned depth and action controllers for adaptive multi-step reasoning without explicit CoT.",
-      "llm_tldr_cn": "大语言模型在多步推理中隐藏状态错误会累积传播。ReLAR提出强化引导的潜在细化框架，在解码前迭代更新隐藏表示，并通过学习深度和动作控制器自适应决定细化步数和方向。在医学、数学等推理任务上，ReLAR显著提升准确率且无需显式思维链。该方法为LLM内部推理稳定性提供了新思路。",
-      "llm_tldr": "大语言模型在多步推理中隐藏状态错误会累积传播。ReLAR提出强化引导的潜在细化框架，在解码前迭代更新隐藏表示，并通过学习深度和动作控制器自适应决定细化步数和方向。在医学、数学等推理任务上，ReLAR显著提升准确率且无需显式思维链。该方法为LLM内部推理稳定性提供了新思路。",
+      "llm_evidence_en": "Proposes ReLAR, a reinforcement-guided latent refinement framework to improve LLM multi-step reasoning",
+      "llm_evidence_cn": "提出ReLAR，一种强化引导的潜在状态细化框架，提升LLM多步推理可靠性",
+      "llm_evidence": "提出ReLAR，一种强化引导的潜在状态细化框架，提升LLM多步推理可靠性",
+      "canonical_evidence": "提出ReLAR，一种强化引导的潜在状态细化框架，提升LLM多步推理可靠性",
+      "llm_tldr_en": "Proposes ReLAR, a reinforcement-guided latent refinement framework that iteratively updates hidden representations before decoding, reducing error propagation in multi-step LLM reasoning.",
+      "llm_tldr_cn": "该论文针对LLM在复杂多步推理中隐藏状态错误传播导致预测不准确的问题，提出ReLAR框架。该框架维护紧凑的潜在推理状态，通过强化学习训练深度和动作控制器，自适应决定细化步数和方向。无需显式思维链即可实现输入依赖推理。在医学、数学、多跳推理等任务上，ReLAR显著提升推理准确率，并减少不稳定输出。",
+      "llm_tldr": "该论文针对LLM在复杂多步推理中隐藏状态错误传播导致预测不准确的问题，提出ReLAR框架。该框架维护紧凑的潜在推理状态，通过强化学习训练深度和动作控制器，自适应决定细化步数和方向。无需显式思维链即可实现输入依赖推理。在医学、数学、多跳推理等任务上，ReLAR显著提升推理准确率，并减少不稳定输出。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -505,52 +360,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "improves LLM reasoning by learning online from reasoning traces",
-      "llm_evidence_cn": "通过在线学习推理痕迹来改进大模型推理",
-      "llm_evidence": "通过在线学习推理痕迹来改进大模型推理",
-      "canonical_evidence": "通过在线学习推理痕迹来改进大模型推理",
-      "llm_tldr_en": "LLMs discard reasoning traces; this work proposes to learn online from them via latent memories, showing that ICL fails but abstraction helps, enabling continual self-improvement without supervision.",
-      "llm_tldr_cn": "大型语言模型通过扩展推理时计算获得了强大的推理能力，但其状态无关的设计丢弃了推理过程中产生的大量推理轨迹。本文研究模型能否从这些经验中在线学习，将瞬态计算转化为持久可重用的知识。实验表明，对原始推理轨迹进行上下文学习（ICL）无法泛化，而轻量级的潜在记忆方法则能有效提取抽象知识，实现持续自我改进，无需外部监督。",
-      "llm_tldr": "大型语言模型通过扩展推理时计算获得了强大的推理能力，但其状态无关的设计丢弃了推理过程中产生的大量推理轨迹。本文研究模型能否从这些经验中在线学习，将瞬态计算转化为持久可重用的知识。实验表明，对原始推理轨迹进行上下文学习（ICL）无法泛化，而轻量级的潜在记忆方法则能有效提取抽象知识，实现持续自我改进，无需外部监督。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.18441v1",
-      "source": "arxiv",
-      "title": "Reasoning as Intersection: Consensus-Frame Alignment for Visual Focus in Video-MLLMs",
-      "abstract": "Reinforcement learning has improved the reasoning ability of large language models, but applying outcome-only rewards to video multimodal large language models (Video-MLLMs) provides limited guidance on which visual evidence should support the answer. Inspired by multisensory integration, where consistent cues can enhance the salience and reliability of perceptual estimates, we introduce Consensus Frame GRPO (CF-GRPO), a temporal-annotation-free process-level reward framework for evidence-aware video reasoning. CF-GRPO constructs a consensus frame prior from intrinsic video cues, including temporal coverage, scene-transition cues, and query-conditioned visual relevance. It then computes a model-side frame-use score from visual and response representations and optimizes their agreement through the Consensus Frame Reward (CFR). With salience-aware sparse aggregation and distribution sharpening, CFR provides a high-contrast reward signal without requiring human temporal annotations. Experiments show that VideoCFR achieves competitive performance across complex video reasoning benchmarks and improves several metrics over representative Video-MLLM and RL baselines, while the consensus prior provides an interpretable view of the evidence frames emphasized during training. The implementation is available at https://github.com/1Pansy/VideoCFR.",
-      "authors": [
-        "Chengwen Liu",
-        "Zhe Huang",
-        "Jisheng Dang",
-        "Hong Peng",
-        "Qi Tian",
-        "Tat-Seng Chua"
-      ],
-      "primary_category": "cs.CV",
-      "categories": [
-        "cs.CV"
-      ],
-      "published": "2026-06-16T19:42:54+00:00",
-      "link": "https://arxiv.org/pdf/2606.18441v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "introduces process-level reward framework for evidence-aware video reasoning",
-      "llm_evidence_cn": "提出过程级奖励框架用于证据感知视频推理",
-      "llm_evidence": "提出过程级奖励框架用于证据感知视频推理",
-      "canonical_evidence": "提出过程级奖励框架用于证据感知视频推理",
-      "llm_tldr_en": "CF-GRPO: temporal-annotation-free process reward for video reasoning, using consensus frame prior to guide visual evidence focus.",
-      "llm_tldr_cn": "本文提出共识帧GRPO（CF-GRPO），一种无时间标注的过程级奖励框架，通过构建共识帧先验引导视频大语言模型聚焦于相关视觉证据。在多模态推理任务上，该方法有效提升了推理质量和证据利用的准确性。",
-      "llm_tldr": "本文提出共识帧GRPO（CF-GRPO），一种无时间标注的过程级奖励框架，通过构建共识帧先验引导视频大语言模型聚焦于相关视觉证据。在多模态推理任务上，该方法有效提升了推理质量和证据利用的准确性。",
+      "llm_evidence_en": "online learning from self-produced reasoning traces improves LLM reasoning",
+      "llm_evidence_cn": "从自产推理轨迹在线学习改进LLM推理",
+      "llm_evidence": "从自产推理轨迹在线学习改进LLM推理",
+      "canonical_evidence": "从自产推理轨迹在线学习改进LLM推理",
+      "llm_tldr_en": "Investigates online learning from self-produced reasoning traces, showing that ICL fails but latent memories enable continual self-improvement for LLM reasoning.",
+      "llm_tldr_cn": "LLM在推理过程中产生丰富轨迹但未加以利用。本文探索在线学习将瞬时推理转化为持久知识，发现原始轨迹的上下文学习无法泛化，而基于潜在记忆的方法能实现持续自我改进，无需外部监督。",
+      "llm_tldr": "LLM在推理过程中产生丰富轨迹但未加以利用。本文探索在线学习将瞬时推理转化为持久知识，发现原始轨迹的上下文学习无法泛化，而基于潜在记忆的方法能实现持续自我改进，无需外部监督。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -581,13 +397,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Improves pragmatic reasoning in LLMs via counterfactual self-reinforcement",
-      "llm_evidence_cn": "通过反事实自强化提升大语言模型的语用推理能力",
-      "llm_evidence": "通过反事实自强化提升大语言模型的语用推理能力",
-      "canonical_evidence": "通过反事实自强化提升大语言模型的语用推理能力",
-      "llm_tldr_en": "PragReST self-supervised framework improves LLM pragmatic reasoning by generating counterfactual reasoning traces and training via SFT and RL.",
-      "llm_tldr_cn": "大语言模型在数学和逻辑推理上表现优异，但在需要语用推断的任务中仍常选择字面解释。本文提出PragReST，一种自监督框架，自动构造语用问答数据并生成反事实推理轨迹，再通过监督微调和强化学习让模型内化这些轨迹。在四个语用基准上显著提升推理准确率，无需人工标注或蒸馏。",
-      "llm_tldr": "大语言模型在数学和逻辑推理上表现优异，但在需要语用推断的任务中仍常选择字面解释。本文提出PragReST，一种自监督框架，自动构造语用问答数据并生成反事实推理轨迹，再通过监督微调和强化学习让模型内化这些轨迹。在四个语用基准上显著提升推理准确率，无需人工标注或蒸馏。",
+      "llm_evidence_en": "improving LLM pragmatic reasoning via self-supervised RL and counterfactual reasoning",
+      "llm_evidence_cn": "通过自监督强化学习和反事实推理改进LLM实用推理",
+      "llm_evidence": "通过自监督强化学习和反事实推理改进LLM实用推理",
+      "canonical_evidence": "通过自监督强化学习和反事实推理改进LLM实用推理",
+      "llm_tldr_en": "PragReST uses self-supervised counterfactual reasoning and RL to improve LLM pragmatic reasoning without human labels, outperforming baselines on four benchmarks.",
+      "llm_tldr_cn": "大型语言模型在数学和逻辑推理方面表现出色，但在实用推理上仍存在不足。本文提出PragReST，一个自监督框架，通过构建实用问答数据、生成反事实推理轨迹，并利用监督微调和强化学习训练模型内化推理过程，无需人工标注或教师蒸馏。在四个实用基准上，PragReST显著提升了LLM的实用推理能力，为改善LLM的隐含意义理解提供了有效途径。",
+      "llm_tldr": "大型语言模型在数学和逻辑推理方面表现出色，但在实用推理上仍存在不足。本文提出PragReST，一个自监督框架，通过构建实用问答数据、生成反事实推理轨迹，并利用监督微调和强化学习训练模型内化推理过程，无需人工标注或教师蒸馏。在四个实用基准上，PragReST显著提升了LLM的实用推理能力，为改善LLM的隐含意义理解提供了有效途径。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -623,88 +439,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "Improves LLM reasoning via self-distillation with error-diagnostic trajectories",
-      "llm_evidence_cn": "通过含错误诊断轨迹的自我蒸馏提升大语言模型推理",
-      "llm_evidence": "通过含错误诊断轨迹的自我蒸馏提升大语言模型推理",
-      "canonical_evidence": "通过含错误诊断轨迹的自我蒸馏提升大语言模型推理",
-      "llm_tldr_en": "TAPO advances self-distillation by constructing learnable micro-reflective trajectories that pinpoint and correct specific reasoning errors.",
-      "llm_tldr_cn": "现有自我蒸馏方法通过隐式分布对齐提升LLM推理，但缺乏对个体错误模式的诊断和纠正。本文提出TAPO，将模型自身的错误推理过程分解为可学习的微反思轨迹，并提供细粒度纠正信号。实验表明TAPO在多项推理任务上优于传统蒸馏方法，且更鲁棒。",
-      "llm_tldr": "现有自我蒸馏方法通过隐式分布对齐提升LLM推理，但缺乏对个体错误模式的诊断和纠正。本文提出TAPO，将模型自身的错误推理过程分解为可学习的微反思轨迹，并提供细粒度纠正信号。实验表明TAPO在多项推理任务上优于传统蒸馏方法，且更鲁棒。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.19120v1",
-      "source": "arxiv",
-      "title": "Seeing Before Reasoning: Decoupling Perception and Reasoning for Shortcut-Resilient Multimodal On-Policy Self-Distillation",
-      "abstract": "On-policy self-distillation (OPSD) trains a model on its own rollouts and uses a frozen copy to provide dense token-level targets conditioned on a reference target. This works well for LLM reasoning, but a direct extension to multimodal large language models (MLLMs) can create a shortcut: the privileged target may guide tokens mainly based on the text reference target rather than the image. We propose ViGOS, a visually grounded OPSD framework for MLLM post-training. The student first writes a visual description and then reasons toward the final answer. For valid rollouts, an image-only perception teacher supervises the description, while a privileged reasoning teacher supervises the reasoning and final answer on the same student prefix. A reference teacher is used only for invalid rollouts to recover the output format. Across general vision-language, expert reasoning, visual math, spatial grounding, and visual-language-prior benchmarks, ViGOS keeps the main benefits of OPSD and improves image-grounded behavior in shortcut-prone settings.",
-      "authors": [
-        "Sihan Wang",
-        "Xiyao Liu",
-        "Lianqing Liu",
-        "Zhi Han"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG",
-        "cs.CV"
-      ],
-      "published": "2026-06-17T14:33:38+00:00",
-      "link": "https://arxiv.org/pdf/2606.19120v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "decouples perception and reasoning for shortcut-resilient multimodal reasoning",
-      "llm_evidence_cn": "分离感知与推理以增强多模态推理的抗捷径性",
-      "llm_evidence": "分离感知与推理以增强多模态推理的抗捷径性",
-      "canonical_evidence": "分离感知与推理以增强多模态推理的抗捷径性",
-      "llm_tldr_en": "ViGOS: visually grounded OPSD for MLLMs, decoupling perception and reasoning to avoid text shortcut bias.",
-      "llm_tldr_cn": "本文提出ViGOS框架，针对多模态大语言模型自蒸馏中的文本捷径问题，将感知与推理解耦：学生先写视觉描述再推理，使用图像感知教师监督描述、特权推理教师监督推理。实验表明该方法有效避免了基于文本参照的捷径，提升了推理的真实性。",
-      "llm_tldr": "本文提出ViGOS框架，针对多模态大语言模型自蒸馏中的文本捷径问题，将感知与推理解耦：学生先写视觉描述再推理，使用图像感知教师监督描述、特权推理教师监督推理。实验表明该方法有效避免了基于文本参照的捷径，提升了推理的真实性。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch"
-    },
-    {
-      "id": "2606.19264v1",
-      "source": "arxiv",
-      "title": "Structured Inference with Large Language Gibbs",
-      "abstract": "The knowledge encoded in large language models (LLMs) can serve as a substrate for structured reasoning over variables describing a complex world, but accessing this knowledge in a probabilistically coherent manner poses a difficult inference problem. We propose Large Language Gibbs, a scheme for structured probabilistic inference that uses conditional distributions of an LLM as transition operators. Rather than sampling structured objects through single-pass autoregressive generation, we iteratively resample individual variables conditioned on others using an LLM's next-token conditionals. This approach avoids order-dependent biases and produces a stationary distribution that reflects a compromise between all local conditionals. We apply this approach to sampling from synthetic distributions, consistent reasoning tasks, and Bayesian structure learning. The results suggest that the use of LLM conditionals in MCMC is a practical alternative to one-pass generation for structured probabilistic inference under a world prior accessible through noisy LLM conditionals.",
-      "authors": [
-        "Sanghyeok Choi",
-        "Henry Gouk",
-        "Esmeralda S. Whitammer"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG",
-        "cs.CL"
-      ],
-      "published": "2026-06-17T16:40:32+00:00",
-      "link": "https://arxiv.org/pdf/2606.19264v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 9.0,
-      "llm_evidence_en": "structured probabilistic inference using LLM conditionals",
-      "llm_evidence_cn": "利用LLM条件分布进行结构化概率推理",
-      "llm_evidence": "利用LLM条件分布进行结构化概率推理",
-      "canonical_evidence": "利用LLM条件分布进行结构化概率推理",
-      "llm_tldr_en": "Proposes Large Language Gibbs, a scheme for structured probabilistic inference using LLM conditionals as transition operators, enabling coherent reasoning.",
-      "llm_tldr_cn": "本文提出Large Language Gibbs框架，将大语言模型的条件分布作为转移算子进行结构化概率推理。通过迭代重采样变量避免顺序依赖偏差，产生的平稳分布反映了所有局部条件之间的折中。在合成基准上验证了其优于单次自回归生成。",
-      "llm_tldr": "本文提出Large Language Gibbs框架，将大语言模型的条件分布作为转移算子进行结构化概率推理。通过迭代重采样变量避免顺序依赖偏差，产生的平稳分布反映了所有局部条件之间的折中。在合成基准上验证了其优于单次自回归生成。",
+      "llm_evidence_en": "Proposes self-distillation method to improve LLM reasoning by learning from mistakes",
+      "llm_evidence_cn": "提出通过从错误中学习的自蒸馏方法改进LLM推理",
+      "llm_evidence": "提出通过从错误中学习的自蒸馏方法改进LLM推理",
+      "canonical_evidence": "提出通过从错误中学习的自蒸馏方法改进LLM推理",
+      "llm_tldr_en": "TAPO advances self-distillation for LLM reasoning by constructing micro-reflective trajectories that pinpoint where and why reasoning fails, enabling fine-grained correction beyond imitation learning.",
+      "llm_tldr_cn": "现有自蒸馏方法通过隐式logit对齐改进LLM推理，但缺乏错误诊断和修正。本文提出轨迹增强策略优化（TAPO），通过构建可学习的微反思轨迹，让模型从自身错误中获得细粒度纠正信号。实验表明TAPO显著提升了推理准确性和多样性，为自我改进推理提供了一种有效范式。",
+      "llm_tldr": "现有自蒸馏方法通过隐式logit对齐改进LLM推理，但缺乏错误诊断和修正。本文提出轨迹增强策略优化（TAPO），通过构建可学习的微反思轨迹，让模型从自身错误中获得细粒度纠正信号。实验表明TAPO显著提升了推理准确性和多样性，为自我改进推理提供了一种有效范式。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -736,13 +477,13 @@
         "query:llm-papers"
       ],
       "llm_score": 9.0,
-      "llm_evidence_en": "value-implicit policy optimization for improving LLM reasoning",
-      "llm_evidence_cn": "价值隐式策略优化改进LLM推理",
-      "llm_evidence": "价值隐式策略优化改进LLM推理",
-      "canonical_evidence": "价值隐式策略优化改进LLM推理",
-      "llm_tldr_en": "VIMPO is a critic-free policy optimization method that derives a policy-implied value function from optimality conditions, improving LLM reasoning without training a separate value network.",
-      "llm_tldr_cn": "现有强化学习方法在改进LLM推理时面临简单性与信用分配的权衡。VIMPO提出无需评论家的策略优化方法，从KL正则化强化学习的最优条件推导出策略隐含的价值函数。在推理任务上，VIMPO比GRPO和Actor-Critic方法更高效，且训练更稳定。该方法为LLM推理增强提供了简洁有效的强化学习范式。",
-      "llm_tldr": "现有强化学习方法在改进LLM推理时面临简单性与信用分配的权衡。VIMPO提出无需评论家的策略优化方法，从KL正则化强化学习的最优条件推导出策略隐含的价值函数。在推理任务上，VIMPO比GRPO和Actor-Critic方法更高效，且训练更稳定。该方法为LLM推理增强提供了简洁有效的强化学习范式。",
+      "llm_evidence_en": "critic-free policy optimization improves LLM reasoning",
+      "llm_evidence_cn": "无评论家策略优化改进LLM推理",
+      "llm_evidence": "无评论家策略优化改进LLM推理",
+      "canonical_evidence": "无评论家策略优化改进LLM推理",
+      "llm_tldr_en": "VIMPO introduces a critic-free policy optimization method that derives a value function from KL-regularized RL optimality conditions, improving reasoning in LLMs without training a separate critic.",
+      "llm_tldr_cn": "当前RLVR方法在简单性和信用分配之间存在权衡；VIMPO通过从KL正则化强化学习最优条件中推导出策略隐含的价值函数，避免了训练评论家网络带来的不稳定性。实验表明该方法在推理任务上取得了有效改进，为LLM推理能力提升提供了新的无批评家框架。",
+      "llm_tldr": "当前RLVR方法在简单性和信用分配之间存在权衡；VIMPO通过从KL正则化强化学习最优条件中推导出策略隐含的价值函数，避免了训练评论家网络带来的不稳定性。实验表明该方法在推理任务上取得了有效改进，为LLM推理能力提升提供了新的无批评家框架。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -754,37 +495,39 @@
   ],
   "quick_skim": [
     {
-      "id": "2606.14142v2",
+      "id": "2606.14691v1",
       "source": "arxiv",
-      "title": "Implicit Reasoning for Large Language Model-based Generative Recommendation",
-      "abstract": "Large Language Models (LLMs) are increasingly adopted as backbones for Generative Recommendation (GR), promising access to pretrained world knowledge. Yet reliably invoking this knowledge for GR remains poorly understood. A key obstacle is that LLM-based GR typically represents items with Semantic IDs (SIDs), disrupting LLMs' natural-language reasoning interface because these tokens are unseen by the LLM during pretraining. Existing approaches address this with expensive multi-stage pipelines that ground SIDs and elicit explicit rationales, but offer limited insight into when and why each stage is necessary. In this work, we systematically decompose explicit reasoning training pipelines for LLM-based GR, revealing three key limitations: weakened world-knowledge verbalization, misalignment between SID and natural-language token embedding spaces, and sensitivity to rationale quality, all of which hurt explicit reasoning performance. To circumvent these issues, we propose PauseRec, a lightweight implicit reasoning paradigm tailored for GR. PauseRec is exceptionally practical, avoiding costly reasoning trace acquisition and reasoning alignment training, leading to a multitude of benefits: (1) it outperforms standard explicit CoT methods by up to 6.22%, (2) it reduces training cost by up to 65% GPU hours, and (3) it speeds up inference by up to 71.3%. These results position PauseRec as a lightweight alternative to explicit rationale generation, enabling more effective and efficient LLM-based GR.",
+      "title": "CORA: Analyzing and bridging thinking-answer gap in Multimodal RLVR via Consistency-Oriented Reasoning Alignment",
+      "abstract": "Reinforcement learning with verifiable rewards (RLVR) has successfully elicited the reasoning capabilities of large language models, motivating its extension to multimodal scenarios. Existing methods primarily focus on improving the visual coverage of reasoning traces and mitigating visual hallucinations, but underestimate the semantic inconsistency between the reasoning process and the final answer. In this paper, we delve into thinking-answer inconsistency in RLVR for large vision-language models (LVLMs), showing thorough analyses of rollouts collected throughout Group Relative Policy Optimization (GRPO) training process and post-RLVR evaluation outputs that this issue persists during training and remains present during inference. Motivated by the analysis, we propose Consistency-Oriented Reasoning Alignment (CORA), which introduces thinking-answer semantic consistency into RLVR through a lightweight plug-and-play consistency reward model, and further incorporates Hybrid Reward Advantage Splitting (HRAS) to stably coordinate task and consistency optimization. Extensive experiments across representative multimodal reasoning benchmarks and mainstream LVLMs show that CORA improves task performance while effectively mitigating thinking-answer inconsistency, leading to more faithful reasoning traces.",
       "authors": [
-        "Yinhan He",
-        "Liam Collins",
-        "Bhuvesh Kumar",
-        "Jundong Li",
-        "Neil Shah",
-        "Donald Loveland"
+        "Jiayue Cao",
+        "Zhicong Lu",
+        "Xuehan Sun",
+        "Wei Jia",
+        "Hongling Zheng",
+        "Changyuan Tian",
+        "Zichuan Lin",
+        "Wenqian Lv",
+        "Nayu Liu"
       ],
       "primary_category": "cs.CL",
       "categories": [
-        "cs.CL",
-        "cs.AI"
+        "cs.CL"
       ],
-      "published": "2026-06-12T06:04:05+00:00",
-      "link": "https://arxiv.org/pdf/2606.14142v2",
+      "published": "2026-06-12T17:54:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.14691v1",
       "tags": [
         "keyword:llm-papers",
         "query:llm-papers"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "implicit reasoning for LLM recommendation",
-      "llm_evidence_cn": "LLM推荐中的隐式推理",
-      "llm_evidence": "LLM推荐中的隐式推理",
-      "canonical_evidence": "LLM推荐中的隐式推理",
-      "llm_tldr_en": "Decomposes explicit reasoning pipelines for LLM-based generative recommendation, revealing limitations and proposing implicit reasoning approach.",
-      "llm_tldr_cn": "本文系统分解了基于大语言模型的生成式推荐中的显式推理训练流程，揭示了三个关键局限性，并提出隐式推理方法以减轻对昂贵多阶段流水线的依赖。实验表明该方法在保持推荐质量的同时显著降低了计算开销。",
-      "llm_tldr": "本文系统分解了基于大语言模型的生成式推荐中的显式推理训练流程，揭示了三个关键局限性，并提出隐式推理方法以减轻对昂贵多阶段流水线的依赖。实验表明该方法在保持推荐质量的同时显著降低了计算开销。",
+      "llm_evidence_en": "bridging thinking-answer gap in multimodal RLVR via consistency alignment",
+      "llm_evidence_cn": "通过一致性对齐弥合多模态RLVR中的思维-答案差距",
+      "llm_evidence": "通过一致性对齐弥合多模态RLVR中的思维-答案差距",
+      "canonical_evidence": "通过一致性对齐弥合多模态RLVR中的思维-答案差距",
+      "llm_tldr_en": "CORA analyzes and addresses the thinking-answer inconsistency in multimodal RLVR through consistency-oriented reasoning alignment.",
+      "llm_tldr_cn": "基于可验证奖励的强化学习成功激发了LLM的推理能力，但在多模态场景下存在推理过程与最终答案之间的语义不一致。本文深入分析这一现象，并提出一致性导向推理对齐（CORA）方法，通过显式对齐推理轨迹与答案来缓解该问题。实验证明CORA能有效提升多模态推理的准确性。",
+      "llm_tldr": "基于可验证奖励的强化学习成功激发了LLM的推理能力，但在多模态场景下存在推理过程与最终答案之间的语义不一致。本文深入分析这一现象，并提出一致性导向推理对齐（CORA）方法，通过显式对齐推理轨迹与答案来缓解该问题。实验证明CORA能有效提升多模态推理的准确性。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -795,41 +538,33 @@
       "quick_tier": "8plus"
     },
     {
-      "id": "2606.14591v1",
+      "id": "2606.15160v1",
       "source": "arxiv",
-      "title": "AudioDER: A Deduplication-Enhanced Reasoning Dataset for Post-Training Large Audio-Language Models",
-      "abstract": "Large Audio-Language Models (LALMs) have shown strong performance on a wide range of audio understanding tasks, yet they still struggle with complex audio reasoning. A practical way to improve such capabilities is post-training, whose effectiveness critically depends on the quality and diversity of training data. However, existing audio-language datasets often contain substantial redundancy, where many samples are highly similar in acoustic content and thus provide overlapping supervisory signals. Such redundancy not only increases annotation cost, but also limits corpus diversity and reduces the effectiveness of post-training. To address this issue, we propose a redundancy-aware data construction pipeline for building reasoning-oriented supervision for LALMs. Specifically, we first perform acoustic similarity-based deduplication across raw audio datasets to improve corpus diversity. We then integrate existing audio captions and question-answer pairs into a unified multiple-choice format. Based on these unified annotations, we leverage Qwen3-30B to generate chain-of-thought (CoT) rationales for reasoning-oriented supervision. Based on this pipeline, we construct AudioDER, a reasoning-oriented post-training dataset containing approximately 191k samples spanning sound, speech, and music. Each sample consists of an audio clip, a multiple-choice question, four answer candidates, an audio caption, and a CoT rationale. Extensive experiments show that post-training on AudioDER consistently improves the performance of Qwen2-Audio-7B-Instruct on multiple audio reasoning benchmarks, including MMAU-mini, MMSU, and MMAR. We hope AudioDER can serve as a valuable resource for advancing audio reasoning research and the development of more capable LALMs.",
+      "title": "DLWM: Diverse Latent World Models for Efficient Multimodal Reasoning",
+      "abstract": "Reasoning capabilities of multimodal large language models (MLLMs) have improved considerably in recent years. Existing approaches typically rely on explicit chain-of-thought or continuous latent-space trajectories to enhance multi-step reasoning. However, these methods generally assume that an input admits a single latent interpretation and unfold reasoning along a fixed path or under a uniform computation budget. In real-world multimodal settings, visual observations are often subject to occlusion, blur, viewpoint variation, or semantic ambiguity, giving rise to multiple plausible interpretations. A uniform reasoning strategy not only limits the model's ability to explore multiple hypotheses but also incurs high memory usage and rollout cost. We present DLWM (Diverse Latent World Models), a multimodal reasoning framework that combines latent-space reasoning with reinforcement learning. First, we construct a set of diverse latent world hypotheses in continuous latent space, each capturing a different plausible interpretation of the visual input, and unfold latent reasoning independently on each hypothesis. An orthogonality-based diversity regularizer explicitly prevents hypothesis collapse. Second, we formulate the latent reasoning process as a resource-constrained sequential decision problem and introduce a resource-aware reinforcement learning policy that adaptively allocates computation across hypotheses, dynamically deciding whether to expand, terminate, or merge reasoning paths, thereby substantially reducing memory footprint and improving rollout efficiency. Experiments on multiple multimodal reasoning benchmarks demonstrate that DLWM outperforms existing methods by 2-5 points in accuracy while reducing memory usage by 24%.",
       "authors": [
-        "Hui Geng",
-        "Yi Su",
-        "Han Yin",
-        "Tianjiao Wan",
-        "Qisheng Xu",
-        "Jiaxin Chen",
-        "Zijian Gao",
-        "Hengzhu Liu",
-        "Xie Chen",
-        "Kele Xu"
+        "David Huang",
+        "Lianlei Shan"
       ],
-      "primary_category": "cs.SD",
+      "primary_category": "cs.CV",
       "categories": [
-        "cs.SD",
-        "cs.AI"
+        "cs.CV",
+        "cs.LG"
       ],
-      "published": "2026-06-12T16:09:49+00:00",
-      "link": "https://arxiv.org/pdf/2606.14591v1",
+      "published": "2026-06-13T07:12:46+00:00",
+      "link": "https://arxiv.org/pdf/2606.15160v1",
       "tags": [
         "keyword:llm-papers",
         "query:llm-papers"
       ],
       "llm_score": 7.0,
-      "llm_evidence_en": "deduplication-enhanced reasoning dataset for post-training large audio-language models",
-      "llm_evidence_cn": "通过去重增强推理数据集改进大型音频语言模型的后训练",
-      "llm_evidence": "通过去重增强推理数据集改进大型音频语言模型的后训练",
-      "canonical_evidence": "通过去重增强推理数据集改进大型音频语言模型的后训练",
-      "llm_tldr_en": "AudioDER constructs a redundancy-aware reasoning dataset for post-training large audio-language models, improving complex audio reasoning by removing duplicate samples.",
-      "llm_tldr_cn": "大型音频语言模型在复杂音频推理上表现不足，后训练数据冗余限制了效果。AudioDER提出冗余感知的数据构建流程，去除高相似样本以提升多样性。实验表明在多个音频推理基准上，使用该数据集后训练的模型性能显著提升。该工作为音频推理数据构建提供了有效范例。",
-      "llm_tldr": "大型音频语言模型在复杂音频推理上表现不足，后训练数据冗余限制了效果。AudioDER提出冗余感知的数据构建流程，去除高相似样本以提升多样性。实验表明在多个音频推理基准上，使用该数据集后训练的模型性能显著提升。该工作为音频推理数据构建提供了有效范例。",
+      "llm_evidence_en": "Introduces diverse latent world models for multimodal reasoning, improving reasoning exploration",
+      "llm_evidence_cn": "提出多样潜在世界模型用于多模态推理，提升推理探索能力",
+      "llm_evidence": "提出多样潜在世界模型用于多模态推理，提升推理探索能力",
+      "canonical_evidence": "提出多样潜在世界模型用于多模态推理，提升推理探索能力",
+      "llm_tldr_en": "DLWM proposes diverse latent world models for multimodal LLMs, enabling multiple hypothesis exploration under ambiguous observations, improving reasoning efficiency and reducing memory cost.",
+      "llm_tldr_cn": "多模态大模型常假设单一潜在解释，限制了处理模糊观察的能力。本文提出多样潜在世界模型（DLWM），在潜在空间中并行探索多个推理路径，并根据观察动态选择。实验表明DLWM在多个多模态推理基准上提升了准确率并降低了计算开销，为多模态推理提供了一种灵活高效的方案。",
+      "llm_tldr": "多模态大模型常假设单一潜在解释，限制了处理模糊观察的能力。本文提出多样潜在世界模型（DLWM），在潜在空间中并行探索多个推理路径，并根据观察动态选择。实验表明DLWM在多个多模态推理基准上提升了准确率并降低了计算开销，为多模态推理提供了一种灵活高效的方案。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -840,91 +575,73 @@
       "quick_tier": "7"
     },
     {
-      "id": "2606.14502v1",
+      "id": "2606.14202v1",
       "source": "arxiv",
-      "title": "From Chatbot to Digital Colleague: The Paradigm Shift Toward Persistent Autonomous AI",
-      "abstract": "Large Language Models (LLMs) are undergoing a fundamental transformation from conversational generators into integrated AI systems capable of reasoning, action, memory, and self-improvement. We conceptualize this transition as a shift from Chatbot to Digital Colleague: from conversational answers to persistent work. We organize this transition along two tightly coupled dimensions. First, at the cognitive core level, LLMs are advancing from Chatbot-era \"fast thinking\" systems driven by next-token prediction toward Thinking LLMs that leverage inference-time computation, Chain-of-Thought reasoning, reflection, process supervision, and reinforcement learning to support more deliberate and reliable cognition. Second, at the tool-augmented task execution level, LLMs are progressing from tool-calling Agents that invoke external resources in an ad hoc manner toward OpenClaw-style workstation systems (OpenClaw) equipped with persistent Workspaces, skills, verification loops, and governance. The \"Workspace + Skill\" paradigm makes episodic tool use colleague-like via state persistence, reusable procedures, task closure, and experience reuse. We examine data construction shifts from instruction-response pairs to State-Action-Observation trajectories and evaluation from static benchmarks to sandboxed, auditable, self-evolving AI ecosystems.",
+      "title": "MeEvo: Metacognitive Evolution Combined with Natural Evolution for Automatic Heuristic Design",
+      "abstract": "Large Language Models (LLMs) have advanced Automatic Heuristic Design (AHD) by enabling heuristic generation through reasoning and code synthesis. Existing LLM-based AHD architectures mainly follow two paradigms: Natural Evolution, which uses crossover and mutation to explore heuristic programs, and Metacognitive Evolution, which refines reasoning through reflection. However, Natural Evolution discards reasoning traces, weakening knowledge inheritance and exploitation, while Metacognitive Evolution lacks population-level recombination, limiting exploration and increasing the risk of premature convergence. These limitations reduce search efficiency, stability, and solution quality on complex problems. To address this gap, we propose MeEvo, a dual-layer AHD framework that cyclically couples Natural Evolution and Metacognitive Evolution. Natural Evolution explores heuristic code while recording reasoning traces, fitness values, and errors into a shared history; Metacognitive Evolution then reflects on this history to generate improved heuristics that re-enter the parent pool for the next cycle. This design enables population-driven exploration and reflection-driven refinement to reinforce each other. Experiments on five optimization problems with two LLM backbones show that MeEvo achieves stronger and more stable performance than existing LLM-based AHD architectures, especially on complex constrained tasks.",
       "authors": [
-        "Yongheng Zhang",
-        "Ziang Liu",
-        "Jiaxuan Zhu",
-        "Shuai Wang",
-        "Xiangqi Chen",
-        "Haojing Huang",
-        "Jiayi Kuang",
-        "Siyu Chen",
-        "Ao Shen",
-        "Hao Wu",
-        "Qiufeng Wang",
-        "Qian-Wen Zhang",
-        "Junnan Dong",
-        "Wenhao Jiang",
-        "Ying Shen",
-        "Hai-Tao Zheng",
-        "Yinghui Li",
-        "Di Yin",
-        "Xing Sun",
-        "Philip S. Yu"
+        "Zishang Qiu",
+        "Xinan Chen",
+        "Rong Qu",
+        "Ruibin Bai"
       ],
-      "primary_category": "cs.AI",
+      "primary_category": "cs.NE",
       "categories": [
+        "cs.NE",
         "cs.AI"
       ],
-      "published": "2026-06-12T14:33:55+00:00",
-      "link": "https://arxiv.org/pdf/2606.14502v1",
+      "published": "2026-06-12T07:36:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.14202v1",
       "tags": [
+        "keyword:llm-papers",
         "query:llm-papers"
       ],
       "llm_score": 6.0,
-      "llm_evidence_en": "Survey on LLM evolution from chatbot to autonomous AI with reasoning",
-      "llm_evidence_cn": "综述大语言模型从聊天机器人到自主AI的演变，涵盖推理能力",
-      "llm_evidence": "综述大语言模型从聊天机器人到自主AI的演变，涵盖推理能力",
-      "canonical_evidence": "综述大语言模型从聊天机器人到自主AI的演变，涵盖推理能力",
-      "llm_tldr_en": "This paper conceptualizes the shift from chatbots to digital colleagues, highlighting reasoning, action, memory, and self-improvement in LLMs.",
-      "llm_tldr_cn": "大语言模型正从对话生成器向集成式AI系统转变。本文提出从Chatbot到Digital Colleague的范式转换，梳理了认知核心（包括推理计算、思维链、反思、过程监督和强化学习）以及工具增强任务执行两条发展线。为理解LLM推理能力的演进提供系统视角。",
-      "llm_tldr": "大语言模型正从对话生成器向集成式AI系统转变。本文提出从Chatbot到Digital Colleague的范式转换，梳理了认知核心（包括推理计算、思维链、反思、过程监督和强化学习）以及工具增强任务执行两条发展线。为理解LLM推理能力的演进提供系统视角。",
+      "llm_evidence_en": "Same as v3, combines metacognitive and natural evolution for heuristic design using LLMs",
+      "llm_evidence_cn": "同v3，结合元认知和自然进化利用LLM进行启发式设计",
+      "llm_evidence": "同v3，结合元认知和自然进化利用LLM进行启发式设计",
+      "canonical_evidence": "同v3，结合元认知和自然进化利用LLM进行启发式设计",
+      "llm_tldr_en": "Same content as v3: MeEvo merges metacognitive reflection with natural evolution for LLM-based heuristic design, improving search efficiency and solution quality.",
+      "llm_tldr_cn": "同v3：自然进化丢弃推理痕迹，元认知进化缺乏种群重组合。MeEvo将两者结合，利用LLM反思改进启发式，并通过交叉变异探索，在复杂问题上提升效率和稳定性，方法可启发LLM推理自我改进。",
+      "llm_tldr": "同v3：自然进化丢弃推理痕迹，元认知进化缺乏种群重组合。MeEvo将两者结合，利用LLM反思改进启发式，并通过交叉变异探索，在复杂问题上提升效率和稳定性，方法可启发LLM推理自我改进。",
       "llm_tags": [
-        "query:llm-papers"
+        "query:llm-papers:composite"
       ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "large language model",
-      "matched_requirement_id": "req-1",
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
       "selection_source": "fresh_fetch",
       "quick_tier": "6"
     },
     {
-      "id": "2606.16111v1",
+      "id": "2606.15080v1",
       "source": "arxiv",
-      "title": "Towards Pareto-Optimal Tool-Integrated Agents with Pareto Ranking Policy Optimization",
-      "abstract": "Recent advances in tool-integrated language agents have significantly improved their ability to solve complex reasoning tasks. However, existing alignment methods predominantly focus on maximizing task accuracy, while overlooking auxiliary objectives such as tool-use efficiency, which are essential for practical deployment. To address this gap, we introduce ParetoPO, a two-stage multi-objective optimization framework for aligning tool-using large language models (LLMs) under competing objectives. In the first stage, ParetoPO leverages hypervolume-guided dynamic scalarization to adapt reward weights based on global Pareto frontier progress. In the second stage, it replaces scalarized learning signals with Pareto-ranking-based advantage computation, promoting nondominated trajectories through dominance-aware credit assignment. This design enables fine-grained, action-level optimization across multiple conflicting objectives. Experimental results on mathematic reasoning and multi-hop QA tasks show that ParetoPO consistently discovers policies with superior accuracy-efficiency trade-offs compared to static and heuristic baselines.",
+      "title": "AdaMame: A Training Recipe for Adaptive Multilingual Reasoning",
+      "abstract": "While Large Reasoning Models (LRMs) show strong performance in English, they often fail to reason in the language of the query, a phenomenon known as language collapse. Existing RL-based fixes typically add a binary language fidelity reward to the accuracy objective, yet still incur trade-off in accuracy, mid-trace code-switching, and excessive token usage. In this work, we propose AdaMame, a two-stage training recipe for multilingual mathematical reasoning that addresses these limitations by adaptively aligning the reasoning language to the query language without compromising accuracy. The first SFT stage fine-tunes on naturally occurring reasoning traces across five languages to establish multilingual reasoning capability. In the subsequent RL stage, we introduce AdaMame-GRPO, an adaptation of Group Relative Policy Optimization (GRPO) in which a query-conditioned alignment factor grows progressively during training, guiding the model to first explore diverse reasoning languages before exploiting reasoning in the query language. Evaluated across two benchmarks, two LRMs, and 12 languages, AdaMame-GRPO achieves Pareto-optimal performance across reasoning accuracy, language fidelity, and token efficiency over all baselines, with the strongest gains on out-of-domain, lower-resource languages.",
       "authors": [
-        "Junyi Li",
-        "Xiaowei Qian",
-        "Yingyi Zhang",
-        "Wenlin Zhang",
-        "Guojing Li",
-        "Sheng Zhang",
-        "Xiao Han",
-        "Yichao Wang",
-        "Xiangyu Zhao"
+        "Dayeon Ki",
+        "Kevin Duh",
+        "Marine Carpuat"
       ],
       "primary_category": "cs.CL",
       "categories": [
-        "cs.CL"
+        "cs.CL",
+        "cs.AI"
       ],
-      "published": "2026-06-15T01:58:07+00:00",
-      "link": "https://arxiv.org/pdf/2606.16111v1",
+      "published": "2026-06-13T03:22:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.15080v1",
       "tags": [
+        "keyword:llm-papers",
         "query:llm-papers"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "multi-objective optimization for tool-integrated LLM agents reasoning",
-      "llm_evidence_cn": "面向工具集成LLM代理的多目标优化以提升推理",
-      "llm_evidence": "面向工具集成LLM代理的多目标优化以提升推理",
-      "canonical_evidence": "面向工具集成LLM代理的多目标优化以提升推理",
-      "llm_tldr_en": "Proposes ParetoPO, a multi-objective optimization framework for aligning tool-using LLMs, improving both reasoning accuracy and tool-use efficiency.",
-      "llm_tldr_cn": "本文提出ParetoPO，一个两阶段多目标优化框架，用于对齐使用工具的LLM代理。第一阶段通过超体积引导动态标量化适应奖励权重，第二阶段用Pareto排序优势替换标量信号。在推理任务上同时提高了准确性和工具使用效率。",
-      "llm_tldr": "本文提出ParetoPO，一个两阶段多目标优化框架，用于对齐使用工具的LLM代理。第一阶段通过超体积引导动态标量化适应奖励权重，第二阶段用Pareto排序优势替换标量信号。在推理任务上同时提高了准确性和工具使用效率。",
+      "llm_evidence_en": "two-stage training recipe improves multilingual LLM reasoning",
+      "llm_evidence_cn": "两阶段训练配方改进多语言LLM推理",
+      "llm_evidence": "两阶段训练配方改进多语言LLM推理",
+      "canonical_evidence": "两阶段训练配方改进多语言LLM推理",
+      "llm_tldr_en": "AdaMame proposes a two-stage SFT+RL recipe to align reasoning language with query language without accuracy loss, improving multilingual reasoning.",
+      "llm_tldr_cn": "大推理模型在非英语查询中常出现语言崩溃。AdaMame通过两阶段训练：SFT阶段微调多语言推理轨迹，RL阶段引入语言保真度奖励，自适应对齐推理语言与查询语言。实验表明该方法在保持准确率的同时减少了语言切换和令牌浪费。",
+      "llm_tldr": "大推理模型在非英语查询中常出现语言崩溃。AdaMame通过两阶段训练：SFT阶段微调多语言推理轨迹，RL阶段引入语言保真度奖励，自适应对齐推理语言与查询语言。实验表明该方法在保持准确率的同时减少了语言切换和令牌浪费。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -959,13 +676,13 @@
         "query:llm-papers"
       ],
       "llm_score": 7.0,
-      "llm_evidence_en": "self-enhanced fine-tuning integrating reasoning and generalization in Text-to-SQL",
-      "llm_evidence_cn": "自增强微调结合推理与泛化改进Text-to-SQL",
-      "llm_evidence": "自增强微调结合推理与泛化改进Text-to-SQL",
-      "canonical_evidence": "自增强微调结合推理与泛化改进Text-to-SQL",
-      "llm_tldr_en": "CoTE-SQL enhances LLM-based Text-to-SQL with self-distilled reasoning traces, structured CoT prompting, and error-aware revision, balancing reasoning and generalization.",
-      "llm_tldr_cn": "基于LLM的Text-to-SQL任务中，现有方法难以兼顾强推理能力和泛化性。CoTE-SQL提出三个创新：自增强推理痕迹（无人工标注）、结构化链式思维提示和基于执行反馈的纠错。在多个数据集上，该方法显著提升了SQL生成准确率和跨领域泛化能力。该工作为LLM在结构化查询任务中的推理增强提供了有效方案。",
-      "llm_tldr": "基于LLM的Text-to-SQL任务中，现有方法难以兼顾强推理能力和泛化性。CoTE-SQL提出三个创新：自增强推理痕迹（无人工标注）、结构化链式思维提示和基于执行反馈的纠错。在多个数据集上，该方法显著提升了SQL生成准确率和跨领域泛化能力。该工作为LLM在结构化查询任务中的推理增强提供了有效方案。",
+      "llm_evidence_en": "Improves LLM reasoning for text-to-SQL via self-enhanced fine-tuning and chain-of-thought",
+      "llm_evidence_cn": "通过自增强微调和思维链改进LLM在文本到SQL任务中的推理",
+      "llm_evidence": "通过自增强微调和思维链改进LLM在文本到SQL任务中的推理",
+      "canonical_evidence": "通过自增强微调和思维链改进LLM在文本到SQL任务中的推理",
+      "llm_tldr_en": "CoTE-SQL enhances LLM-based text-to-SQL with self-enhanced reasoning traces, structured CoT prompting, and error-aware revision, improving both reasoning and generalization.",
+      "llm_tldr_cn": "文本到SQL转换需要强推理和泛化能力。本文提出CoTE-SQL，通过自增强蒸馏推理轨迹、结构化思维链提示和基于执行反馈的错误修正，提升了LLM在复杂查询上的推理准确率和跨数据库泛化能力。实验表明，该方法在多个基准上达到先进水平，验证了自我改进和结构化推理的有效性。",
+      "llm_tldr": "文本到SQL转换需要强推理和泛化能力。本文提出CoTE-SQL，通过自增强蒸馏推理轨迹、结构化思维链提示和基于执行反馈的错误修正，提升了LLM在复杂查询上的推理准确率和跨数据库泛化能力。实验表明，该方法在多个基准上达到先进水平，验证了自我改进和结构化推理的有效性。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -976,42 +693,161 @@
       "quick_tier": "7"
     },
     {
-      "id": "2606.18075v1",
+      "id": "2606.14202v3",
       "source": "arxiv",
-      "title": "A Unified Framework for Context-Aware and Relation-Aware Graph Retrieval-Augmented Generation",
-      "abstract": "Retrieval-Augmented Generation (RAG) has emerged as a paradigm for enhancing large language models (LLMs) with external knowledge, yet existing graph-based methods face a fundamental limitation: entity-centric and chunk-centric approaches operate on representations anchored to original text without true knowledge fusion. While entity-centric methods connect logically related content and chunk-centric methods preserve context, both retrieve information separately through similarity search, missing emergent understanding from their synthesis. In this paper, we propose HyGRAG, a hierarchical graph RAG framework that transcends source documents by addressing three core challenges: constructing summaries that genuinely integrate contextual and relational information, leveraging these synthesized representations to access emergent knowledge during retrieval, and efficiently updating hierarchical structures for dynamic corpora. Specifically, we design hierarchical index structures over hybrid graphs with both chunk and entity nodes, then iteratively cluster them and generate LLM-based summaries. Then, we design context and relation-aware retrieval that searches across all abstraction levels while expanding through community membership. Moreover, we enable dynamic knowledge update through attachment-based algorithms with only local re-summarization. Experimental results show that HyGRAG improves the average accuracy of multi-hop reasoning tasks by 9.7%, while maintaining reasonable efficiency.",
+      "title": "MeEvo: Metacognitive Evolution Combined with Natural Evolution for Automatic Heuristic Design",
+      "abstract": "Large Language Models (LLMs) have advanced Automatic Heuristic Design (AHD) by enabling heuristic generation through reasoning and code synthesis. Existing LLM-based AHD architectures mainly follow two paradigms: Natural Evolution, which uses crossover and mutation to explore heuristic programs, and Metacognitive Evolution, which refines reasoning through reflection. However, Natural Evolution discards reasoning traces, weakening knowledge inheritance and exploitation, while Metacognitive Evolution lacks population-level recombination, limiting exploration and increasing the risk of premature convergence. These limitations reduce search efficiency, stability, and solution quality on complex problems. To address this gap, we propose MeEvo, a dual-layer AHD framework that cyclically couples Natural Evolution and Metacognitive Evolution. Natural Evolution explores heuristic code while recording reasoning traces, fitness values, and errors into a shared history; Metacognitive Evolution then reflects on this history to generate improved heuristics that re-enter the parent pool for the next cycle. This design enables population-driven exploration and reflection-driven refinement to reinforce each other. Experiments on five optimization problems with two LLM backbones show that MeEvo achieves stronger and more stable performance than existing LLM-based AHD architectures, especially on complex constrained tasks.",
       "authors": [
-        "Haoyang Zhong",
-        "Yifei Sun",
-        "Antong Zhang",
-        "Chunping Wang",
-        "Lei Chen",
-        "Yang Yang"
+        "Zishang Qiu",
+        "Xinan Chen",
+        "Rong Qu",
+        "Ruibin Bai"
       ],
-      "primary_category": "cs.AI",
+      "primary_category": "cs.NE",
       "categories": [
+        "cs.NE",
         "cs.AI"
       ],
-      "published": "2026-06-16T15:44:10+00:00",
-      "link": "https://arxiv.org/pdf/2606.18075v1",
+      "published": "2026-06-12T07:36:38+00:00",
+      "link": "https://arxiv.org/pdf/2606.14202v3",
       "tags": [
         "keyword:llm-papers",
         "query:llm-papers"
       ],
       "llm_score": 6.0,
-      "llm_evidence_en": "graph RAG framework enhancing LLMs with external knowledge",
-      "llm_evidence_cn": "图检索增强生成框架增强LLM外知识",
-      "llm_evidence": "图检索增强生成框架增强LLM外知识",
-      "canonical_evidence": "图检索增强生成框架增强LLM外知识",
-      "llm_tldr_en": "Proposes HyGRAG, a hierarchical graph RAG framework that integrates summaries and relations to improve LLM knowledge fusion.",
-      "llm_tldr_cn": "本文提出HyGRAG，一种分层图检索增强生成框架，通过构建真正融合上下文的摘要和跨文档关系，克服了现有实体中心和分块中心方法的局限。在问答任务中，HyGRAG优于传统RAG方法。",
-      "llm_tldr": "本文提出HyGRAG，一种分层图检索增强生成框架，通过构建真正融合上下文的摘要和跨文档关系，克服了现有实体中心和分块中心方法的局限。在问答任务中，HyGRAG优于传统RAG方法。",
+      "llm_evidence_en": "Uses LLM reasoning and evolution for heuristic design, transferable to LLM reasoning improvement",
+      "llm_evidence_cn": "利用LLM推理和进化进行启发式设计，可迁移至LLM推理改进",
+      "llm_evidence": "利用LLM推理和进化进行启发式设计，可迁移至LLM推理改进",
+      "canonical_evidence": "利用LLM推理和进化进行启发式设计，可迁移至LLM推理改进",
+      "llm_tldr_en": "MeEvo combines metacognitive evolution (reflection) and natural evolution (crossover) for automatic heuristic design using LLMs, addressing limitations of both paradigms and improving search efficiency.",
+      "llm_tldr_cn": "自动启发式设计中，自然进化丢弃推理痕迹，元认知进化缺乏种群重组合。本文提出MeEvo，将两者结合：利用LLM进行反思推理来改进启发式，同时通过交叉变异探索解空间。实验表明该方法在多个复杂问题上提升了搜索效率和稳定性。其方法可启发LLM推理的自我改进机制。",
+      "llm_tldr": "自动启发式设计中，自然进化丢弃推理痕迹，元认知进化缺乏种群重组合。本文提出MeEvo，将两者结合：利用LLM进行反思推理来改进启发式，同时通过交叉变异探索解空间。实验表明该方法在多个复杂问题上提升了搜索效率和稳定性。其方法可启发LLM推理的自我改进机制。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.16783v1",
+      "source": "arxiv",
+      "title": "Gen-VCoT: Generative Visual Chain-of-Thought Reasoning via Diffusion-Based RGB Intermediate Representations",
+      "abstract": "Multimodal large language models (MLLMs) excel at visual reasoning but rely on text-based chain-of-thought (CoT), lacking interpretable visual intermediates. Existing methods use opaque tokens or external tools, missing key properties. We propose Gen-VCoT, a framework using expert vision models to generate RGB images as reasoning intermediates. It has three stages: visual grounding (SAM segmentation), geometric reasoning (Marigold depth maps), and semantic reasoning (Qwen2-VL integration). An adaptive router selects reasoning depth. Evaluations show Gen-VCoT improves spatial (25% better) and depth (50% better) questions, but may hurt simple factual queries. Text CoT outperforms visual intermediates on CLEVR (91.2% vs 62.5%), showing task-dependent optimal representations. Gen-VCoT establishes a new paradigm for interpretable multimodal reasoning.",
+      "authors": [
+        "Zhiqiang Zhou",
+        "Junliang Dai",
+        "Xu ling"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI",
+        "cs.LG"
+      ],
+      "published": "2026-06-15T14:27:57+00:00",
+      "link": "https://arxiv.org/pdf/2606.16783v1",
+      "tags": [
+        "keyword:llm-papers",
+        "query:llm-papers"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "visual chain-of-thought reasoning improves multimodal LLM reasoning",
+      "llm_evidence_cn": "视觉思维链推理改进多模态LLM推理",
+      "llm_evidence": "视觉思维链推理改进多模态LLM推理",
+      "canonical_evidence": "视觉思维链推理改进多模态LLM推理",
+      "llm_tldr_en": "Gen-VCoT generates RGB images as reasoning intermediates using expert vision models, improving spatial and depth reasoning in MLLMs.",
+      "llm_tldr_cn": "多模态大语言模型缺乏可解释的视觉中间表示。Gen-VCoT通过SAM分割和深度估计等视觉模型生成RGB图像作为推理中间步骤，并通过自适应路由器选择推理深度。评估显示空间和深度问题准确率分别提升25%和50%，但简单事实查询可能受损。",
+      "llm_tldr": "多模态大语言模型缺乏可解释的视觉中间表示。Gen-VCoT通过SAM分割和深度估计等视觉模型生成RGB图像作为推理中间步骤，并通过自适应路由器选择推理深度。评估显示空间和深度问题准确率分别提升25%和50%，但简单事实查询可能受损。",
       "llm_tags": [
         "query:llm-papers"
       ],
       "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "large language model",
-      "matched_requirement_id": "req-1",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.16118v1",
+      "source": "arxiv",
+      "title": "Know Your Limits : On the Faithfulness of LLMs as Solvers and Autoformalizers in Legal Reasoning",
+      "abstract": "Large Language Models (LLMs) achieve strong performance on reasoning tasks, but whether this reflects faithful logical inference or heuristic approximation remains unclear. We study this question in legal entailment by comparing three paradigms, including pure LLM classification, LLM-based Formal Reasoning, and solver-based Formal Reasoning using the Z3 SMT solver, on a re-annotated subset of ContractNLI across five LLMs. Our re-annotation reveals a systematic and measurable gap between pragmatic legal interpretation and strict formal entailment, where a substantial proportion of legally sound inferences are not formally grounded without additional unstated assumptions. While introducing formal structure improves accuracy, with LLM-based Formal Reasoning achieving the highest benchmark performance, we show that this gain does not imply faithful reasoning. We identify three recurring failure modes: scope laundering, where LLMs report solver-inconsistent classifications without executing the underlying formal reasoning, producing conclusions that appear logically grounded but are not; implicit constraint blindness, where LLMs overlook logical constraints present in formal representations; and program synthesis failures, where LLMs generate incorrect Z3 code despite structured prompting. Critically, scope laundering persists across all models, raising serious concerns about the faithfulness of LLM-based formal reasoning as a proxy for symbolic execution. These results reveal a fundamental gap between benchmark accuracy and logical faithfulness.",
+      "authors": [
+        "Olivia Peiyu Wang",
+        "Sanna Wong-Toropainen",
+        "Daneshvar Amrollahi",
+        "Ryan Bai",
+        "Tashvi Bansal",
+        "Arush Garg",
+        "Leilani H. Gilpin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.LO"
+      ],
+      "published": "2026-06-15T02:14:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.16118v1",
+      "tags": [
+        "query:llm-papers"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "analyzing faithfulness of LLM reasoning in legal entailment",
+      "llm_evidence_cn": "分析LLM在法律推理中的忠实性",
+      "llm_evidence": "分析LLM在法律推理中的忠实性",
+      "canonical_evidence": "分析LLM在法律推理中的忠实性",
+      "llm_tldr_en": "This paper evaluates LLM reasoning faithfulness in legal entailment, revealing a gap between pragmatic and formal reasoning.",
+      "llm_tldr_cn": "本文研究大型语言模型在法律推理中的忠实性，通过对比纯LLM分类、LLM形式推理和求解器形式推理三种范式，发现法律解释中的实用推理与严格形式推理之间存在系统性差距。即使引入形式结构，LLM仍可能依赖启发式近似而非忠实逻辑推理。这项工作为理解LLM推理的可靠性提供了重要视角。",
+      "llm_tldr": "本文研究大型语言模型在法律推理中的忠实性，通过对比纯LLM分类、LLM形式推理和求解器形式推理三种范式，发现法律解释中的实用推理与严格形式推理之间存在系统性差距。即使引入形式结构，LLM仍可能依赖启发式近似而非忠实逻辑推理。这项工作为理解LLM推理的可靠性提供了重要视角。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.15633v1",
+      "source": "arxiv",
+      "title": "Formalizing and Mitigating Structural Distortion in LLM Attention for Zero-Shot Graph Reasoning",
+      "abstract": "Large Language Models (LLMs) have shown promise for reasoning over Text-Attributed Graphs (TAGs). However, applying LLMs to graphs requires linearizing their structure into sequences, introducing distortion rooted in the graph bandwidth problem. While this distortion has been shown to degrade performance, it is often attributed to prompt design or model scale, leaving the underlying mechanism unclear. In this work, we show \\textit{how} rotary positional embeddings turn graph linearization into bandwidth-dependent attention decay, suppressing attention between graph-adjacent nodes that are forced far apart in the serialized sequence. This shifts the focus of LLM-based graph reasoning from prompt engineering and scaling toward correcting attention misalignment. Motivated by this analysis, we propose \\textbf{G}raph-\\textbf{a}ligned \\textbf{L}anguage \\textbf{A}ttention (\\textbf{GaLA}), a lightweight, inference-time modification for LLMs. GaLA biases attention toward graph-adjacent nodes while preserving the LLM's sequential inductive biases. Across TAG benchmarks, GaLA improves performance with negligible overhead, demonstrating that distortion is a correctable bottleneck in LLM-based graph reasoning.",
+      "authors": [
+        "Donald Loveland",
+        "Puja Trivedi",
+        "Ari Weinstein",
+        "Edward W Huang",
+        "Danai Koutra"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-14T06:50:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.15633v1",
+      "tags": [
+        "keyword:llm-papers",
+        "query:llm-papers"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "analyzes structural distortion in LLM attention for graph reasoning",
+      "llm_evidence_cn": "分析LLM在图推理中的注意力结构失真",
+      "llm_evidence": "分析LLM在图推理中的注意力结构失真",
+      "canonical_evidence": "分析LLM在图推理中的注意力结构失真",
+      "llm_tldr_en": "Shows that rotary positional embeddings cause bandwidth-dependent attention decay in graph linearization, suppressing attention between adjacent nodes, degrading graph reasoning.",
+      "llm_tldr_cn": "LLM在图推理中将图线性化导致结构失真。本文揭示旋转位置嵌入造成带宽依赖的注意力衰减，抑制邻接节点间的注意力。实验表明这种机制是性能下降的根本原因，需从注意力层面修正。",
+      "llm_tldr": "LLM在图推理中将图线性化导致结构失真。本文揭示旋转位置嵌入造成带宽依赖的注意力衰减，抑制邻接节点间的注意力。实验表明这种机制是性能下降的根本原因，需从注意力层面修正。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
       "selection_source": "fresh_fetch",
       "quick_tier": "6"
     },
@@ -1045,13 +881,13 @@
         "query:llm-papers"
       ],
       "llm_score": 8.0,
-      "llm_evidence_en": "exploring extrinsic and intrinsic properties for effective reasoning with code interpreter",
-      "llm_evidence_cn": "探索代码解释器推理的外在和内在特性",
-      "llm_evidence": "探索代码解释器推理的外在和内在特性",
-      "canonical_evidence": "探索代码解释器推理的外在和内在特性",
-      "llm_tldr_en": "Investigates code reasoning by analyzing crucial tokens (extrinsic) and cognitive behaviors (intrinsic) across LLMs, finding that stronger models exhibit higher prevalence of these properties.",
-      "llm_tldr_cn": "代码解释器能增强LLM推理，但其有效性的行为属性尚不明确。本文从两个角度分析：外在属性（关键token）和内在属性（代码认知行为）。发现更强的推理模型在两者上均有更高出现率，并据此提出改进策略。该工作为理解并优化代码解释器推理提供了行为洞察。",
-      "llm_tldr": "代码解释器能增强LLM推理，但其有效性的行为属性尚不明确。本文从两个角度分析：外在属性（关键token）和内在属性（代码认知行为）。发现更强的推理模型在两者上均有更高出现率，并据此提出改进策略。该工作为理解并优化代码解释器推理提供了行为洞察。",
+      "llm_evidence_en": "Investigates behavioral properties for effective code reasoning in LLMs, directly enhances reasoning",
+      "llm_evidence_cn": "研究代码推理的行为特性，直接增强LLM推理能力",
+      "llm_evidence": "研究代码推理的行为特性，直接增强LLM推理能力",
+      "canonical_evidence": "研究代码推理的行为特性，直接增强LLM推理能力",
+      "llm_tldr_en": "This work explores extrinsic (crucial tokens) and intrinsic (code-specific cognitive behaviors) properties underlying effective code interpreter reasoning in LLMs, finding consistent correlates with stronger models.",
+      "llm_tldr_cn": "代码解释器推理能有效提升LLM推理能力，但其行为特性尚不明确。本文从外在和内在两个角度分析：外在关键token和内在认知行为。跨多个LLM的实验表明，更强模型在这些特性上表现更突出。该发现为设计和训练更有效的代码推理模型提供了指导。",
+      "llm_tldr": "代码解释器推理能有效提升LLM推理能力，但其行为特性尚不明确。本文从外在和内在两个角度分析：外在关键token和内在认知行为。跨多个LLM的实验表明，更强模型在这些特性上表现更突出。该发现为设计和训练更有效的代码推理模型提供了指导。",
       "llm_tags": [
         "query:llm-papers"
       ],
@@ -1060,45 +896,6 @@
       "matched_requirement_id": "req-2",
       "selection_source": "fresh_fetch",
       "quick_tier": "8plus"
-    },
-    {
-      "id": "2606.15633v1",
-      "source": "arxiv",
-      "title": "Formalizing and Mitigating Structural Distortion in LLM Attention for Zero-Shot Graph Reasoning",
-      "abstract": "Large Language Models (LLMs) have shown promise for reasoning over Text-Attributed Graphs (TAGs). However, applying LLMs to graphs requires linearizing their structure into sequences, introducing distortion rooted in the graph bandwidth problem. While this distortion has been shown to degrade performance, it is often attributed to prompt design or model scale, leaving the underlying mechanism unclear. In this work, we show \\textit{how} rotary positional embeddings turn graph linearization into bandwidth-dependent attention decay, suppressing attention between graph-adjacent nodes that are forced far apart in the serialized sequence. This shifts the focus of LLM-based graph reasoning from prompt engineering and scaling toward correcting attention misalignment. Motivated by this analysis, we propose \\textbf{G}raph-\\textbf{a}ligned \\textbf{L}anguage \\textbf{A}ttention (\\textbf{GaLA}), a lightweight, inference-time modification for LLMs. GaLA biases attention toward graph-adjacent nodes while preserving the LLM's sequential inductive biases. Across TAG benchmarks, GaLA improves performance with negligible overhead, demonstrating that distortion is a correctable bottleneck in LLM-based graph reasoning.",
-      "authors": [
-        "Donald Loveland",
-        "Puja Trivedi",
-        "Ari Weinstein",
-        "Edward W Huang",
-        "Danai Koutra"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG"
-      ],
-      "published": "2026-06-14T06:50:28+00:00",
-      "link": "https://arxiv.org/pdf/2606.15633v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 7.0,
-      "llm_evidence_en": "mitigating structural distortion in LLM attention for graph reasoning",
-      "llm_evidence_cn": "缓解LLM在图推理中的注意力结构失真",
-      "llm_evidence": "缓解LLM在图推理中的注意力结构失真",
-      "canonical_evidence": "缓解LLM在图推理中的注意力结构失真",
-      "llm_tldr_en": "Reveals that rotary positional embeddings cause bandwidth-dependent attention decay in graph reasoning, shifting focus from prompt engineering to model co-design.",
-      "llm_tldr_cn": "本文揭示了旋转位置嵌入将图线性化转化为带宽依赖的注意力衰减，抑制了序列中距离远的相邻节点间的注意力。将图推理的关注点从提示工程和缩放转向模型与数据的协同设计。",
-      "llm_tldr": "本文揭示了旋转位置嵌入将图线性化转化为带宽依赖的注意力衰减，抑制了序列中距离远的相邻节点间的注意力。将图推理的关注点从提示工程和缩放转向模型与数据的协同设计。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "7"
     },
     {
       "id": "2606.18502v1",
@@ -1125,100 +922,20 @@
         "keyword:llm-papers",
         "query:llm-papers"
       ],
-      "llm_score": 6.0,
-      "llm_evidence_en": "LLM-based multi-agent systems for enterprises",
-      "llm_evidence_cn": "基于LLM的多智能体系统在企业中的应用",
-      "llm_evidence": "基于LLM的多智能体系统在企业中的应用",
-      "canonical_evidence": "基于LLM的多智能体系统在企业中的应用",
-      "llm_tldr_en": "A unified framework for customizing and deploying LLM-based multi-agent systems in enterprise settings, combining continual pretraining, fine-tuning, and inference optimization.",
-      "llm_tldr_cn": "大规模语言模型多智能体系统在企业部署面临定制化困难和成本高的问题。本文提出统一框架，包括智能体模型定制（持续预训练、微调、偏好优化）和推理优化（推测解码等）。实验证明该方法可在保持智能体能力的同时降低延迟和成本。该工作为LLM企业级应用提供了实用方案。",
-      "llm_tldr": "大规模语言模型多智能体系统在企业部署面临定制化困难和成本高的问题。本文提出统一框架，包括智能体模型定制（持续预训练、微调、偏好优化）和推理优化（推测解码等）。实验证明该方法可在保持智能体能力的同时降低延迟和成本。该工作为LLM企业级应用提供了实用方案。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "large language model",
-      "matched_requirement_id": "req-1",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "6"
-    },
-    {
-      "id": "2606.17821v1",
-      "source": "arxiv",
-      "title": "DecoSearch: Complexity-Aware Routing and Plan-Level Repair for Text-to-SQL",
-      "abstract": "Large Language Models (LLMs) have demonstrated remarkable capabilities in translating natural language to SQL, yet existing methods still falter on complex queries requiring multi-step, data-aware reasoning. We introduce DecoSearch, a training-free framework that addresses this by routing each query to the appropriate level of reasoning effort. A lightweight Schema Selector first prunes the full database schema to the relevant tables and columns. An LLM Judger then decides whether the question requires decomposition: straightforward questions follow a direct generation path and complex ones are escalated to a Directed Acyclic Graph (DAG) of atomic sub-questions, each solved by a targeted SQL generation step. A RAG component grounds the decomposer with semantically similar training examples, and a Topology Refiner restructures the reasoning plan when execution failures signal a flawed decomposition rather than a fixable SQL error. DecoSearch achieves 70.53% execution accuracy on BIRD and 88.31% on Spider with a DeepSeek backbone, surpassing all training-free baselines while consuming an order of magnitude fewer tokens than competing methods. It also functions as a model-agnostic wrapper, consistently improving fine-tuned SQL generation backbones without any modification to the pipeline.",
-      "authors": [
-        "Esteban Schafir",
-        "Xu Zheng",
-        "Hojat Allah Salehi",
-        "Zhuomin Chen",
-        "Mo Sha",
-        "Wei Cheng",
-        "Dongsheng Luo"
-      ],
-      "primary_category": "cs.AI",
-      "categories": [
-        "cs.AI"
-      ],
-      "published": "2026-06-16T11:48:50+00:00",
-      "link": "https://arxiv.org/pdf/2606.17821v1",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
-      "llm_score": 8.0,
-      "llm_evidence_en": "Improves LLM multi-step reasoning for Text-to-SQL via complexity-aware routing",
-      "llm_evidence_cn": "通过复杂度感知路由提升大语言模型在Text-to-SQL中的多步推理",
-      "llm_evidence": "通过复杂度感知路由提升大语言模型在Text-to-SQL中的多步推理",
-      "canonical_evidence": "通过复杂度感知路由提升大语言模型在Text-to-SQL中的多步推理",
-      "llm_tldr_en": "DecoSearch uses a training-free framework with complexity-aware routing and plan-level repair to improve LLM reasoning in complex Text-to-SQL.",
-      "llm_tldr_cn": "现有Text-to-SQL方法在复杂查询上仍易出错，需要多步数据感知推理。本文提出DecoSearch，一个无训练框架，先精简模式，再由LLM裁判判断问题复杂度：简单问题直接生成，复杂问题分解为原子子问题的有向无环图并逐步求解。采用检索增强生成和计划级修复保证了推理可靠性。",
-      "llm_tldr": "现有Text-to-SQL方法在复杂查询上仍易出错，需要多步数据感知推理。本文提出DecoSearch，一个无训练框架，先精简模式，再由LLM裁判判断问题复杂度：简单问题直接生成，复杂问题分解为原子子问题的有向无环图并逐步求解。采用检索增强生成和计划级修复保证了推理可靠性。",
-      "llm_tags": [
-        "query:llm-papers"
-      ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
-      "selection_source": "fresh_fetch",
-      "quick_tier": "8plus"
-    },
-    {
-      "id": "2606.15633v2",
-      "source": "arxiv",
-      "title": "Formalizing and Mitigating Structural Distortion in LLM Attention for Graph Reasoning",
-      "abstract": "Large Language Models (LLMs) have shown promise for reasoning over Text-Attributed Graphs (TAGs). However, applying LLMs to graphs requires linearizing their structure into sequences, introducing distortion rooted in the graph bandwidth problem. While this distortion has been shown to degrade performance, it is often attributed to prompt design or model scale, leaving the underlying mechanism unclear. In this work, we show \\textit{how} rotary positional embeddings turn graph linearization into bandwidth-dependent attention decay, suppressing attention between graph-adjacent nodes that are forced far apart in the serialized sequence. This shifts the focus of LLM-based graph reasoning from prompt engineering and scaling toward correcting attention misalignment. Motivated by this analysis, we propose \\textbf{G}raph-\\textbf{a}ligned \\textbf{L}anguage \\textbf{A}ttention (\\textbf{GaLA}), a lightweight, inference-time modification for LLMs. GaLA biases attention toward graph-adjacent nodes while preserving the LLM's sequential inductive biases. Across TAG benchmarks, GaLA improves performance with negligible overhead, demonstrating that distortion is a correctable bottleneck in LLM-based graph reasoning.",
-      "authors": [
-        "Donald Loveland",
-        "Puja Trivedi",
-        "Ari Weinstein",
-        "Edward W Huang",
-        "Danai Koutra"
-      ],
-      "primary_category": "cs.LG",
-      "categories": [
-        "cs.LG"
-      ],
-      "published": "2026-06-14T06:50:28+00:00",
-      "link": "https://arxiv.org/pdf/2606.15633v2",
-      "tags": [
-        "keyword:llm-papers",
-        "query:llm-papers"
-      ],
       "llm_score": 7.0,
-      "llm_evidence_en": "formalizing and mitigating structural distortion in LLM attention for graph reasoning",
-      "llm_evidence_cn": "形式化并缓解图推理中LLM注意力的结构失真",
-      "llm_evidence": "形式化并缓解图推理中LLM注意力的结构失真",
-      "canonical_evidence": "形式化并缓解图推理中LLM注意力的结构失真",
-      "llm_tldr_en": "Shows that rotary positional embeddings cause bandwidth-dependent attention decay in graph reasoning, shifting focus from prompt engineering to correcting structural distortion.",
-      "llm_tldr_cn": "将图线性化输入LLM会引入结构失真，但此前归因于提示设计。本文揭示旋转位置嵌入会导致与带宽相关的注意力衰减，抑制图相邻节点间的注意力。通过分析提出缓解策略，显著提升图推理性能。该工作为LLM在图上的推理机制提供了深入理解。",
-      "llm_tldr": "将图线性化输入LLM会引入结构失真，但此前归因于提示设计。本文揭示旋转位置嵌入会导致与带宽相关的注意力衰减，抑制图相邻节点间的注意力。通过分析提出缓解策略，显著提升图推理性能。该工作为LLM在图上的推理机制提供了深入理解。",
+      "llm_evidence_en": "framework for customizing and deploying LLM-based multi-agent systems",
+      "llm_evidence_cn": "基于LLM的多智能体系统定制与部署框架",
+      "llm_evidence": "基于LLM的多智能体系统定制与部署框架",
+      "canonical_evidence": "基于LLM的多智能体系统定制与部署框架",
+      "llm_tldr_en": "Proposes a unified framework for customization and efficient deployment of LLM-based multi-agent systems, combining continual pretraining, fine-tuning, and inference optimization.",
+      "llm_tldr_cn": "LLM多智能体系统在复杂推理任务上表现优异，但面临领域定制和高延迟问题。本文提出统一框架，通过持续预训练、监督微调和偏好优化进行模型定制，并集成推测解码等推理优化技术。实验表明框架在保持推理能力的同时降低了部署成本。",
+      "llm_tldr": "LLM多智能体系统在复杂推理任务上表现优异，但面临领域定制和高延迟问题。本文提出统一框架，通过持续预训练、监督微调和偏好优化进行模型定制，并集成推测解码等推理优化技术。实验表明框架在保持推理能力的同时降低了部署成本。",
       "llm_tags": [
-        "query:llm-papers"
+        "query:llm-papers:composite"
       ],
-      "matched_query_tag": "query:llm-papers",
-      "matched_query_text": "how to improve large language model reasoning",
-      "matched_requirement_id": "req-2",
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
       "selection_source": "fresh_fetch",
       "quick_tier": "7"
     }
