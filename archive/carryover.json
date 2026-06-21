@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-06-21T16:12:48.606525+00:00",
-  "updated_date": "20260612-20260621",
+  "generated_at": "2026-06-21T20:17:39.814257+00:00",
+  "updated_date": "20260621",
   "carryover_days": 9,
   "tag_states": {
     "llm-papers": {
@@ -253,6 +253,11 @@
           "carry_days": 1
         }
       ]
+    },
+    "on-policy": {
+      "updated_date": "20260621",
+      "carryover_days": 9,
+      "items": []
     }
   }
 }
