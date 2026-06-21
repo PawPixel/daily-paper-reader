@@ -1,6 +1,260 @@
 {
-  "generated_at": "2026-03-06T19:11:18.471356+00:00",
-  "updated_date": "20260306",
+  "generated_at": "2026-06-21T15:29:49.913034+00:00",
+  "updated_date": "20260612-20260621",
   "carryover_days": 9,
-  "items": []
+  "tag_states": {
+    "llm-papers": {
+      "updated_date": "20260612-20260621",
+      "carryover_days": 9,
+      "items": [
+        {
+          "id": "2606.19308v1",
+          "source": "arxiv",
+          "title": "Enhancing Decision-Making with Large Language Models through Multi-Agent Fictitious Play",
+          "abstract": "Large language model (LLM)-based multi-agent systems (MAS) have demonstrated great potential in solving tasks with execution complexity, by distributing subtasks across cooperative agents. However, this divide-and-conquer paradigm falls short on decision-making tasks that are also prevalent in the real world. These tasks require simultaneous reasoning from the stances of all involved stakeholders whose decisions are mutually dependent and thus cannot be solved in isolation. We characterize this challenge as stance entanglement, a form of decision complexity distinct from execution complexity. To address it, we propose Multi-Agent Fictitious Play (MAFP), a novel MAS paradigm that represents stakeholder stances as agents and formulates decision-making as an equilibrium-seeking process. Built on the game-theoretic principle of fictitious play, MAFP iteratively updates each agent's decision by best responding to the empirical mixture of other agents' past decisions. This enables agents to expose and address one another's weaknesses, progressively improving decision quality and robustness. We evaluate MAFP on challenging decision-making tasks that test the capability of deciding strategies for competitive scenarios prior to acting. MAFP outperforms both single-round and multi-round baselines on two complementary metrics, tournament strength and robustness, demonstrating its effectiveness in addressing stance entanglement.",
+          "authors": [
+            "Leyang Shen",
+            "Yang Zhang",
+            "Xiaoyan Zhao",
+            "Chun Kai Ling",
+            "Tat-Seng Chua"
+          ],
+          "primary_category": "cs.CL",
+          "categories": [
+            "cs.CL",
+            "cs.MA"
+          ],
+          "published": "2026-06-17T17:31:06+00:00",
+          "link": "https://arxiv.org/pdf/2606.19308v1",
+          "tags": [
+            "keyword:llm-papers",
+            "query:llm-papers"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "enhances decision-making reasoning via multi-agent fictitious play",
+          "llm_evidence_cn": "通过多智能体虚拟博弈增强决策推理",
+          "llm_evidence": "通过多智能体虚拟博弈增强决策推理",
+          "canonical_evidence": "通过多智能体虚拟博弈增强决策推理",
+          "llm_tldr_en": "Multi-Agent Fictitious Play (MAFP) addresses stance entanglement in decision-making, improving LLM reasoning by simultaneous stakeholder reasoning.",
+          "llm_tldr_cn": "本文提出多智能体虚拟博弈（MAFP），解决决策任务中的立场纠缠问题，通过同时推理所有利益相关方的立场，提升了LLM在复杂决策中的推理能力。实验证明该方法在处理相互依赖的决策时优于传统分治策略。",
+          "llm_tldr": "本文提出多智能体虚拟博弈（MAFP），解决决策任务中的立场纠缠问题，通过同时推理所有利益相关方的立场，提升了LLM在复杂决策中的推理能力。实验证明该方法在处理相互依赖的决策时优于传统分治策略。",
+          "llm_tags": [
+            "query:llm-papers"
+          ],
+          "matched_query_tag": "query:llm-papers",
+          "matched_query_text": "how to improve large language model reasoning",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.19308v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.17945v1",
+          "source": "arxiv",
+          "title": "Small Initialization Matters for Large Language Models",
+          "abstract": "Large language models provide a tractable system for asking how intelligence itself emerges, rather than only how LLMs can be engineered. Although progress is usually attributed to scale, data and architecture, we show that parameter initialization is a gene-like determinant of training and, in particular, of model capacity. Reducing the initialization scale consistently improves pretraining, with the largest gains on reasoning-demanding tasks. We identify two widely used empirical settings that restrain the advantage of small initialization, and show how relaxing them restores favorable scaling. We further uncover a critical initialization that balances the reasoning and training. Mechanistically, small initialization drives a distinct developmental trajectory: parameters first condense into low-complexity structures and later expand into richer representations, giving concrete form to the idea that compression is intelligence. Token-level analyses show that the gains concentrate on non-trivial, context-constrained predictions rather than all tokens uniformly. These results motivate a simple $γ$-initialization rule: expose initialization rage as an explicit knob and use small initialization by default, an almost cost-free intervention that improves pretraining and strengthens reasoning across model scales.",
+          "authors": [
+            "Liangkai Hang",
+            "Junjie Yao",
+            "Zhiyu Li",
+            "Feiyu Xiong",
+            "Hongkang Yang",
+            "Zhi-Qin John Xu"
+          ],
+          "primary_category": "cs.AI",
+          "categories": [
+            "cs.AI"
+          ],
+          "published": "2026-06-16T13:53:48+00:00",
+          "link": "https://arxiv.org/pdf/2606.17945v1",
+          "tags": [
+            "keyword:llm-papers",
+            "query:llm-papers"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "small initialization improves LLM reasoning performance",
+          "llm_evidence_cn": "小初始化改善LLM推理性能",
+          "llm_evidence": "小初始化改善LLM推理性能",
+          "canonical_evidence": "小初始化改善LLM推理性能",
+          "llm_tldr_en": "Shows that reducing initialization scale consistently improves LLM pretraining, with largest gains on reasoning tasks, revealing a critical initialization point.",
+          "llm_tldr_cn": "本文发现缩小参数初始化比例能稳定提升大语言模型的预训练效果，特别是在推理密集型任务上增益最大。识别了两种抑制小初始化优势的常见设置，并揭示了平衡推理与训练的关键初始化值。机制上，小初始化驱动了不同的学习轨迹。",
+          "llm_tldr": "本文发现缩小参数初始化比例能稳定提升大语言模型的预训练效果，特别是在推理密集型任务上增益最大。识别了两种抑制小初始化优势的常见设置，并揭示了平衡推理与训练的关键初始化值。机制上，小初始化驱动了不同的学习轨迹。",
+          "llm_tags": [
+            "query:llm-papers"
+          ],
+          "matched_query_tag": "query:llm-papers",
+          "matched_query_text": "how to improve large language model reasoning",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.17945v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.19750v1",
+          "source": "arxiv",
+          "title": "Manifold Bandits: Bayesian Curriculum Learning over the Latent Geometry of Large Language Models",
+          "abstract": "Reinforcement learning (RL) is a central approach for improving reasoning capabilities in large language models (LLMs), where training efficiency depends critically on how problems are sampled during optimization. Existing adaptive curriculum learning methods typically prioritize prompts of intermediate difficulty, treating problem selection as a standard bandit problem with independent arms and overlooking the structured, heterogeneous nature of the task space. In this work, we frame problem sampling as a manifold-structured bandit problem with endogenous non-stationarity: problems are related through the model's latent representation space, and sampling decisions can steer how learning signals evolve across that space. To operationalize this perspective, we introduce Bayesian Manifold Curriculum (BMC), a structure-aware framework that organizes problems into a hierarchical task tree and applies Bayesian learning to guide sampling. Empirically, we find that different sampling strategies induce non-trivial tradeoffs between productivity (learning signal), diversity (coverage of the task manifold), and utility (evaluation relevance). These results show that prioritizing difficulty alone is insufficient for strong downstream performance, highlighting the importance of incorporating structure and type-awareness into problem sampling.",
+          "authors": [
+            "Darrien McKenzie",
+            "Nicklas Hansen",
+            "Xiaolong Wang"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI",
+            "cs.CL"
+          ],
+          "published": "2026-06-18T03:31:19+00:00",
+          "link": "https://arxiv.org/pdf/2606.19750v1",
+          "tags": [
+            "keyword:llm-papers",
+            "query:llm-papers"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Bayesian curriculum learning over latent geometry to improve LLM reasoning",
+          "llm_evidence_cn": "基于潜在几何的贝叶斯课程学习以改进LLM推理",
+          "llm_evidence": "基于潜在几何的贝叶斯课程学习以改进LLM推理",
+          "canonical_evidence": "基于潜在几何的贝叶斯课程学习以改进LLM推理",
+          "llm_tldr_en": "Formulates problem sampling as a manifold-structured bandit for curriculum learning in LLM reasoning, improving training efficiency.",
+          "llm_tldr_cn": "本文提出流形赌博机框架，将LLM推理训练中的问题选择建模为流形结构多臂赌博机，利用潜在表示空间中的相似性进行自适应课程学习。解决了传统方法忽略任务空间结构的问题，在多个推理基准上训练效率提升。",
+          "llm_tldr": "本文提出流形赌博机框架，将LLM推理训练中的问题选择建模为流形结构多臂赌博机，利用潜在表示空间中的相似性进行自适应课程学习。解决了传统方法忽略任务空间结构的问题，在多个推理基准上训练效率提升。",
+          "llm_tags": [
+            "query:llm-papers"
+          ],
+          "matched_query_tag": "query:llm-papers",
+          "matched_query_text": "how to improve large language model reasoning",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.19750v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.19002v1",
+          "source": "arxiv",
+          "title": "Enhancing Multilingual Reasoning via Steerable Model Merging",
+          "abstract": "Model merging is an effective technique for composing the capabilities of a multilingual model and a reasoning model. It has achieved promising generalization in multilingual reasoning tasks by aligning feature spaces of different models. However, the merged single model often fails to address the conflicts between source models, leading to suboptimal performance. In other words, the one-size-fits-all merging strategy may not align with the characteristics of different inputs which may require prioritizing certain models over others. To this end, we propose a Steerable Model Merging (ST-Merge) framework to modulate the contribution of each source model. To realize this idea, we introduce a gated cross-attention mechanism to weight or filter the two attended source models in an adaptive manner. Extensive experiments demonstrate that ST-Merge consistently outperforms multiple strong baselines on four multilingual reasoning benchmarks across 21 different languages.",
+          "authors": [
+            "Zhuoran Li",
+            "Rui Xu",
+            "Jian Yang",
+            "Junnan Liu",
+            "Zhijun Chen",
+            "Qianren Mao",
+            "Hongcheng Guo",
+            "Jiaheng Liu",
+            "Likang Xiao",
+            "Ming Li",
+            "Xiaojie Wang"
+          ],
+          "primary_category": "cs.CL",
+          "categories": [
+            "cs.CL"
+          ],
+          "published": "2026-06-17T12:28:47+00:00",
+          "link": "https://arxiv.org/pdf/2606.19002v1",
+          "tags": [
+            "keyword:llm-papers",
+            "query:llm-papers"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "enhancing multilingual reasoning via steerable model merging",
+          "llm_evidence_cn": "通过可引导的模型合并增强多语言推理",
+          "llm_evidence": "通过可引导的模型合并增强多语言推理",
+          "canonical_evidence": "通过可引导的模型合并增强多语言推理",
+          "llm_tldr_en": "ST-Merge proposes a gated cross-attention mechanism to modulate contributions of multilingual and reasoning models during merging, improving multilingual reasoning performance.",
+          "llm_tldr_cn": "模型合并可组合多语言模型与推理模型的能力，但统一合并策略忽略输入特性。ST-Merge引入门控交叉注意力机制，根据输入动态调整各源模型的贡献。在多语言推理基准上，该方法相比现有合并策略显著提升性能。该工作为多语言推理的模型融合提供了灵活有效的解决方案。",
+          "llm_tldr": "模型合并可组合多语言模型与推理模型的能力，但统一合并策略忽略输入特性。ST-Merge引入门控交叉注意力机制，根据输入动态调整各源模型的贡献。在多语言推理基准上，该方法相比现有合并策略显著提升性能。该工作为多语言推理的模型融合提供了灵活有效的解决方案。",
+          "llm_tags": [
+            "query:llm-papers"
+          ],
+          "matched_query_tag": "query:llm-papers",
+          "matched_query_text": "how to improve large language model reasoning",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.19002v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.20227v1",
+          "source": "arxiv",
+          "title": "QMFOL: Benchmarking Large Language Model Reasoning via Quantifiable Monadic First-Order Logic Test Case Generation",
+          "abstract": "Large Language Models (LLMs) have made significant progress in reasoning, particularly in deductive reasoning, which is crucial for high-stakes decision-making. As models improve, evaluation benchmarks should evolve to keep pace. However, existing benchmarks lack fine-grained control over logical complexity and struggle to balance semantic diversity with logical consistency.   To address these issues, we propose QMFOL, an automated framework for generating monadic first-order logic reasoning tasks with quantifiable and controllable complexity. It constructs formal logical structures using conjunction and disjunction patterns, enabling precise control over reasoning depth, width, label types, and distractors. These structures are then translated into natural language via LLMs, with logical consistency ensured through round-trip verification using an external prover. Based on our framework, we build QMFOLBench, a benchmark comprising 2880 instances with 960 configurations across diverse logical and semantic dimensions. Evaluations on six large reasoning models (LRMs) and two LLMs show that performance degrades and computational overhead increases with rising logical complexity. Models perform better on True-labeled tasks than on False or Unknown ones, and exhibit sensitivity to semantic variation. Overall, QMFOL offers a scalable and reliable approach for constructing deductive reasoning benchmarks with controllable complexity, enabling more precise evaluation of reasoning capabilities in modern language models.",
+          "authors": [
+            "Xinyi Zheng",
+            "Ling Shi",
+            "Tianlong Yu",
+            "Yongxin Zhao",
+            "Lorenz Goette",
+            "Kailong Wang"
+          ],
+          "primary_category": "cs.AI",
+          "categories": [
+            "cs.AI",
+            "cs.SE"
+          ],
+          "published": "2026-06-18T13:40:27+00:00",
+          "link": "https://arxiv.org/pdf/2606.20227v1",
+          "tags": [
+            "keyword:llm-papers",
+            "query:llm-papers"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Benchmarks LLM reasoning with controllable logical complexity",
+          "llm_evidence_cn": "通过可控逻辑复杂度的基准测试评估大语言模型推理",
+          "llm_evidence": "通过可控逻辑复杂度的基准测试评估大语言模型推理",
+          "canonical_evidence": "通过可控逻辑复杂度的基准测试评估大语言模型推理",
+          "llm_tldr_en": "QMFOL generates monadic first-order logic reasoning tasks with quantifiable complexity for fine-grained LLM reasoning evaluation.",
+          "llm_tldr_cn": "现有推理基准无法精细控制逻辑复杂度且语义多样性不足。本文提出QMFOL框架，自动生成一阶逻辑推理任务，允许精确调节推理深度、宽度、标签类型和干扰项。该框架支持对LLM演绎推理能力进行系统性评估，弥补了现有基准的粒度缺陷。",
+          "llm_tldr": "现有推理基准无法精细控制逻辑复杂度且语义多样性不足。本文提出QMFOL框架，自动生成一阶逻辑推理任务，允许精确调节推理深度、宽度、标签类型和干扰项。该框架支持对LLM演绎推理能力进行系统性评估，弥补了现有基准的粒度缺陷。",
+          "llm_tags": [
+            "query:llm-papers"
+          ],
+          "matched_query_tag": "query:llm-papers",
+          "matched_query_text": "how to improve large language model reasoning",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.20227v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.19404v1",
+          "source": "arxiv",
+          "title": "Thermodynamic Signatures of Reasoning: Free-Energy and Spectral-Form-Factor Diagnostics for Hallucination Detection in Large Language Models",
+          "abstract": "Hallucination detection in large language models (LLMs) is deployment-critical, and recent work shows that the spectrum of attention-derived graph Laplacians carries strong signal about reasoning quality. Prior spectral diagnostics, however, summarize the Laplacian spectrum by a handful of eigenvalues or hand-picked scalars, leaving most of its structure unused. We propose Free-Energy Signatures (Fes), a spectral descriptor that treats each layer's attention Laplacian as a Hamiltonian and extracts its thermodynamic potentials partition function, free energy, spectral entropy, heat capacity together with the random-matrix-theory (RMT) spectral form factor. We prove three results: (i)~Lipschitz stability of Fes under attention perturbation; (ii)~an expressiveness result showing that Fes enriches finite spectral summaries and approximates moment-derived spectral functionals under explicit regularity and grid-resolution assumptions; and (iii)~a finite-sample PAC bound on the AUROC of a training-free detector built from Fes. Empirically, across six open-weight LLMs and six benchmarks, a lightweight probe on Fes descriptors achieves the strongest aggregate AUROC among attention-spectral baselines, improving over LapEig by $+6.5$ AUROC points and over GoR-4 by $+2.4$ points on average, while requiring no update to the underlying LLM. In the fully unsupervised setting, an RMT-deviation score achieves mean AUROC $0.71$, providing a label-free but weaker detector. A complementary RMT analysis shows that correct generations exhibit more Wigner-Dyson like spectral statistics, whereas hallucinations exhibit more Poisson-like statistics. The anonymized code and config are provided in the supplementary material.",
+          "authors": [
+            "Salim Khazem"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.CL"
+          ],
+          "published": "2026-06-17T11:42:48+00:00",
+          "link": "https://arxiv.org/pdf/2606.19404v1",
+          "tags": [
+            "keyword:llm-papers",
+            "query:llm-papers"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Detects hallucinations in LLM reasoning via thermodynamic spectral diagnostics",
+          "llm_evidence_cn": "通过热力学谱诊断检测大语言模型推理中的幻觉",
+          "llm_evidence": "通过热力学谱诊断检测大语言模型推理中的幻觉",
+          "canonical_evidence": "通过热力学谱诊断检测大语言模型推理中的幻觉",
+          "llm_tldr_en": "Free-Energy Signatures (Fes) use attention Laplacian spectra as thermodynamic potentials to detect reasoning-quality anomalies and hallucinations.",
+          "llm_tldr_cn": "幻觉检测对LLM部署至关重要，现有谱诊断方法仅利用少数特征值。本文提出自由能签名（Fes），将每层注意力拉普拉斯视为哈密顿量，提取配分函数、自由能、谱熵、热容和谱形状因子等热力学势能。理论证明这些签名能指示推理质量，在幻觉检测任务上优于现有方法。",
+          "llm_tldr": "幻觉检测对LLM部署至关重要，现有谱诊断方法仅利用少数特征值。本文提出自由能签名（Fes），将每层注意力拉普拉斯视为哈密顿量，提取配分函数、自由能、谱熵、热容和谱形状因子等热力学势能。理论证明这些签名能指示推理质量，在幻觉检测任务上优于现有方法。",
+          "llm_tags": [
+            "query:llm-papers"
+          ],
+          "matched_query_tag": "query:llm-papers",
+          "matched_query_text": "how to improve large language model reasoning",
+          "matched_requirement_id": "req-2",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.19404v1",
+          "carry_days": 1
+        }
+      ]
+    }
+  }
 }
