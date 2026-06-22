@@ -1,0 +1,1572 @@
+Title: A First-Principles Derivation of LLM Policy Optimization: From Expected Reward to GRPO and Its Structural Extensions
+
+URL Source: https://arxiv.org/pdf/2606.16733v1
+
+Published Time: Tue, 16 Jun 2026 02:17:22 GMT
+
+Number of Pages: 60
+
+Markdown Content:
+> Preprint
+
+# A First-Principles Derivation of LLM Policy Optimization: From Expected Reward to GRPO and Its Structural Extensions 
+
+Jianghan Shen 1,2, ∗ Siqi Luo 2,3, ∗ Yue Li 4 Jiyao Liu 2,5 Wanying Qu 2,5 
+
+Yi Zhang 6 Ziyan Huang 2 Tianbin Li 2 Ming Hu 2
+
+Xiaohong Liu 3,7, † Yirong Chen 2, † Junjun He 7, †
+
+> 1
+
+Nanjing University 2Shanghai Artificial Intelligence Laboratory 3Shanghai Jiao Tong University 
+
+> 4
+
+Peking University 5Fudan University 6Nanjing University of Aeronautics and Astronautics 
+
+> 7
+
+Shanghai Innovation Institute 
+
+Abstract 
+
+Policy gradient algorithms for language models optimize the same objective J(θ) = 
+
+Eτ ∼pθ (τ )[R(τ )], which has exactly two factors: the trajectory probability pθ (τ ) and the reward R(τ ). Every method from REINFORCE to PPO to GRPO and their descendants modifies one or both factors to address a specific failure in the preceding formulation. Existing surveys organize these methods by domain or chronology, which obscures the rationale behind each design choice and the precise location of its intervention within the gradient estimator. This survey revisits the landscape of LLM policy optimization from 
+
+J(θ) on first principles and uses the trajectory side, induced by pθ (τ ), and the reward side, induced by R(τ ), as the two axes along which methods are located. It covers the path from REINFORCE and PPO to GRPO, as well as post-GRPO variants, Agentic RL, and GRPO-OPD. The resulting framework is unified , diagnostic , and extensible : it analyzes methods from a shared objective, identifies which side each method modifies and why, and applies the same trajectory and reward axes across these settings. Across these settings, the framework also exposes compound failures that no single-side fix resolves and that therefore require joint design of the trajectory side and the reward side. The boundary cases and coupled failures identified by this map mark where existing solutions run out and provide a principled starting point for designing the next generation of LLM policy optimization algorithms. 
+
+Keywords: reinforcement learning, large language models, policy gradient, GRPO, agentic RL, on-policy distillation 
+
+1 Introduction 
+
+Reinforcement learning has become a central mechanism for post-training large language models toward human preferences, task intent, and reasoning behavior (Christiano et al., 2017). Early language-model RLHF (Reinforcement Learning from Human Feedback) methods applied preference-trained reward models to continuation and summarization tasks (Ziegler et al., 2019; Stiennon et al., 2020). PPO -based ( Proximal Policy Optimization) 
+
+> ∗
+
+These authors contributed equally. †Corresponding authors. Correspondence: jianghanshencs@smail.nju.edu.cn 
+
+1
+
+> arXiv:2606.16733v1 [cs.AI] 15 Jun 2026 A First-Principles Derivation of LLM Policy Optimization
+
+RLHF then established the standard optimization template for instruction following and assistant alignment (Schulman et al., 2017; Ouyang et al., 2022; Bai et al., 2022). GRPO 
+
+(Group Relative Policy Optimization) marked a turning point for reasoning-oriented RL by replacing the learned critic with group-relative reward normalization, thereby reducing the memory burden of PPO-style training while enabling strong mathematical and reasoning performance (Shao et al., 2024; Guo et al., 2025a). After GRPO, the field expanded rapidly in several directions. Post-GRPO variants modify how rollouts are collected and how training signals are constructed (Yu et al., 2025; Lightman et al., 2024). Agentic RL extends policy optimization to multi-turn interaction with tools and external feedback (Jin et al., 2025; Wei et al., 2025a). OPD (On-Policy Distillation) trains a student against a teacher signal on its own rollouts. In its original form it replaces J(θ) with a divergence-based objective (Gu et al., 2024), which exits the policy-gradient frame and is treated as a boundary case in Section 9.1. This survey instead studies the GRPO-OPD hybrid , which incorporates the teacher signal into the GRPO update while retaining J(θ) as the optimization objective (Ramos et al., 2026). DPO (Direct Preference Optimization) and related methods constitute another line of work. This line replaces the policy-gradient objective with a preference-based objective derived directly from preference data (Rafailov et al., 2023). Together, these methods define a research landscape that is broad, rapidly evolving, and difficult to navigate. Existing surveys (Kaufmann et al., 2025; Wang et al., 2023; Gao et al., 2024; Wang et al., 2024, 2026d; Liu et al., 2025a; Srivastava and Aggarwal, 2025; Zhang et al., 2026a; Song and Zheng, 2026) provide broad coverage of this landscape, but they typically organize methods by pipeline stage, method family, or application domain. Such organizations are useful for coverage, but they do not answer the diagnostic question practitioners face: given a failure, what mechanism produced it, and what minimal intervention can resolve it without introducing a worse failure elsewhere? Answering this question requires tracing each method back to the optimization objective it modifies. For policy-gradient methods, this objective is 
+
+J(θ) = Eτ ∼pθ (τ )[R(τ )], whose update is governed by two factors: the trajectory probability 
+
+pθ(τ ) and the reward R(τ ). These two factors naturally define the trajectory side and the reward side of policy optimization. Failures can therefore be diagnosed by asking whether they arise from how trajectories are sampled, reused, or constrained, from how rewards are assigned and normalized, or from the interaction between the two. A few recent surveys propose unified formulations (Wang et al., 2026d; Song and Zheng, 2026), but they mainly unify the form of existing methods rather than use these two factors to explain failure origins and intervention choices. This survey addresses this gap by organizing every reviewed method as a transition from a concrete failure mode to a corresponding intervention on the trajectory side, the reward side, or both. Table 1 summarizes how this differs from existing work. The organizing principle behind these distinctions is the core objective itself. All policy-gradient algorithms for language models optimize a trajectory-level objective, 
+
+J(θ) = Eτ ∼pθ (τ )
+
+R(τ )
+
+where τ denotes a sampled trajectory, pθ(τ ) denotes the probability of that trajectory under the current policy, and R(τ ) denotes the reward assigned to it. This objective exposes two natural axes of intervention: the trajectory side, which controls how samples enter the update, and the reward side, which controls what signal weights that update. From 
+
+> 2A First-Principles Derivation of LLM Policy Optimization
+
+Table 1: Comparison with related surveys on LLM policy optimization. From J(θ): starts from J(θ) = E[R(τ )] and its two factors; Diagnostic : locates each method by the factor it modifies and the failure it answers; Agentic /OPD : whether the two axes carry to agentic RL and on-policy distillation. ✓ full, ◦ partial, × none.                                                  
+
+> Survey Organizing principle From J(θ)Diagnostic Agentic OPD Wang et al. (2023) Alignment: data, training, evaluation
+> ××××
+> Gao et al. (2024) Preference learning, four components
+> ◦×××
+> Wang et al. (2024) Feedback type: RLHF, RLAIF, DPO
+> ××××
+> Kaufmann et al. (2025) RLHF pipeline stages ××××
+> Srivastava and Aggarwal (2025) Algorithm families and applications
+> ××××
+> Liu et al. (2025a) LLM lifecycle stages ××××
+> Song and Zheng (2026) OPD: f-divergence, design axes
+> ××◦✓
+> Zhang et al. (2026a) Agentic capabilities and domains
+> ××✓×
+> Wang et al. (2026d) Unified policy-gradient estimator
+> ◦×◦×
+> This survey First-principles two-axis diagnostic map
+> ✓✓✓✓
+
+REINFORCE (Williams, 1992) to PPO (Schulman et al., 2017) and GRPO (Shao et al., 2024), methods can be understood as modifying one or both axes to address failures left unresolved by the preceding formulation. This decomposition turns J(θ) into a diagnostic map : given any failure, the question becomes which factor it originates from and what targeted modification resolves it. 
+
+Applying this map to the post-GRPO landscape reveals three classes of methods. Trajectory-side methods ask which trajectories should be used and how much each should be optimized, spanning rollout collection, compression, diversity, repair, and the clipping and ratio rules that govern the update (Zheng et al., 2025a,b). Reward-side methods ask how to accurately evaluate the quality of each policy decision, and act at two levels. At the reward signal Ri, they cover density, source, shaping, and multi-objective aggregation. At the advantage ˆAi that converts Ri into a per-token weight, they cover statistical bias correction and fine-grained credit assignment (Lightman et al., 2024; Cui et al., 2025; Liu et al., 2025b). Both-side methods address failure modes that couple the two components, where modifying one side alone leaves residual instability on the other (Yu et al., 2025; Yang et al., 2025a). The same two-axis map also extends beyond the post-GRPO single-turn setting. Agentic RL expands the trajectory side to multi-turn environment interaction, but this expansion also introduces reward-side challenges such as delayed feedback and temporal credit assign-
+
+> 3
+
+A First-Principles Derivation of LLM Policy Optimization RLHF Alignment 
+
+> Human Preference
+> Learning
+
+Classical RL Foundations 
+
+> Policy Gradient Theory
+
+GRPO & Reasoning RL  
+
+> Critic -Free Baseline
+> Optimization Capability / LLM Alignment Quality
+> REINFORCE
+> (§2 )
+> Actor -Critic
+> +GAE
+> (§3 )
+> PPO -Clip
+> (§4 )
+> RLHF -PPO
+> (§5 )
+
+Post -GRPO Extension  Structural Extension  
+
+> Variance reduction
+> via critic
+> Clipped policy update for stability
+> Critic cost
+> LLM -MDP
+> mapping
+
+2025+ 1992  2024 2023 1950s 
+
+Agentic RL ( §7)    
+
+> Collection/Validity &
+> Compression/Diversity
+> New extensions
+> WebRL
+> DeepResearcher AgentRL
+> CuSearch
+> ARPO
+
+OPD Hybrid ( §8)   
+
+> 𝘛 𝐵
+> 𝘛 𝐶 /𝘛 𝐷 𝘛 𝐴 +𝐵
+> 𝘛 𝘈
+> CoDistil l-
+> GRPO
+> dGRPO
+> dGRPO
+> KDRL
+> KDRL
+> REOPOLD
+> RLAD
+> RLSD
+
+Trajectory -Side Extension 
+
+(§6.2)     
+
+> Diversity
+> TreeRPO
+> Repair
+> SCoRe DAPO
+> DIVER
+> SAPO
+> Compression
+> ThinkPrune
+> DAST
+> PAG
+> Both -Side Extension ( §6.4 )
+> DAPO
+> GRPO
+> (§6.1 )
+> 𝐽 (𝜃 )
+> Intractable
+> gradient
+> Log -derivative trick
+> Trajectory selection
+> and weighting
+> DCPO GTPO
+> GRESO
+> PODS
+> Collection
+> Clip/Ratio ……
+> ZeroSearch
+> Search -R1
+> ……
+> SWE -RL
+> ReTool
+> SkyRL
+> Importance Sampling
+> Critic -free
+> group -relative baseline
+
+Reward -Side Extension 
+
+(§6.3)  
+
+> Open -
+> Reasoner -Zero
+> Stat. bias corr .Credit assign.
+> SCRL
+> Shaping
+> GRPO -VPS
+> Density
+> TreeRPO Dr.GRPO
+> Source
+> S-GRPO
+> LASER
+> AGPO
+> R1-V
+> SPO
+
+Figure 1: A first-principles landscape of LLM policy optimization. The blue spine runs from 
+
+J(θ) = E[R(τ )] to GRPO, each arrow labeling the failure that motivates the next step. Post-GRPO variants split into the trajectory side ( §6.2), the reward side (§6.3), and both-side instabilities ( §6.4). Agentic RL ( §7) extends the trajectory side to multi-turn interaction, and the GRPO-OPD hybrid ( §8) extends the reward side through four operators: TA importance ratio, TB advantage, TC in-expectation distillation, TD external regularizer, with TA+B coupling the first two. Each group shows representative methods only. ment (Jin et al., 2025; Wei et al., 2025a; Feng et al., 2026). The GRPO-OPD hybrid 
+
+expands the reward side with dense teacher signals, but these signals depend on trajectory-side properties such as rollout quality and update stability (Ramos et al., 2026; Xu et al., 2025). Thus, the map identifies open problems not only within each side, but also where trajectory construction and reward construction must be optimized jointly. This survey analyzes existing methods under a first-principles two-axis framework. The framework has three properties. (i) unified and first-principles: all methods are revisited from the shared objective J(θ) = E[R(τ )] rather than treated as isolated algorithm families. (ii) diagnostic: each method is located by which side it modifies, what failure motivates the modification, and what residual instability remains. (iii) extensible: the same trajectory and reward axes apply beyond single-turn GRPO to Agentic RL and the 
+
+GRPO-OPD (Group Relative Policy Optimization with On-Policy Distillation) hybrid, revealing why these settings require joint design of the trajectory side and the reward side. By contrast, methods that replace J(θ) itself, such as DPO (Rafailov et al., 2023) and divergence-minimization distillation (Gu et al., 2024; Agarwal et al., 2024), fall outside this policy-gradient frame and are discussed separately as boundary cases. 
+
+4A First-Principles Derivation of LLM Policy Optimization 
+
+The survey covers online policy optimization for autoregressive LLMs. Part I starts from J(θ) = E[R(τ )] and develops the trajectory and reward axes through REINFORCE, Actor-Critic, GAE, PPO, and the LLM–MDP mapping. Part II uses these axes to organize post-GRPO variants into trajectory-side, reward-side, and coupled interventions. Part III extends the same diagnostic framework to Agentic RL and the GRPO-OPD hybrid. Section 9 marks the boundary of the policy-gradient frame and identifies open problems. Figure 1 provides an overview of the first-principles diagnostic map. Together, the three parts show that the rapid post-GRPO expansion is not a collection of independent proposals but a structured response to failures that arise, in a predictable order, along the trajectory and reward axes of J(θ). 
+
+# Part I From the RL Objective to the Per-Step LLM Form 
+
+2 From Objective to Policy Gradient 
+
+2.1 The Optimization Objective and Its Two Sides 
+
+A Markov Decision Process is a tuple ( S, A, P, R, ρ 0, γ ), where S is the state space, A the action space, P : S × A → ∆( S) the transition kernel, R : S × A → R the reward function, 
+
+ρ0 the initial state distribution, and γ ∈ [0 , 1] the discount factor (Sutton et al., 2018). The defining property is the Markov condition (Sutton et al., 2018): transitions depend only on the current state and action, 
+
+P (st+1 | s0, a 0, . . . , s t, a t) = P (st+1 | st, a t). (1) A trajectory τ = ( s0, a 0, r 0, s 1, a 1, r 1, . . . , s T ) is generated by sampling s0 ∼ ρ0, selecting 
+
+at ∼ πθ(· | st) at each step, receiving rt = R(st, a t), and transitioning to st+1 ∼ P (· | st, a t). By the Markov property the trajectory probability factorizes as 
+
+pθ(τ ) = ρ0(s0) 
+
+> T−1
+
+Y
+
+> t=0
+
+πθ(at | st) P (st+1 | st, a t), (2) and the discounted return is R(τ ) = PT −1 
+
+> t=0
+
+γtrt (Sutton et al., 2018). 
+
+The core objective. All methods in this survey optimize 
+
+J(θ) = Eτ ∼pθ (τ )[R(τ )] = X
+
+> τ
+
+pθ(τ ) R(τ ). (3) This objective weights each trajectory by two factors: how likely the current policy makes it, and how much reward it yields. Both factors must be addressed for gradient optimization to be effective, and each introduces a distinct challenge (Williams, 1992; Sutton et al., 1999). 
+
+Trajectory side. Computing ∇θJ(θ) requires differentiating through pθ(τ ). Summing over all trajectories is intractable, and the naive gradient 
+
+∇θJ(θ) = X
+
+> τ
+
+R(τ )∇θpθ(τ ) (4) 
+
+5A First-Principles Derivation of LLM Policy Optimization 
+
+is not expressed in the form Epθ [·]. It therefore cannot be estimated directly by sampling from the current policy. Section 2.2 addresses this by applying the log-derivative trick, which converts the gradient into a sampling-friendly expectation. 
+
+Reward side. Even after the gradient becomes tractable, the trajectory return R(τ ) = P 
+
+> t
+
+γtrt assigns a single scalar to the entire trajectory and uses it to credit all actions uniformly. This assignment is causally coarse because action at cannot influence rewards obtained before time t. The result is high variance and uniform credit across all steps regardless of each action’s actual contribution. Section 3 addresses this by introducing the advantage function and per-step estimation. 
+
+2.2 The Policy Gradient Theorem Log-derivative trick. The identity ∇θpθ(τ ) = pθ(τ )∇θ log pθ(τ ) (Williams, 1992) converts the intractable gradient (4) into a sampling-friendly expectation: 
+
+∇θJ(θ) = Eτ ∼pθ
+
+R(τ ) ∇θ log pθ(τ ). (5) 
+
+Eliminating environment terms. Differentiating log pθ(τ ) from Equation (2) gives 
+
+∇θ log pθ(τ ) = ∇θ log ρ0(s0)
+
+| {z }
+
+> =0
+
++ 
+
+> T−1
+
+X
+
+> t=0
+
+∇θ log πθ(at|st) +  
+
+> T−1
+
+X
+
+> t=0
+
+∇θ log P (st+1 |st, a t)
+
+| {z }
+
+> =0
+
+. (6) Both the initial-state term and the transition term vanish because they do not depend on θ.The policy-gradient identity therefore reduces to 
+
+∇θJ(θ) = Eτ ∼pθ
+
+"
+
+R(τ ) 
+
+> T−1
+
+X
+
+> t=0
+
+∇θ log πθ(at|st)
+
+#
+
+, (7) which gives the REINFORCE estimator when the expectation is approximated by sampled trajectories (Williams, 1992). This trajectory-level form is consistent with the policy gradient theorem of Sutton et al. (1999). The log-derivative trick resolves the trajectory-side problem: the gradient is now a sampling-friendly expectation, and transition-dynamics derivatives have been eliminated. The reward-side problem remains open. 
+
+3 From REINFORCE to Actor-Critic 
+
+The reward-side problem is the coarseness of the credit signal. REINFORCE weights every action log-probability term by the full trajectory return R(τ ), even though action at cannot influence rewards before time t, and therefore provides a causally coarse and high-variance credit signal. This section addresses it in two stages. First, reward-to-go removes causally irrelevant pre-t rewards from the weight on each action, and the advantage function (Sutton et al., 2018) replaces absolute return with a relative quality signal. Second, TD bootstrapping and GAE (Schulman et al., 2016) make per-step advantage estimation practical without requiring full Monte Carlo rollouts. The Actor-Critic architecture (Konda and Tsitsiklis, 1999; Mnih et al., 2016) combines both stages into the first complete per-timestep optimization form. 
+
+> 6
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+3.1 Advantage Estimation Reward-to-go. Replacing the full trajectory return with the causal future return 
+
+Gt = 
+
+> T−1
+
+X
+
+> k=t
+
+γk−trk (8) removes rewards obtained before time t from the weight applied to ∇θ log πθ(at|st). This replacement does not alter the expected gradient. Let Ct = Pt−1 
+
+> k=0
+
+γkrk denote the part of the trajectory return that precedes time t. Conditional on the pre-action history 
+
+ht = ( s0, a 0, r 0, . . . , s t), Ct is fixed, while at is sampled from πθ(· | st). Therefore, by iterated expectation, 
+
+E[Ct∇θ log πθ(at | st)] = ECt Eat∼πθ (·| st)[∇θ log πθ(at | st)]  .
+
+The inner expectation is zero because 
+
+Eat∼πθ [∇θ log πθ(at | st)] = X
+
+> a
+
+πθ(a | st)∇θ log πθ(a | st) = X
+
+> a
+
+∇θπθ(a | st) = ∇θ1 = 0 .
+
+Thus, rewards before time t contribute zero in expectation. Removing them changes the variance but not the expected gradient (Sutton et al., 2018; Greensmith et al., 2004). The resulting reward-to-go policy gradient is 
+
+∇θJ(θ) = E
+
+"T −1X
+
+> t=0
+
+Gt ∇θ log πθ(at | st)
+
+#
+
+. (9) 
+
+Advantage function. Although Gt removes rewards obtained before time t, it still measures the absolute future return from the trajectory. For policy optimization, however, the relevant question is not only whether the return after st was large, but whether the sampled action at produced a return larger than what is typically achievable from the same state. This motivates comparing two conditional expectations of the return. The first is the average return obtained from state st under the policy, 
+
+V π(st) = Eπ[Gt | st], (10) which serves as a state-dependent baseline. The second is the average return obtained when the first action is fixed to at and the policy is followed thereafter, 
+
+Qπ(st, a t) = Eπ[Gt | st, a t]. (11) Their difference defines the advantage function (Sutton et al., 2018): 
+
+Aπ(st, a t) = Qπ(st, a t) − V π(st). (12) Thus, Aπ(st, a t) measures the relative quality of at at st: it is positive when at yields higher expected return than the policy’s average return from st, and negative when it yields lower expected return. 
+
+7A First-Principles Derivation of LLM Policy Optimization 
+
+TD error. The advantage definition above is expressed in terms of expected returns, but computing Gt exactly requires observing a complete episode (Sutton et al., 2018). Temporal-difference learning avoids this requirement by bootstrapping from a learned critic Vϕ. It forms the one-step temporal-difference error 
+
+δt = rt + γV ϕ(st+1 ) − Vϕ(st), (13) where rt and st+1 are drawn from a single sampled transition. When the critic is exact, 
+
+Vϕ = V π, the Bellman expectation equation gives 
+
+Qπ(st, a t) = Eπ[rt + γV π(st+1 ) | st, a t] . (14) Taking the conditional expectation of δt over the sampled transition, 
+
+Eπ[δt | st, a t] = Eπ[rt + γV π(st+1 ) − V π(st) | st, a t] (15) = Qπ(st, a t) − V π(st) (16) = Aπ(st, a t). (17) Thus, under an exact value function, the expected TD error is an unbiased one-step estimate of the advantage (Konda and Tsitsiklis, 1999). A single-sample δt is therefore an unbiased but noisy estimator in this ideal case. In practice, Vϕ is learned and approximate, so δt
+
+inherits the critic’s approximation error. It can still have much lower variance than Monte Carlo estimates based directly on Gt, but it may now be biased (Sutton et al., 2018). Monte Carlo returns are unbiased but high-variance, while one-step TD bootstrapping reduces variance at the cost of critic-induced bias when the value function is approximate. This tension between the two extremes motivates a practical interpolation, which the Actor-Critic architecture provides through GAE. 
+
+3.2 Actor-Critic: First Complete Per-Timestep Form 
+
+The Actor-Critic architecture (Konda and Tsitsiklis, 1999; Mnih et al., 2016) maintains two networks: an actor πθ that selects actions, and a critic Vϕ that estimates state values for advantage computation. 
+
+Generalized Advantage Estimation. GAE (Schulman et al., 2016) interpolates between Monte Carlo and one-step TD estimation by accumulating discounted TD errors, 
+
+AGAE  
+
+> t
+
+= 
+
+> T−t−1
+
+X
+
+> l=0
+
+(γλ )l δt+l, (18) where δt+l = rt+l + γV ϕ(st+l+1 ) − Vϕ(st+l) denotes the TD error at step t + l. At a true terminal state, the terminal bootstrap value is set to Vϕ(sT ) = 0. For truncated rollouts, the final value is instead bootstrapped from the critic. This sum admits an efficient backward recurrence, 
+
+AGAE  
+
+> t
+
+= δt + γλA GAE  
+
+> t+1
+
+,
+
+seeded at the horizon with AGAE  
+
+> T
+
+= 0, which avoids explicit summation over future steps. The parameter λ ∈ [0 , 1] controls the bias–variance trade-off. When λ = 0, GAE reduces to 
+
+> 8A First-Principles Derivation of LLM Policy Optimization
+
+the single-step TD error, producing a low-variance but potentially biased estimate. When 
+
+λ = 1, it accumulates all future TD errors and recovers the Monte Carlo advantage estimator 
+
+Gt − Vϕ(st), which is unbiased but high-variance. Intermediate values yield a geometrically weighted mixture, with smaller λ prioritizing variance reduction through bootstrapping and larger λ reducing reliance on the critic (Schulman et al., 2016; Sutton et al., 2018). 
+
+Actor and critic losses. The actor is updated using GAE advantages: 
+
+Lactor (θ) = −Et
+
+AGAE  
+
+> t
+
+log πθ(at|st) . (19) The critic minimizes the squared error against a bootstrapped return target. In the single-step case the target is rt + γV ϕ(st+1 ), evaluated at the data-collecting critic and treated as a constant with respect to ϕ. With GAE the target generalizes to the λ-return, ˆRt = AGAE  
+
+> t
+
++ V old  
+
+> t
+
+, (20) where V old  
+
+> t
+
+= Vϕold (st) is the value estimate from the data-collecting critic. Both AGAE  
+
+> t
+
+and 
+
+V old  
+
+> t
+
+are computed from the data-collecting critic and held fixed during the update of ϕ.The critic loss is then 
+
+Lcritic (ϕ) = Et
+
+h Vϕ(st) − ˆRt
+
+2i
+
+. (21) The reward-side problem is now addressed: Actor-Critic provides per-timestep advantage estimates that remove pre-t rewards and control variance through GAE. Resolving it, however, reopens the trajectory side in a new form: stale on-policy data and unconstrained policy updates. 
+
+4 PPO: Stability and Data Efficiency 
+
+Section 3 produced the first complete per-timestep optimization form but left two trajectory-side problems open: stale on-policy data and unconstrained policy updates. PPO resolves them through importance sampling, which enables data reuse across multiple gradient steps, and clipping, which constrains the policy shift to a safe trust region. 
+
+4.1 Importance Sampling for Data Reuse 
+
+Importance sampling rewrites an on-policy expectation using samples from a different distribution. Writing πθold for the policy that collected the current data batch, the on-policy objective becomes 
+
+LIS (θ) = E(st,a t)∼πθold [rt(θ) At] , rt(θ) = πθ(at|st)
+
+πθold (at|st) . (22) The ratio rt(θ) corrects for the distribution mismatch, allowing the same rollout batch to be reused for multiple gradient steps. As πθ diverges from πθold , however, the weights become extreme and the estimator’s variance grows without bound. This variance growth is the update-instability problem, and it requires a mechanism to constrain how far the policy can move per update. 
+
+> 9A First-Principles Derivation of LLM Policy Optimization
+
+4.2 PPO-Clip 
+
+On-policy Actor-Critic variants such as A3C (Mnih et al., 2016) increase training throughput through asynchronous parallelism but do not resolve the data-efficiency problem: each rollout batch is still discarded after a single gradient step. TRPO (Schulman et al., 2015) handles update instability through an explicit KL constraint, but this requires computing the Fisher information matrix, which is expensive for large networks. PPO (Schulman et al., 2017) replaces the constraint with a clipping operation that removes the gradient incentive to push the probability ratio outside [1 − ϵ, 1 + ϵ]: 
+
+LCLIP (θ) = Et[min( rt(θ) At, clip( rt(θ), 1 − ϵ, 1 + ϵ) At)] . (23) The min operator implements conservative pessimism. When At > 0, increasing rt beyond 1 + ϵ produces no additional gradient. When At < 0, pushing rt below 1 − ϵ yields no further gradient. In both cases the policy can improve within the trust region but receives no signal to exceed it. In practice, PPO preserves the actor-critic structure introduced in Section 3.2. The actor replaces the vanilla policy-gradient objective with the clipped surrogate in Equation (23) .The critic is trained to minimize the squared error against the λ-return target ˆRt from Equation (20), held fixed during the update of ϕ:
+
+Lcritic (ϕ) = Et
+
+
+
+Vϕ(st) − ˆRt
+
+2
+
+. (24) Some implementations additionally clip the value-function update to prevent the critic from moving too far from its previous estimate. Define the clipped value as 
+
+V CLIP  
+
+> t
+
+= clip  Vϕ(st), V old  
+
+> t
+
+− ϵv, V old  
+
+> t
+
++ ϵv
+
+, (25) where ϵv is a separate threshold from the policy-ratio ϵ: the former bounds an absolute shift in value units, while the latter bounds a dimensionless probability ratio. The clipped critic loss is then 
+
+Lclip critic (ϕ) = Et
+
+h
+
+max 
+
+ Vϕ(st) − ˆRt
+
+2,  V CLIP  
+
+> t
+
+− ˆRt
+
+2i 
+
+. (26) The max retains whichever term has the larger squared error. The clipped term is selected only when Vϕ(st) has moved outside the trust region [ V old  
+
+> t
+
+− ϵv, V old  
+
+> t
+
++ ϵv] on the same side as the target ˆRt, so that a further update would push Vϕ even farther from V old  
+
+> t
+
+. In that case 
+
+V CLIP  
+
+> t
+
+is constant with respect to ϕ, so no gradient flows and movement in that direction is suppressed. If instead Vϕ(st) has overshot past the target, the unclipped term has the larger error and stays active, so the gradient still pulls Vϕ back toward ˆRt. The clip therefore caps steps that drive the value away from its previous estimate. It does not block corrective ones. This is a stabilization detail rather than the defining PPO-Clip mechanism, and many implementations omit it. 
+
+4.3 Training Loop 
+
+PPO proceeds in alternating rollout and update phases. 
+
+> 10 A First-Principles Derivation of LLM Policy Optimization
+
+1. Fix πθold ← πθ. Roll out πθold to collect a batch of trajectories. Record states, actions, rewards, values, and action log-probabilities. 2. Compute GAE advantages AGAE  
+
+> t
+
+using Equation (18) and the λ-return targets ˆRt
+
+from Equation (20). 3. For K epochs over the collected data, compute rt(θ) = πθ(at|st)/π θold (at|st), evaluate 
+
+LCLIP , update θ, evaluate Lcritic against ˆRt, and update ϕ.4. Return to step 1. The multi-epoch update in step 3 is possible because importance sampling decouples the gradient computation from the data-collecting policy. This is what makes PPO data-efficient relative to vanilla Actor-Critic. Importance sampling and clipping resolve both trajectory-side problems: data reuse is now possible across multiple gradient steps, and the clipping mechanism keeps the updated policy within a trust region where the advantage estimates remain valid. Two things remain before PPO can be applied to LLMs. First, the derivation so far assumes a generic MDP, and autoregressive token generation must be verified to satisfy the structural premises PPO requires. Second, the reward model scores a complete response with a single scalar, but PPO requires per-token advantages. Bridging this mismatch calls for an explicit token-level reward construction. 
+
+5 LLM as MDP: Why PPO Applies 
+
+Both remaining questions concern how the generic MDP derivation connects to the specifics of autoregressive generation. The trajectory-side question is whether token generation satisfies the Markov property and yields deterministic transitions, so that the policy gradient depends only on the policy and not on the environment dynamics, and whether action log-probabilities are differentiable through θ. The reward-side question is how a scalar response-level reward connects to the per-token credit assignment that PPO’s GAE computation requires. This section answers both and shows that the full derivation carries over to the LLM setting without modification. 
+
+5.1 The MDP–LLM Correspondence 
+
+Given a prompt x, an autoregressive LLM generates a response y = ( y1, . . . , y T ) token by token. Table 2 shows the exact correspondence between standard MDP variables and LLM generation. Token generation can be modeled as an episodic, finite-horizon task. Because the episode always terminates at the end-of-sequence token, the infinite-horizon convergence requirement that enforces γ < 1 does not apply, and we set γ = 1 so that future rewards are not discounted by token position. In practice, the state space ( x, y <t ) is extremely large, so all expectations and gradients are estimated via sampling rather than exact enumeration. This simplification is standard in LLM policy optimization (Ziegler et al., 2019; Ouyang et al., 2022). From this section onwards all LLM-specific formulations implicitly assume γ = 1 for the return, so the reward-to-go reduces to Gt = P 
+
+> k≥t
+
+rk and no token position is discounted. 
+
+> 11 A First-Principles Derivation of LLM Policy Optimization
+
+Table 2: MDP–LLM correspondence used throughout this survey. MDP variable LLM counterpart Description State st (x, y <t ) Prompt concatenated with generated prefix Action at Token yt Next token selected from the vocabulary Policy πθ(at|st) πθ(yt|x, y <t ) Next-token distribution Trajectory τ (x, y 1: T ) Complete prompt-response pair Transition P (st+1 |st, a t) st+1 = ( x, y ≤t) Deterministic string concatenation Reward R(τ ) R(x, y ) Reward model or verifier score The GAE expressions from Part I carry over unchanged. We note that the γ inside GAE need not equal the return discount. Several RLHF implementations keep a γ slightly below one in the GAE recursion as a variance-control knob on long sequences, while still leaving the terminal reward undiscounted. The role of λ as the bias–variance control is the same in either case. Two structural features make the MDP formulation exact at the level of autoregressive token generation. First, the state transition is deterministic: given st = ( x, y <t ) and 
+
+at = yt, the next state is st+1 = ( x, y ≤t). Since this transition kernel is independent of θ, it contributes no score term to the policy-gradient estimator, exactly as in Section 2.2. Second, the log-probability factorizes as log πθ(y | x) = X
+
+> t
+
+log πθ(yt | x, y <t ),
+
+which is computable by a standard forward pass and differentiable with respect to θ. These properties ensure that autoregressive generation admits an exact policy-gradient formulation with token-level actions and prefix states. 
+
+5.2 The RLHF Pipeline 
+
+RLHF (Stiennon et al., 2020; Ouyang et al., 2022) typically proceeds in three stages. 1. Supervised fine-tuning. A pretrained LLM is fine-tuned on human demonstrations to obtain the initial policy, and a frozen copy of this model or the pretrained base model serves as the reference model πref .2. Reward model training. Human annotators compare pairs of responses to the same prompt x and identify the preferred response yw over the rejected response yl. A scalar reward model Rψ(x, y ) (Bai et al., 2022; Christiano et al., 2017) is trained to assign higher scores to preferred responses under the Bradley–Terry model (BRADLEY and TERRY, 1952): 
+
+P (yw ≻ yl | x) = σ Rψ(x, y w) − Rψ(x, y l), (27) where σ denotes the sigmoid function, and the training loss is the negative log-likelihood of the observed preferences. 
+
+> 12 A First-Principles Derivation of LLM Policy Optimization
+
+3. RL fine-tuning. The actor is optimized to maximize the reward model score while being regularized by a KL penalty against πref :max  
+
+> θ
+
+Ex, y ∼πθ [Rψ(x, y ) − β KL( πθ(·| x)∥πref (·| x))] . (28) In practice, the sequence-level KL term is implemented through sampled per-token log-ratio penalties, as made explicit in Section 5.4. 
+
+5.3 Four-Component Architecture 
+
+The four model roles in LLM RLHF-PPO are summarized in Table 3. The critic and the reward model are distinct. The critic estimates future value from partial generations, while the reward model evaluates complete responses. Table 3: Four model components in LLM RLHF-PPO and their roles. Component Role Updated during RL? Actor πθ Policy that generates tokens Yes Critic Vϕ Estimates per-token state value V π(st) Yes Reward model Rψ Scores complete responses No Reference πref Provides KL regularization No 
+
+5.4 Token-Level Reward from Sequence-Level Score 
+
+The reward model outputs a single scalar for the complete response, but PPO must update each token’s probability. To bridge this mismatch, we define a token-level reward sequence: the final token receives the full sequence reward from the reward model, while earlier tokens receive only per-token KL penalties. Generalized Advantage Estimation (GAE) combines this reward sequence with the critic’s value estimates to assign credit to earlier token decisions through temporal-difference residuals. For long sequences or sparse rewards, the variance of these advantages can still be high, which motivates alternative baseline strategies in Part II. Formally, 
+
+rt =
+
+
+
+Rψ(x, y ) − β log πθ(yt|x, y <t )
+
+πref (yt|x, y <t ) t = T, 
+
+−β log πθ(yt|x, y <t )
+
+πref (yt|x, y <t ) t < T. 
+
+(29) Here the KL penalty is written with πθ to denote the policy that generated the response. In practice the entire token-level reward sequence, including the KL term, is computed once at rollout time and then held fixed. GAE turns this sequence into token-level advantages. These advantages are reused across the K inner update epochs rather than recomputed at each step (Ouyang et al., 2022). At collection time πθold ← πθ, so the policy appearing here coincides with πθold . This matches the sequence-level KL objective in (28) . GAE applied to this sequence with Vϕ produces token-level advantages AGAE  
+
+> t
+
+, and the PPO-Clip objective (23) is applied per token with 
+
+rt(θ) = πθ(yt|x, y <t )
+
+πθold (yt|x, y <t ) .
+
+> 13
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+Part I Summary 
+
+Part I began from the intractable gradient of J(θ) and resolved problems on each side in sequence. On the trajectory side, the log-derivative trick converted the intractable gradient into a sampling-friendly expectation. The environment dynamics terms vanish because they do not depend on θ, and in the LLM setting this holds exactly because transitions are deterministic. Importance sampling and PPO-Clip then resolved the data-reuse and large-update instability problems that arise when attempting to reuse on-policy Actor-Critic data across multiple gradient steps. On the reward side, reward-to-go, advantage estimation, and GAE replaced the noisy trajectory return with causally correct, variance-reduced per-timestep advantages. The MDP–LLM correspondence confirmed that token generation satisfies every structural premise the derivation requires, so the full derivation carries over to the LLM setting intact. A remaining challenge is that the per-token critic Vϕ must match the actor in capacity, roughly doubling memory and compute, and becomes numerically unstable under the sparse or binary rewards typical of LLM training. In such cases, value targets are noisy or poorly calibrated, producing high-variance or biased advantage estimates and potentially destabilizing PPO updates. Part II takes this per-step form as its starting point and addresses the critic challenge directly: GRPO performs a reward-side substitution, replacing the per-token critic-estimated advantage with a group-relative scalar computed from sampled rewards. Part III then extends the framework along both axes: Agentic RL generalizes the trajectory side to multi-turn environment interaction, while the GRPO-OPD hybrid incorporates a dense per-token teacher signal into the reward objective. 
+
+# Part II LLM Policy Optimization in Practice 
+
+6 GRPO and the Single-Turn Landscape 
+
+Part I established the per-step LLM optimization objective: a per-token clipped importance-ratio objective, combined with per-token critic-estimated advantages and a KL penalty on the objective. Although this formulation is theoretically sound, it is computationally expensive. The critic required for per-token advantage estimation must be comparable in scale to the actor. For long chain-of-thought tasks with sparse or binary rewards, this requirement is both computationally prohibitive and numerically unstable. Throughout this survey, reward side refers to the full pipeline from reward signal to advantage estimate: how rewards are obtained, normalized, shaped, and converted into the scalar that weights each policy-gradient step. The main founding contribution of GRPO is a reward-side innovation: the computational cost of the per-token critic arises from advantage estimation, not from trajectory sampling. Therefore, eliminating this cost requires only a reward-side substitution while leaving the trajectory side unchanged. This observation provides the starting point for Part II. Subsequent work after GRPO reveals limitations on both sides, and later methods address these failures either independently or jointly, while remaining within the single-turn token-generation setting. Part III then examines 
+
+14 A First-Principles Derivation of LLM Policy Optimization 
+
+Collection: GRESO (Zheng et al., 2025b), Prompt Re-play (Baroian and Berger, 2026), PODS (Xu et al., 2026), Adap. rollout (Zhang et al., 2026d, 2025c) 
+
+Compression & reuse: ThinkPrune (Hou et al., 2025), DAST (Shen et al., 2025), RePO (Li et al., 2025b), Ex-GRPO (Zhan et al., 2025) 
+
+Diversity: TreeRPO (Yang et al., 2025b), DIVER (Hu et al., 2026), DRA-GRPO (Chen et al., 2025c), DSDR (Wan et al., 2026), R1-zero-Div (Yao et al., 2025b), GAPO (Anschel et al., 2025), Pro-GRPO (Ge et al., 2026), DaGRPO (Xie et al., 2025) 
+
+Repair: S2R (Ma et al., 2025), SCoRe (Kumar et al., 2025), PAG (Jiang et al., 2025) 
+
+Clip & ratio granularity: DAPO (Yu et al., 2025), SAPO (Gao et al., 2025), GSPO (Zheng et al., 2025a) 
+
+Density: GRPO-VPS (Wang et al., 2026b), SPO (Guo et al., 2025b) 
+
+Source: Open-Reasoner-Zero (Hu et al., 2025b), R1-V (Chen et al., 2025b), One-shot RLVR (Wang et al., 2025c) 
+
+Shaping: LASER (Liu et al., 2026b), S-GRPO (Dai et al., 2025) 
+
+Multi-objective: QwQ (Team, 2025), Kimi k1.5 (Team et al., 2025), GLM-4.5V (Hong et al., 2025) 
+
+Stat. bias corr.: Dr.GRPO (Liu et al., 2025b), Lopti (Yang et al., 2025c), NGRPO (Nan et al., 2025), AGPO (Li et al., 2025a), CPPO (Lin et al., 2025), RiskPO (Ren et al., 2025) 
+
+Credit assign.: TreeRPO (Yang et al., 2025b), SCRL (Jiang et al., 2026), SPO (Guo et al., 2025b), HighEnt (Wang et al., 2025b), PRIME (Cui et al., 2025), GRPO-λ (Parthasarathi et al., 2025), VAPO (Yue et al., 2025), GRPO-VPS (Wang et al., 2026b) 
+
+Clip–variance coupling: DAPO (Yu et al., 2025), DCPO (Yang et al., 2025a) 
+
+Granularity coupling: HT-GRPO (Luo et al., 2026), GTPO (Tan et al., 2025) 
+
+Trajectory-Side Extensions 
+
+Reward-Side Extensions 
+
+Both-Side Extensions 
+
+GRPO (Shao et al., 2024) 
+
+> reward-side: critic-free baseline
+
+Figure 2: Structure of the GRPO line ( §6). GRPO (Shao et al., 2024) originates as a pure reward-side substitution: the group-relative baseline ˆAi = ( Ri − μG)/σ G replaces the trained critic while the trajectory probability side (importance ratio, clip, KL penalty) is unchanged. Post-GRPO work identifies trajectory-side failures (collection, compression and reuse, diversity, repair, and clip–ratio granularity mis-match), reward-side failures (density, source, shaping, multi-objective aggregation, statistical bias correction, and credit assignment), and compound instabilities that require joint intervention on both sides. two structural extensions: Agentic RL, where the trajectory side expands from single-turn generation to multi-turn environment interaction, and the GRPO-OPD hybrid, where the reward side incorporates a dense per-token teacher signal as a component of the reward objective while retaining J(θ). 
+
+15 A First-Principles Derivation of LLM Policy Optimization 
+
+6.1 GRPO: Eliminating the Critic Core idea. Group Relative Policy Optimization (GRPO) (Shao et al., 2024) replaces the value model with group-relative reward normalization. For a prompt x, G responses 
+
+y1, . . . , y G are sampled from πθold and evaluated by a verifier or reward model, yielding 
+
+Ri = R(x, y i). The group-relative advantage is defined as ˆAi = Ri − μG
+
+σG
+
+, μG = 1
+
+> G
+
+P 
+
+> i
+
+Ri, σG =
+
+q 1
+
+> G
+
+P
+
+> i
+
+(Ri − μG)2. (30) This scalar advantage is then broadcast uniformly to every token in yi. The objective is 
+
+LGRPO (θ) = E
+
+ 1
+
+G
+
+> G
+
+X
+
+> i=1
+
+1
+
+|yi|
+
+> |yi|
+
+X
+
+> t=1
+
+min  ri,t ˆAi, clip( ri,t , 1 − ϵ, 1 + ϵ) ˆAi
+
+ − β KL( πθ∥πref ), (31) where ri,t = πθ(yi,t |x, y i,<t )/π θold (yi,t |x, y i,<t ) denotes the per-token importance ratio, which is identical to the RLHF-PPO ratio in Equation (23) . A comparison between GRPO and RLHF-PPO makes the modification precise: the trajectory side remains unchanged, with the same importance ratio, the same symmetric clipping rule, and the same KL regularization toward πref , whereas the reward side is restructured from a critic-estimated per-token advantage AGAE  
+
+> t
+
+into a group-relative scalar advantage ˆAi. The two formulations place this KL term differently. RLHF-PPO folds it into the per-token reward sequence in Equation (29) ,whereas GRPO writes it as a separate penalty on the objective in Equation (31) . The regularization role is the same, only the point of insertion differs. GRPO is therefore a purely reward-side substitution. GRPO belongs to a broader family of critic-free methods that replace the value network with a Monte Carlo baseline computed from sampled responses. RLOO (Ahmadian et al., 2024) builds the baseline for each response by averaging the returns of the other responses to the same prompt, a leave-one-out estimate. ReMax (Li et al., 2024) instead subtracts the reward of a single greedy response. REINFORCE++ (Hu et al., 2025a) keeps a global baseline and adds normalization and variance-reduction techniques to the basic REINFORCE estimator. What sets GRPO apart is the division of the centered reward by the within-group standard deviation σG. This extra step strips out the reward scale, and it is the origin of the statistical biases examined in Section 6.3. DeepSeek-R1 (Guo et al., 2025a) demonstrated that this substitution, when combined with verifiable rewards, can produce strong mathematical reasoning. Subsequent analy-ses (Wen et al., 2025; Yang et al., 2024) clarified the implicit incentive structure, and open reasoning models such as QwQ-32B (Team, 2025) adopted GRPO-style RLVR at scale. Recent surveys have documented the rapid proliferation of RLVR methods after DeepSeek-R1. A technical comparison of PPO, GRPO, and their variants is provided by Srivastava and Aggarwal (2025); Wang et al. (2024). The broader landscape of agentic RL, which extends these methods to multi-turn environments, is surveyed by Zhang et al. (2026a). Practical training recipes and analyses of hyperparameter sensitivity are reported by Hu et al. (2025b). 
+
+The failure structure. The deficiencies of GRPO align closely with the two algorithmic sides. On the trajectory side, failures arise in two places. Some failures concern the 
+
+> 16 A First-Principles Derivation of LLM Policy Optimization
+
+trajectories themselves before any update: uniform prompt sampling wastes compute on uninformative groups, long responses introduce length-variance artifacts, group diversity decreases as the policy converges, and failed rollouts provide no gradient. Other failures concern how the update rule of GRPO consumes these trajectories. Hard symmetric clipping, combined with group-relative normalization, can drive entropy collapse by constraining low-probability exploratory tokens more aggressively than high-probability ones as the group distribution narrows. This coupling is treated as a compound failure in Section 6.4. Separately, pairing the token-level importance ratio ri,t with the sequence-level advantage ˆAi creates a structural granularity mismatch. On the reward side, limitations arise at two levels: the reward signal Ri itself, and the advantage ˆAi that converts it into a per-token weight. At the reward-signal level, the sparse scalar reward Ri can be too coarse to identify which steps or tokens determine the outcome. Without additional design, it is also insensitive to output length, format, diversity, and competing objectives. At the advantage level, normalization by σG and |yi| introduces statistical bias. When all responses in a group receive the same reward, the centered numerator Ri − μG and the denominator σG both vanish, so the normalized advantage is formally 0 /0. Implementations resolve this by adding a small constant to σG or by skipping the group, which sets the advantage to zero and leaves the gradient empty. Section 6.3 treats this degeneracy in detail. Beyond normalization, the scalar advantage ˆAi is assigned identically to every token, treating all positions as equally responsible for the outcome: this is the credit assignment problem, and it motivates a separate class of methods that replace the uniform broadcast with position-sensitive signals. The subsections below group these failures by side, beginning with the trajectory side, then the reward side, and finally methods that address failures on both sides jointly. All methods discussed in this section remain within the single-turn token-generation setting. Part III then considers two structural departures from this endpoint: Section 7 expands the trajectory side by replacing single-turn generation with multi-turn environment interaction, and Section 8 extends the reward side by incorporating a dense per-token teacher signal as a component of the reward objective while retaining J(θ). 
+
+6.2 Trajectory-Side Variants 
+
+From the trajectory perspective, the central question can be decomposed into two sub-questions that jointly determine which learning signals contribute to the gradient. First, 
+
+which trajectories should be used . Standard uniform rollout collection can spend rollout budget on uninformative prompts, reduce group diversity, or produce trajectories whose processing cost is prohibitive without compression. Collection, compression, diversity, and repair methods address this sub-question by determining which trajectories are included in the update and in what form. Second, how much each trajectory should be optimized . The clipping rule and ratio granularity define the trust region. They control the magnitude of the update induced by an individual trajectory and the level of aggregation at which the correction is applied. 
+
+Working within the GRPO update rule. These methods keep the importance ratio and the clipping rule fixed, and they address the first sub-question above, namely which trajectories should be used. The design space can be organized along four dimensions. 
+
+> 17 A First-Principles Derivation of LLM Policy Optimization
+
+Trajectory collection determines which prompts and rollouts are sampled. Trajectory compression and reuse constrain trajectories and amortize sampling cost. Trajectory diversity preserves contrastive signals within the group. Trajectory repair recovers useful signals from failed rollouts. 
+
+Trajectory Collection Problem. Standard GRPO samples G responses uniformly, but many prompts yield zero-variance groups and therefore no useful advantage signal (Zheng et al., 2025b; Yu et al., 2025). Better collection strategies concentrate sampling on prompts with high group variance and strong gradient signal. GRESO (Zheng et al., 2025b) predicts likely uninformative prompts from historical reward dynamics and filters them before rollout. Prompt Replay (Baroian and Berger, 2026) maintains a buffer of high-signal prompts and mixes them with fresh samples in each batch. New responses are always sampled from the current policy, so the importance ratio remains valid regardless of whether the prompt came from the buffer or from fresh sampling. PODS (Xu et al., 2026) can also be viewed as a rollout-selection strategy. It generates a larger set of responses per prompt and updates only on a down-sampled subset chosen to maximize reward variance, thereby preserving contrastive signal. Adaptive rollout-allocation methods (Zhang et al., 2026d, 2025c) allocate more samples to prompts with uncertain or non-saturated rewards and fewer samples to already-converged prompts. Together, these methods redirect rollout compute from zero-signal groups toward higher-gradient updates without fundamentally changing the overall GRPO-style update. In summary, collection methods solve the informative-group problem by filtering or prioritizing which prompts or rollouts enter the update. 
+
+Trajectory Compression and Reuse Problem. Rolling out G fresh on-policy responses for each prompt at each update step and processing long reasoning chains constitute the dominant training costs in GRPO-style training (Hou et al., 2025; Li et al., 2025b). A secondary issue arises from length variance. When response lengths vary substantially within a group, the group-normalized advantage becomes sensitive to length, which introduces noise that is unrelated to correctness. Reusing past response trajectories amortizes sampling cost but introduces off-policy drift, which must be controlled. ThinkPrune (Hou et al., 2025) shortens reasoning by training under explicit token budgets and progressively tightening these budgets. DAST (Shen et al., 2025) uses difficulty-adaptive reasoning budgets, which encourage shorter reasoning for easy prompts while preserving longer reasoning for hard prompts. The difficulty signal gates trajectory length rather than modifying the reward, so DAST remains a trajectory-side compression method. RePO (Li et al., 2025b) extends GRPO by maintaining a replay buffer of previously sampled outputs and retrieving diverse off-policy samples for each prompt. It combines on-policy and off-policy terms to improve data efficiency. ExGRPO (Zhan et al., 2025) maintains a prioritized experience buffer ranked by correctness and response entropy, and selectively replays trajectories whose signals would otherwise be lost after a single update step. In summary, both families reduce training cost. Compression shortens trajectories to reduce 
+
+> 18 A First-Principles Derivation of LLM Policy Optimization
+
+per-step computation, whereas reuse amortizes the cost of fresh rollouts across multiple updates. Both families must satisfy a correctness constraint. Stronger compression may discard informative tokens, and reuse must keep importance-ratio drift within bounds to preserve a valid policy-gradient estimate. 
+
+Trajectory Diversity Problem. When the policy collapses to a narrow set of solution strategies, the sampled group may lose semantic and reward diversity, yielding weak or redundant group-relative learning signals even when some responses are correct (Anschel et al., 2025; Chen et al., 2025c; Ge et al., 2026). Without explicit diversity pressure, the rollout distribution can become degenerate, and the group may no longer provide useful contrastive signals, regardless of reward quality. TreeRPO (Yang et al., 2025b) uses tree-structured sampling rather than independent linear rollouts. From each intermediate node, it samples multiple candidate continuations and forms step-level groups from sibling branches. The branching structure increases trajectory-level exploration and exposes structurally different reasoning prefixes during train-ing. Because sibling branches also enable step-level expected reward estimation, TreeRPO doubles as a credit assignment mechanism and is revisited in Section 6.3. DIVER (Hu et al., 2026) introduces global sequence-level diversity as an intrinsic reward and incorporates it through potential-based reward shaping, preserving optimal-policy invariance while encour-aging deeper exploration in semantically structured reasoning spaces. DRA-GRPO (Chen et al., 2025c) acts after trajectories have been sampled. It estimates semantic density within the sampled group and uses a diversity-aware reward adjustment to down-weight redundant completions and amplify rewards for structurally distinct reasoning paths. DSDR (Wan et al., 2026) also operates on the collected trajectory set by adding dual-scale diversity regularization to the training objective. At the global level, it encourages distinct solution modes among correct reasoning trajectories. At the local level, it applies length-invariant token-level entropy regularization restricted to correct trajectories, preventing collapse within each mode while preserving correctness. R1-zero-Div (Yao et al., 2025b) adds a token-level diversity objective to the GRPO-style policy objective and applies it selectively to positive samples, motivated by the observed positive correlation between solution diversity and reasoning potential. GAPO (Anschel et al., 2025) extends GRPO by computing rewards over group-level properties such as diversity and coverage. With frequency-aware group rewards, it penalizes over-represented completions and encourages more uniform coverage of valid responses. Pro-GRPO (Ge et al., 2026), developed for GRPO-style training in generative models, addresses reward clustering by expanding the initial sampling group and pruning reward-clustered trajectories during sampling using latent feature proxies. This dynamic expand-and-prune strategy retains a higher-variance survivor set while avoiding the full cost of generating trajectories that would later be discarded. DaGRPO (Xie et al., 2025) identifies low-distinctiveness samples or response pairs in the collected group as a source of gradient conflict and dynamically masks them from the update. It also injects high-quality off-policy anchors to recover training signals on difficult prompts. Together, these methods address diversity failures by shaping trajectory generation, adding diversity-aware rewards 
+
+> 19 A First-Principles Derivation of LLM Policy Optimization
+
+or regularizers to the training objective, or filtering and reweighting the collected trajectory set before the update. They help maintain useful contrastive signals throughout training. 
+
+Trajectory Repair Problem. Outcome-only RLVR treats a response primarily through its final correctness, so a failed first attempt provides little information about where the reasoning went wrong or how the policy could recover. In group-relative objectives, this inefficiency is amplified when all sampled trajectories for a prompt fail, since the group provides little or no reward contrast and the resulting advantage signal becomes uninformative. Repair methods address this by expanding a failed single-shot response into a multi-turn attempt–verification–revision process, exposing correction behavior that is unavailable in single-shot outcome-only rollouts. S2R (Ma et al., 2025) learns self-directed trial-and-error by combining self-verification and self-correction with outcome- and process-level reinforcement learning. SCoRe (Kumar et al., 2025) trains self-correction through multi-turn online RL on the model’s own correction traces, using regularization and reward shaping to encourage genuine improvement over the first attempt. PAG (Jiang et al., 2025) frames the same model as both policy and generative verifier, revising only when self-verification detects an error and thereby avoiding unnecessary second attempts. From a GRPO-style training perspective, repair methods can convert otherwise terminal failures into structured verification–revision traces, potentially recovering learning signal from rollouts that would provide little contrast under outcome-only feedback. 
+
+Modifying the GRPO update rule. These methods accept trajectories as given and instead modify how GRPO processes them during the update step. The key dimension of variation is the clipping rule, specifically how the trust region is enforced and at what granularity the importance ratio is computed. 
+
+Clipping Rule and Ratio Granularity Modification Problem. The standard symmetric clipping rule clip (ri,t , 1 − ϵ, 1 + ϵ) applies identical thresholds to upward and downward deviations of the importance ratio. This symmetric bound can disproportionately restrict the probability increase of low-probability exploratory tokens with positive advantage, while high-probability exploitation tokens remain relatively easy to reinforce. This creates entropy-reduction pressure and can lead to premature determinism or mode collapse at scale (Yu et al., 2025). A separate problem arises from granularity: standard GRPO computes a per-token importance ratio, clips each token independently, and then multiplies the clipped ratio by the sequence-level advantage ˆAi. For a sequence-level reward, the policy gradient theorem requires a sequence-level probability correction. Applying token-level ratios to a sequence-level advantage therefore creates a systematic mismatch (Zheng et al., 2025a). DAPO (Yu et al., 2025) decouples the lower and upper clipping thresholds by setting 
+
+ϵlow < ϵ high . The asymmetric upper bound gives low-probability but positively advantaged tokens more room to increase, mitigating the tendency of the policy to become prematurely deterministic. DAPO also drops the KL penalty term entirely. During long reasoning training the policy is expected to move far from the initial model, so a fixed reference anchor restricts the very exploration the method tries to encourage. Because DAPO further 
+
+> 20 A First-Principles Derivation of LLM Policy Optimization
+
+combines dynamic sampling, token-level policy-gradient loss, and overlong reward shaping, it addresses reward-side variance coupling as well and is revisited as a compound instability in Section 6.4. SAPO (Gao et al., 2025) replaces the hard clipping rule with a continuous soft gate. The gradient is attenuated smoothly as ri,t moves away from 1, preserving useful signal from moderately off-policy tokens that hard clipping would otherwise discard. GSPO (Zheng et al., 2025a) resolves the granularity mismatch by clipping the sequence-level ratio directly: 
+
+rseq  
+
+> i
+
+(θ) = 
+
+ πθ(yi|x)
+
+πθold (yi|x)
+
+1/|yi|
+
+= exp 
+
+ 1
+
+|yi|
+
+> |yi|
+
+X
+
+> t=1
+
+log πθ(yi,t |x, y i,<t )
+
+πθold (yi,t |x, y i,<t )
+
+ . (32) Clipping rseq  
+
+> i
+
+rather than individual ri,t aligns the level of probability correction with the level of the advantage signal. At coarser granularities such as step, sentence, or turn, the ratio is computed as a partial product over the tokens within that unit. Clipping and granularity methods operate entirely within the update step and leave rollout trajectories unchanged. Their corrections are therefore orthogonal to the collection, compression, diversity, and repair interventions above and can in principle be combined with any of them. In summary, asymmetric clipping and soft gating address the entropy-collapse pressure from the trust-region rule, while sequence-level ratio clipping resolves the structural mismatch between the granularity of the importance ratio and the granularity of the advantage. 
+
+6.3 Reward-Side Variants 
+
+The central question on the reward side is how to accurately evaluate the quality of each policy decision. The GRPO advantage ˆAi estimates how much better response i is relative to the group average. Every reward-side intervention ultimately aims to make this estimate more faithful: more informative about which steps contributed to the outcome, less distorted by statistical artifacts of the group-relative formula, and better aligned with the true objective intended by the designer. Failures in this estimation can occur at every stage of the pipeline: from the quality and granularity of the raw signal Ri, through the aggregation and normalization rules that produce ˆAi, to the granularity at which the advantage is propagated across token positions. The reward side encompasses all components that determine ˆAi, including the quality of the underlying reward signal Ri, the group baseline μG, the normalization term σG, and the granularity at which the advantage is assigned. Reward-side interventions split into two levels: the reward signal Ri itself, and the advantage ˆAi that converts it into a per-token weight. One class of methods preserves the GRPO advantage formula and instead modifies the reward signal Ri through density, source, shaping, and multi-objective aggregation. Another class intervenes after Ri is computed, changing how it is transformed into the advantage through statistical bias correction and fine-grained advantage estimation. 
+
+Modifying the reward signal Ri. This design space can be characterized along four dimensions. Reward density specifies the number of positions in the response that receive a training signal. Reward source specifies the origin of Ri. Reward shaping specifies which auxiliary terms accompany the primary reward signal. Multi-objective reward specifies how competing task objectives are aggregated into a single scalar. 
+
+> 21
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+Table 4: Trajectory-side post-GRPO methods, grouped by whether they work within or modify the GRPO update rule. 
+
+Method Dimension Key mechanism 
+
+Within GRPO update rule 
+
+GRESO (Zheng et al., 2025b) Collection Informativeness prediction filters uninformative prompts. Prompt Replay (Baroian and Berger, 2026) Collection High-signal prompt buffer with fresh on-policy responses. PODS (Xu et al., 2026) Collection Over-generate then down-sample to a subset maximizing reward variance. Adap. rollout (Zhang et al., 2026d, 2025c) Collection Difficulty-proportional group size allocation. ThinkPrune (Hou et al., 2025) Compression & reuse Truncate chains beyond learned length threshold. DAST (Shen et al., 2025) Compression & reuse Difficulty-adaptive length budget, short for easy and long for hard. RePO (Li et al., 2025b) Compression & reuse Verified trajectory replay buffer under IS correction. ExGRPO (Zhan et al., 2025) Compression & reuse Prioritised experience buffer by correctness and entropy. TreeRPO (Yang et al., 2025b) Diversity Branch rollouts from each intermediate step. Sibling branches also enable step-level reward estimation (also in Table 5). DIVER (Hu et al., 2026) Diversity Global diversity as intrinsic reward via potential-based shaping. DRA-GRPO (Chen et al., 2025c) Diversity Diversity-aware reward adjustment down-weights redundant comple-tions. DSDR (Wan et al., 2026) Diversity Dual-scale diversity regularization: global mode diversity + local token entropy. R1-zero-Div (Yao et al., 2025b) Diversity Token-level diversity objective applied selectively to positive samples. GAPO (Anschel et al., 2025) Diversity Group-aware objective penalises redundant responses. Pro-GRPO (Ge et al., 2026) Diversity Over-sample then prune reward-clustered trajectories. DaGRPO (Xie et al., 2025) Diversity Mask low-distinctiveness pairs, and inject quality anchors. S2R (Ma et al., 2025) Repair Self-verification and correction via RL with a two-turn signal. SCoRe (Kumar et al., 2025) Repair End-to-end multi-turn self-correction from initial attempt. PAG (Jiang et al., 2025) Repair Policy-as-verifier with revision only on self-detected errors. 
+
+Modifying GRPO update rule 
+
+DAPO (Yu et al., 2025) Clip & ratio Asymmetric clip: ϵlow < ϵ high . Also combines dynamic sampling and length shaping (also in Table 6). SAPO (Gao et al., 2025) Clip & ratio Soft continuous gate replaces hard clip. GSPO (Zheng et al., 2025a) Clip & ratio Sequence-level IS ratio clipped at sequence level. 
+
+Reward Density Problem. The scalar Ri is typically sparse. It is provided as a single verifier score at the end of the response and does not convey which tokens or reasoning steps within the trajectory contributed to the outcome. Different task types exhibit qualitatively different 
+
+22 A First-Principles Derivation of LLM Policy Optimization 
+
+sparsity regimes. Mathematical reasoning often allows binary correctness checking, whereas open-ended generation may provide no directly verifiable signal. Accordingly, the appropriate design of reward density varies across tasks. Outcome reward models (Cobbe et al., 2021) provide the baseline by assigning one scalar reward to each response. Process reward models (Lightman et al., 2024) increase reward density by labeling intermediate reasoning steps and supplementing or replacing the end-of-response scalar with denser per-step feedback. GRPO-VPS (Wang et al., 2026b) achieves step-level density without a separately trained reward model. It segments generation into discrete steps and tracks the conditional probability of the correct answer at each segment boundary, thereby producing verifiable step-level progress signals that are directly incorporated into the GRPO update. SPO (Guo et al., 2025b) partitions yi into contiguous segments and assigns a segment-level advantage to each segment, providing intermediate granularity between trajectory-level and token-level credit. Its segment construction also functions as a credit assignment mechanism, which is discussed further in Section 6.3. Overall, density-based methods replace the single end-of-response scalar with finer-grained signals, directing the gradient toward the step or segment level where causal responsibility can be localized more precisely. 
+
+Reward Source Problem. The quality of Ri depends on both the source that generates it and the training instances through which it is observed. Across all three source types, the central reward-side failure is reward hacking : the policy optimizes the proxy signal Ri rather than the intended objective, so Ri ceases to track true quality. Rule-based verifiers are precise within their target domains but brittle outside these domains, where the policy can exploit format, length, or test-case loopholes that satisfy the rule without solving the task. Trained reward models generalize more effectively but are most susceptible to hacking. Because they approximate true human preferences from finite data, sustained RL optimization drives the policy toward out-of-distribution outputs that achieve high model scores yet violate the intended objective. This is a manifestation of Goodhart’s Law, which intensifies as the policy diverges from 
+
+πref (Gao et al., 2023), so the KL penalty toward πref introduced in Part I is also the standard structural bound on reward hacking. LLM-as-judge evaluation (Zheng et al., 2023) is flexible and scales to open-ended tasks but can be hacked through verbosity or sycophancy and can produce inconsistent results across prompts and models. Rule-based verifiers are the default choice for mathematical reasoning. Open-Reasoner-Zero (Hu et al., 2025b) demonstrates that rule-based verification can support stable training with minimal reward-side complexity. Image-grounded verifiers extend this paradigm to vision-language settings. Early vision-language RL systems such as R1-V (Chen et al., 2025b) indicate that R1-style verifiable-reward training can be extended to multimodal tasks, although verifier design remains task-dependent. One-shot RLVR (Wang et al., 2025c) demonstrates that the data requirement of RLVR can be extremely small when the reward source is precise and verifiable. With a reliable mathematical verifier, even a single carefully selected training example can yield substantial reasoning gains, indicating that precise verifiable rewards make extremely small RLVR datasets effective. Overall, the choice of reward source governs both training stability and generalization. Rule-based verifiers are 
+
+> 23 A First-Principles Derivation of LLM Policy Optimization
+
+reliable within narrow domains. Trained reward models transfer across tasks but may introduce reward hacking. LLM-as-judge methods are flexible but can be inconsistent. 
+
+Reward Shaping Problem. The main task reward alone may be insufficient. It can be insensitive to response length or unaware of when reasoning has already reached a correct conclusion. Auxiliary reward terms can shape the behavior of the policy along these dimensions. However, they must be calibrated carefully to avoid displacing the primary objective. LASER (Liu et al., 2026b) adds a step-function length reward. Correct responses within a target-length threshold receive an auxiliary bonus, and a difficulty-aware variant dynamically adapts the threshold while maintaining at least one complete and correct response per difficulty level. This design achieves a Pareto-optimal balance between correctness and token efficiency. S-GRPO (Dai et al., 2025) assigns rewards that decay with the position at which the model exits reasoning. The model samples one reasoning path, selects multiple candidate exit points, and receives exponentially decreasing rewards for later correct exits, thereby incentivizing accurate but concise reasoning termination. Reward shaping is the primary entry point for S-GRPO, but its intervention extends to group construction and advantage computation as well. It is not separately examined in Sections 6.3 or 6.3. Overall, shaping methods extend the reward signal to dimensions that the primary verifier ignores. Each auxiliary term introduces a calibration burden, and a weight that is too large can displace the primary objective. 
+
+Multi-Objective Reward Problem. A single scalar reward Ri cannot simultaneously represent correctness, format adherence, fluency, safety, and user preference unless these objectives are reduced to a weighted sum. Such a sum requires manually tuned weights, and its components may drive the policy in conflicting directions. This limitation is structural rather than incidental. It arises whenever a task requires balancing incommensurable objectives, which is the default setting for general-purpose language models. Reward aggregation methods construct a composite scalar from heterogeneous reward sources or verifiable components. QwQ (Team, 2025) combines outcome-based verifiers for mathematics and coding with general reward models and rule-based verifiers in later RL stages. Kimi k1.5 (Team et al., 2025) combines verifiable rewards, learned reward models, and an auxiliary length-based reward that is added to the original reward with an explicit weighting parameter. GLM-4.5V (Hong et al., 2025) illustrates the engineering complexity of this design at scale. It combines RLVR and RLHF across many multimodal domains and capabilities, using a multi-domain unified reward system that shares common evaluation logic while allowing targeted verifier optimization for each subdomain. The corresponding training report further observes that weakness in the reward signal for a single capability can disrupt training across domains. All such approaches modify the quantity that enters 
+
+Ri while leaving the importance ratio, the clipping rule, and the GRPO advantage formula unchanged. Overall, multi-objective methods address the structural limitation of a single scalar reward by composing objectives into a calibrated weighted sum, while sharing the challenge of preventing any single component from dominating the gradient. 
+
+> 24
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+Table 5: Reward-side post-GRPO methods, grouped by whether they modify the reward signal Ri or the advantage ˆAi.
+
+Method Dimension Key mechanism 
+
+Modifying the reward signal Ri
+
+GRPO-VPS (Wang et al., 2026b) Reward density Verifiable step-level progress via conditional probability at segment boundaries (also under Credit assignment below). SPO (Guo et al., 2025b) Reward density Segment-level advantage at intermediate granularity between trajec-tory and token level (also under Credit assignment below). Open-Reasoner-Zero (Hu et al., 2025b) Reward source Rule-based verifier for stable training with minimal complexity. R1-V (Chen et al., 2025b) Reward source Image-grounded verifier extends RLVR to vision-language tasks. One-shot RLVR (Wang et al., 2025c) Reward source Single carefully selected training example suffices when verifier is precise. LASER (Liu et al., 2026b) Reward shaping Step-function length reward with difficulty-aware dynamic threshold. S-GRPO (Dai et al., 2025) Reward shaping Exponentially decaying rewards by reasoning exit position. QwQ (Team, 2025) Multi-objective Verifiers for math/code combined with reward models across RL stages. Kimi k1.5 (Team et al., 2025) Multi-objective Verifiable rewards, learned RM, and length reward with explicit weight. GLM-4.5V (Hong et al., 2025) Multi-objective Multi-domain unified reward system across RLVR and RLHF capa-bilities. 
+
+Modifying the advantage ˆAi
+
+Dr.GRPO (Liu et al., 2025b) Stat. bias corr. Remove per-length and σG normalization for unbiased estimator. Lopti (Yang et al., 2025c) Stat. bias corr. Probability-correlated token weights downweight low-prob. gradient dominance. NGRPO (Nan et al., 2025) Stat. bias corr. Virtual maximum-reward sample restores nonzero advantages in homogeneous groups. AGPO (Li et al., 2025a) Stat. bias corr. Mask homogeneous groups from loss, and clip negative batch losses to zero. CPPO (Lin et al., 2025) Stat. bias corr. Prune low-absolute-advantage completions before gradient step. RiskPO (Ren et al., 2025) Stat. bias corr. Mixed Value-at-Risk baseline prevents entropy collapse from high-prob. overemphasis. TreeRPO (Yang et al., 2025b) Credit assignment Step-level expected reward estimated from tree-structured rollouts (also under Diversity in Table 4). SCRL (Jiang et al., 2026) Credit assignment Subproblem-level normalized advantages from verifiable reasoning chain decomposition. SPO (Guo et al., 2025b) Credit assignment Segment-level advantage assignment with flexible segmentation scheme. HighEnt (Wang et al., 2025b) Credit assignment Selective gradient update on high-entropy forking tokens only. PRIME (Cui et al., 2025) Credit assignment Per-token implicit reward β log πϕ/π ref trained online from outcome labels. GRPO-
+
+λ (Parthasarathi et al., 2025) Credit assignment TD( λ)-style eligibility-trace weighting via per-token log-prob. VAPO (Yue et al., 2025) Credit assignment A value model is reintroduced with decoupled GAE, length-adaptive 
+
+λ, asymmetric clipping, and group-sampled contrastive signals to address sparse rewards and length heterogeneity. GRPO-VPS (Wang et al., 2026b) Credit assignment Verifiable step-level progress signals via conditional answer probabil-ity at segment boundaries (also under Reward density above). 
+
+Modifying the advantage ˆAi. These methods intervene after Ri has been computed, changing how reward information is transformed into policy-gradient updates. They can be 
+
+25 A First-Principles Derivation of LLM Policy Optimization 
+
+organized along two dimensions. Statistical bias correction addresses systematic distortions introduced by the normalization, centering, and aggregation rules used to convert group rewards into advantages and losses. Credit assignment addresses the uniform broadcast of ˆAi across all token positions, replacing it with a position-sensitive signal intended to better approximate the contribution of each step or token. 
+
+Statistical Bias Correction Problem. The GRPO advantage formula introduces several sources of systematic distortion, arising from its length averaging, group normalization, group centering, and token-level gradient rules. The per-response length averaging in standard GRPO scales each response-level loss by 1 /|yi|, so long incorrect responses receive a smaller per-token penalty than short incorrect responses, creating a length-dependent aggregation bias. Normalization by σG
+
+amplifies groups with small within-group reward variance, making the update scale depend on sampled group statistics rather than only on task utility. When all G responses in a group receive identical rewards, both the centered numerator Ri − μG and the denominator 
+
+σG vanish, so the normalized advantage is formally 0 /0. Implementations resolve this by adding a small constant ε to σG or by skipping the group, which sets the advantage to zero and blocks the gradient entirely, both on easy prompts where all responses are correct and on hard prompts where all are incorrect. Group-mean centering also discards absolute reward scale: groups with different absolute success rates can yield similar normalized advantages if their relative reward patterns are similar. At the token level, low-probability tokens can produce disproportionately large gradient magnitudes and dominate the update even when they are not semantically responsible for the final outcome. These effects arise from particular normalization and aggregation choices in GRPO-style training rather than from verifiable rewards themselves, and they can accumulate over the course of RL training. Dr. GRPO (Liu et al., 2025b) removes both response-length normalization and σG
+
+normalization to reduce the length and difficulty biases of vanilla GRPO, trading these bias reductions for higher gradient variance. Lopti (Yang et al., 2025c) assigns token-level loss weights that are positively correlated with the predicted probability of each token, downweighting low-probability tokens whose large gradient magnitudes would otherwise dominate GRPO updates. NGRPO (Nan et al., 2025) hypothesizes a virtual maximum-reward sample during advantage computation, altering the group mean and variance so that homogeneously incorrect responses receive nonzero advantages rather than being silently zeroed out. AGPO (Li et al., 2025a) masks zero-advantage groups from the batch loss computation, preventing all-correct or all-wrong groups from entering the mean loss as uninformative terms, and clips negative batch losses to zero to mitigate overconfidence and entropy collapse. CPPO (Lin et al., 2025) prunes completions with low absolute advantages before computing the gradient, reducing the number of responses that enter the loss while preserving the signal from high-advantage completions. RiskPO (Ren et al., 2025) replaces mean-based optimization with a Mixed Value-at-Risk objective that integrates weighted attention over multiple regions of the reward distribution, mitigating entropy collapse and overconfident convergence caused by overemphasis on high-probability sequences. Overall, these methods 
+
+> 26 A First-Principles Derivation of LLM Policy Optimization
+
+mitigate statistical artifacts induced by GRPO’s normalization and aggregation choices, each targeting a distinct distortion: length bias, variance amplification, degenerate advantages, or token-level gradient dominance. 
+
+Credit Assignment and Fine-Grained Advantage Problem. The credit assignment problem in RL asks which actions are causally responsible for the observed return. In GRPO, this problem takes a specific form: the scalar ˆAi is broadcast uniformly to every token in a response, treating all positions as equally responsible for the outcome. This uniform assignment wastes gradient on uninformative tokens and dilutes the signal at decisive ones. The natural resolution is to replace the uniform broadcast with a position-sensitive signal, either by structurally decomposing the reward across steps, by selectively updating high-signal positions, or by estimating a fine-grained advantage directly from model internals. At the step level via structural decomposition, TreeRPO (Yang et al., 2025b) samples a tree of continuations from intermediate reasoning states and estimates step-level expected rewards from the resulting tree-structured rollouts. SCRL (Jiang et al., 2026) decomposes a reference reasoning chain into verifiable subproblems and assigns subproblem-level normalized advantages to the corresponding answer segments, providing a finer-grained credit signal than a single end-of-response scalar. SPO (Guo et al., 2025b) partitions yi into contiguous segments under a flexible segmentation scheme and assigns a segment-level advantage to each segment, providing an intermediate granularity between trajectory-level and token-level credit assignment. Via selective updating, HighEnt (Wang et al., 2025b) shows that only a small fraction of tokens exhibit high entropy and that these high-entropy tokens act as forking tokens that steer the model toward qualitatively different reasoning paths. Applying policy gradient updates selectively to this minority maintains or improves the performance of full-gradient training, whereas updating only the lowest-entropy tokens degrades performance. Via model-driven estimation, PRIME (Cui et al., 2025) derives per-token implicit process rewards as β log πϕ(yt|y<t )  
+
+> πref (yt|y<t )
+
+, where πϕ is a language model trained online from outcome labels and πref is a fixed reference, producing a dense token-level signal without requiring explicit step-level annotations. GRPO-λ (Parthasarathi et al., 2025) approximates a TD( λ)-style advantage by reformulating eligibility-trace weighting through per-token log-probabilities, enabling fine-grained credit assignment across token positions without a learned value model. Although broader than pure credit assignment, VAPO (Yue et al., 2025) revisits advantage estimation through a value-based framework. Value model bias is corrected by value pre-training and a decoupled GAE that uses separate λ values for policy and value updates. Heterogeneous sequence lengths are handled by dynamically adjusting λ according to sequence length. Sparse rewards are addressed jointly through asymmetric clipping, positive example imitation loss, and group-sampled contrastive signals. In reintroducing a value model, VAPO partially converges with the PPO approach, applying the value model selectively to resolve limitations that the group-relative baseline alone cannot address. Also relevant here, GRPO-VPS (Wang et al., 2026b) produces verifiable step-level progress signals by tracking conditional answer probability at segment boundaries, which serves simultaneously as a density mechanism and a credit signal. Overall, credit assignment methods break the 
+
+> 27
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+Table 6: Both-side post-GRPO methods for compound instabilities coupling the two sides.       
+
+> Method Dimension Key mechanism DAPO (Yu et al., 2025) Clip–variance Asymmetric clipping on the trajectory side is combined with dynamic sampling, token-level policy-gradient loss, and length shaping on the reward side (also under Clip & ratio in Table 4). DCPO (Yang et al., 2025a) Clip–variance Token-specific dynamic clip thresholds on the trajectory side are paired with smooth advantage standardization over cumulative train-ing statistics on the reward side. HT-GRPO (Luo et al., 2026) Granularity A prompt-conditioned ratio estimator on the trajectory side is coupled with phase-differentiated advantage weighting on the reward side. GTPO (Tan et al., 2025) Granularity Policy entropy on the trajectory side defines the token-level granu-larity at which the signal is applied, paired with entropy-weighted token-level reward redistribution on the reward side.
+
+uniform-broadcast assumption of GRPO and concentrate the gradient on tokens or steps that are more likely to carry useful learning signal, whether through structural decomposition, selective updating, or model-driven estimation. 
+
+6.4 Both-Side Variants: Compound Instabilities 
+
+Some failure modes are better understood as interactions between the trajectory side and the reward side. Modifying one side may leave residual instability on the other. Existing both-side methods typically assemble independently motivated fixes rather than deriving them from a shared principle. The open gaps below highlight couplings that remain underexplored or have not yet been systematically formulated. 
+
+Clip–Variance Coupling Problem. Symmetric clipping and group-relative normalization can interact adversely during long-CoT RL. If clipping suppresses exploration and the sampled group becomes increasingly homogeneous, the within-group reward variance σG can shrink or vanish, reducing the usefulness of group-relative advantages. Conversely, variance-based normalization can make update scales highly dependent on sampled group statistics. As a result, trajectory-side clipping and reward-side normalization may reinforce instability rather than correct it independently. DAPO (Yu et al., 2025) combines Clip-Higher, an asymmetric clipping rule with ϵlow <ϵhigh , with dynamic sampling, token-level policy-gradient loss, and overlong reward shaping. Each component addresses a distinct failure mode. DAPO shows that these independently motivated components can be complementary in a practical recipe for stable long-CoT training. DCPO (Yang et al., 2025a) uses token-specific dynamic clip thresholds on the trajectory side and smooth advantage standardization over cumulative training statistics on the reward side, reducing the zero-gradient problem that arises when all responses in a group receive identical rewards. 
+
+28 A First-Principles Derivation of LLM Policy Optimization 
+
+Granularity Coupling Problem. Ratio granularity and advantage granularity are not independent. A token-level ratio applied to a step-level advantage can mismatch the unit of trust-region control with the unit of credit. A sequence-level ratio applied to a token-level advantage can create the reverse mismatch. A principled design should therefore specify ratio aggregation and advantage assignment at compatible granularities. GTPO (Tan et al., 2025) is closer to the reward-side boundary of this category: it uses policy entropy to define token-level reward or advantage weighting, concentrating the learning signal on uncertain positions rather than broadcasting the same scalar uniformly. This differs from HighEnt in Section 6.3, which selectively applies policy-gradient updates to high-entropy tokens, whereas GTPO redistributes token-level reward or advantage weights according to entropy. Although most GRPO variants discussed here target text-only long-CoT RLVR, similar coupling patterns also appear in adjacent generation settings. Sketch-Then-Paint / HT-GRPO (Luo et al., 2026) anchors the importance ratio to a prompt-conditioned estimator computed from a fully masked state on the trajectory side and assigns advantage weights by the structural role of each token in the staged generation process on the reward side. The two choices are coupled through the stage structure. The stages organize the masked-state ratio computation and define the structural roles used for advantage weighting. Both methods rely on method-specific anchors, such as a phase boundary in HT-GRPO or a policy-entropy estimate in GTPO. A general joint granularity design without such an anchor remains open. 
+
+Open Gaps in Both-Side Design 
+
+The methods above address specific instabilities, but two deeper gaps persist across Part II. 
+
+Absence of a joint theoretical foundation. The objective J(θ) = Eτ ∼pθ [R(τ )] couples the trajectory distribution pθ(τ ) with the reward functional R(τ ). However, existing GRPO/RLVR variants rarely derive from this structure the conditions under which trajectory-side and reward-side choices should co-vary. Without such a theory, it is difficult to determine from first principles whether a single-side fix is sufficient or a joint intervention is necessary. The both-side methods reviewed above largely assemble components that were motivated independently on each side rather than derived from a shared principle. 
+
+Uncharted interactions between single-side methods. Trajectory-side and reward-side methods operate simultaneously within the same update step. A trajectory-side method that changes the sample distribution also changes the groups on which reward normalization, filtering, or shaping operates. Conversely, reward-side filtering or weighting changes which trajectories contribute to the effective policy update. These interactions have not been systematically studied, so the combined behavior of methods drawn from different parts of Part II remains unknown. Combining independently validated methods does not guarantee a well-behaved joint system. 
+
+> 29
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+# Part III Structural Extensions: Agentic RL and On-Policy Distillation 
+
+7 Agentic RL as a Trajectory-Side Structural Extension 
+
+Part II showed that GRPO originates as a reward-side substitution and that subsequent work refines the same single-turn estimator on both sides, while remaining within the regime of single-turn token generation. Part III departs structurally from that endpoint in two complementary directions. This section addresses the first direction: Agentic RL, which expands what the trajectory contains while preserving the GRPO update rule and reward aggregation logic. The action space expands from token generation against a static prompt to structured multi-step decisions, including web search, code execution, and GUI interaction, interleaved with environment observations over multiple turns. The introduction of an environment constitutes the single structural change that induces all new failure modes on both sides. Section 8 addresses the second direction. A note on scope: Agentic RL is an active research area with a large and rapidly growing body of work. Rather than attempting to catalog this literature comprehensively, this section uses the trajectory-side and reward-side framework developed in Part II as an analytical lens, identifying which Part II failure modes carry over structurally and which new failure modes are introduced by the environment. The goal is to show how the same analytical axes extend to the agentic setting, not to provide a complete survey of agentic methods. This focus complements dedicated agentic RL surveys. The landscape survey of Zhang et al. (2026a) organizes the field by agentic capability, such as planning, tool use, and memory, and catalogs what agents can do. Domain surveys of deep research systems take the same capability-centric view within one application (Li et al., 2025c; Zhang et al., 2025b). The two-sided reading is orthogonal. It asks instead which factor of ∇θJ(θ) a method modifies and which failure that change answers. The two readings compose. A capability such as memory or tool use is ultimately realized as a trajectory-side or reward-side intervention on the same estimator. 
+
+Formal objective. Agentic RL replaces the single-turn response yi with a multi-turn interaction sequence: 
+
+τi = ( x, o i, 1, a i, 1, o i, 2, a i, 2, . . . , o i,H , a i,H ), (33) where oi,t denotes the environment observation at turn t and ai,t denotes the action of the model. Substituting this trajectory into the GRPO objective yields: 
+
+LAgentic (θ) = E
+
+ 1
+
+G
+
+> G
+
+X
+
+> i=1
+
+1
+
+|τ mask  
+
+> i
+
+|
+
+> H
+
+X  
+
+> t=1
+> |τmask
+> i,t |
+
+X
+
+> k=1
+
+min  ri,t,k ˆAi, clip( ri,t,k , 1−ϵ, 1+ ϵ) ˆAi
+
+
+
+− β KL( πθ∥πref ),
+
+(34) where τ mask  
+
+> i,t
+
+denotes the subset of policy-generated tokens at turn t that enter the policy-gradient loss, |τ mask  
+
+> i
+
+| = PHt=1 |τ mask  
+
+> i,t
+
+| is the total number of such tokens in the trajectory, 
+
+30 A First-Principles Derivation of LLM Policy Optimization 
+
+Collection: WebRL (Qi et al., 2025), CuSe-arch (Shen et al., 2026), DeepResearcher (Zheng et al., 2025c) 
+
+Collection & compression: WebAgent-R1 (Wei et al., 2025b) 
+
+Compression & reuse: ARPO (Lu et al., 2025) 
+
+Diversity: AgentRL (Zhang et al., 2025a) 
+
+Rollout validity: Search-R1 (Jin et al., 2025) 
+
+Ratio staleness: WebRL (Qi et al., 2025) 
+
+Env. interaction cost: ZeroSearch (Sun et al., 2025), Simia (Li et al., 2025e), AWM (Wang et al., 2026c), SkyRL (Cao et al., 2025), ProRL (Zhang et al., 2026b), LOOP (Chen et al., 2025a) 
+
+Reward source: Search-R1 (Jin et al., 2025), SWE-RL (Wei et al., 2025a), ReTool (Feng et al., 2026), ARTIST (Singh et al., 2025) 
+
+Temporal credit: SWEET-RL (Zhou et al., 2025), MT-GRPO (Zeng et al., 2025), IGPO (Wang et al., 2025a) 
+
+Reward specification: WebRL (Qi et al., 2025), MUA-RL (Zhao et al., 2025b), UI-R1 (Lu et al., 2026a), UI-AGILE (Lian et al., 2026) 
+
+Multi-agent (boundary): MAGRPO (Liu et al., 2026a) 
+
+Prefix quality & mixing ( TA): RLAD (Zhang et al., 2026c), dGRPO (Ramos et al., 2026), LUFFY (Yan et al., 2025), Prefix-RFT (Huang et al., 2025) 
+
+Reward shaping ( TB ): CoDistill-GRPO (Kwon et al., 2026), KDRL (Xu et al., 2025) [collapse] 
+
+Additive loss ( TC ): dGRPO (Ramos et al., 2026) 
+
+External KL ( TD ): KDRL (Xu et al., 2025), HDPO (Ding, 2026) 
+
+Coupled ( TA+B ): RLSD (Yang et al., 2026), RE-OPOLD (Ko et al., 2026) 
+
+Persist 
+
+New–Traj 
+
+New–Reward 
+
+Trajectory 
+
+Reward 
+
+Both 
+
+Agentic RL (§7)    
+
+> τ: single →multi-turn
+
+GRPO-OPD hybrid (§8)    
+
+> teacher ˜rtvia TA–TD
+
+GRPO 
+
+> (Part II endpoint)
+
+Figure 3: Part III structural extensions from the Part II GRPO endpoint. Each extension alters one axis of J(θ) = Eτ ∼pθ [R(τ )]. Agentic RL expands τ to multi-turn environment interaction. The GRPO-OPD hybrid retains the GRPO update rule and introduces the teacher signal ˜rt along the same trajectory-side, reward-side, and both-side axes used in Part II. Operator labels TA–TD indicate where each method intervenes. The orange node in the Agentic branch lists Part II problem dimensions that persist there. Colored nodes list qualitatively new dimensions introduced by the structural change. 
+
+k indexes these tokens within the turn, and ri,t,k is the per-token importance ratio of the 
+
+k-th such token, defined exactly as in single-turn GRPO. In tool-augmented trajectories, environment-generated observation tokens must be excluded from the likelihood-ratio and KL terms, because the policy did not generate them and assigning gradient credit to them violates the policy-gradient derivation. Search-R1 (Jin et al., 2025) makes this requirement explicit through retrieved-token masking, which excludes retrieved tokens from the policy-
+
+31 A First-Principles Derivation of LLM Policy Optimization 
+
+gradient loss and restricts updates to policy-generated tokens. There are two structural modifications relative to single-turn GRPO. First, the single sum over response tokens becomes a double sum over turns and within-turn action tokens. Second, Ri is computed from trajectory-level environment feedback, often as a terminal outcome reward, rather than from a single-turn static verifier. 
+
+Trajectory side. How do trajectory-side failures from Part II persist in Agentic RL? Part II identifies trajectory-side failures at two levels. The first concerns the trajectories themselves, including rollout collection, trajectory compression and reuse, group diversity, and the repair of failed rollouts. The second concerns the update rule, where hard sym-metric clipping combined with group-relative normalization can drive entropy collapse, and token-level importance ratios create a granularity mismatch when applied to sequence-level advantages. These failures persist in the agentic setting. The methods below are illustrative rather than exhaustive. Each is included only to show that a Part II failure mode reappears in the agentic setting and is addressed by a recognizably trajectory-side intervention. For trajectory collection, WebRL (Qi et al., 2025) uses a self-evolving online curriculum together with outcome-supervised reward modeling and adaptive RL strategies, so that training focuses on tasks that remain informative under the current policy. CuSearch (Shen et al., 2026) reallocates the rollout budget toward deeper-search trajectories through a search-depth greedy allocation operator, concentrating the gradient signal on trajectories with more retrieval decision points. WebAgent-R1 (Wei et al., 2025b) extends GRPO to the multi-turn web setting and adds context compression and asynchronous rollout. This is a trajectory-side response to the collection and compression problems carried over from Part II. DeepResearcher (Zheng et al., 2025c) scales rollout collection in live web-search environments, where the environment rather than a static prompt set decides which trajectories appear. For compression and reuse, ARPO (Lu et al., 2025) maintains a per-task experience replay buffer that substitutes one failed trajectory with a previously successful one when the entire group fails, preventing zero-reward groups from producing vanishing gradients under sparse GUI task rewards. It also applies a task selection strategy that retains only tasks on which a baseline agent succeeds at least once, thereby filtering out unlearnable interactions. For diversity, AgentRL (Zhang et al., 2025a) applies Cross-Policy Sampling, drawing actions from multiple policies to encourage exploration in multi-turn settings. 
+
+What new trajectory-side failures are introduced by interactive environments? 
+
+Beyond these inherited failures, the introduction of a real interactive environment creates three qualitatively new trajectory-side problems with no counterpart in single-turn generation. 
+
+Rollout validity : a multi-turn trajectory interleaves policy-generated action tokens with observation tokens returned by the environment. The policy-gradient loss must therefore be restricted to policy-generated tokens. Including environment-generated observation tokens would incorrectly assign credit to tokens that the policy did not generate, and Search-R1 (Jin et al., 2025) establishes retrieved-token masking as the standard remedy for this case. 
+
+Importance ratio staleness : as the horizon H grows, the environment state distribution shifts after each gradient step, which invalidates importance ratios computed under πθold .WebRL (Qi et al., 2025) addresses the related problem of policy distribution drift through a self-evolving online curriculum, outcome-supervised reward modeling, and adaptive RL strategies that update the training distribution as the policy changes. 
+
+> 32 A First-Principles Derivation of LLM Policy Optimization
+
+Environment cost and availability : each tool call blocks the rollout until the environment responds, whether the call involves a live search query, a code-execution sandbox, or a GUI action. This single source of friction surfaces as three related bottlenecks: the per-call cost of each interaction, the availability of an environment to interact with at all, and the throughput of collecting rollouts in parallel. Wall-clock time per gradient step therefore increases with both the horizon H and the group size G, while quota constraints make parallel rollout difficult and directly limit the gradient update budget. For per-call cost, ZeroSearch (Sun et al., 2025) converts the LLM into a retrieval module that simulates search, generating both useful and noisy documents to replace live search calls and eliminate API cost. For availability, when no real environment exists rollout collection is impossible. Simia (Li et al., 2025e) uses LLM-simulated feedback to support training without real environments, and AWM (Wang et al., 2026c) constructs fully synthetic code-driven and database-backed environments at scale. For throughput, sequential tool calls block gradient updates and limit parallelism. SkyRL (Cao et al., 2025) provides an efficient multi-turn tool-use RL pipeline with asynchronous rollout, and ProRL (Zhang et al., 2026b) fully decouples rollout generation as a rollout-as-a-service infrastructure, separating the rollout process from the training loop. A related limit appears when the horizon grows so long that storing the full trajectory becomes the binding memory constraint. LOOP (Chen et al., 2025a) answers with a memory-efficient PPO variant that keeps one copy of the policy and uses no separate value network. This shares the critic-free motivation of the GRPO line. 
+
+Reward side. How do reward-side failures from Part II persist in Agentic RL? 
+
+Part II identifies reward-side limitations at two levels: the reward signal Ri itself, and the advantage ˆAi that turns it into a per-token weight. At the reward-signal level, failures arise in reward density, reward source, reward shaping, and multi-objective aggregation. At the advantage level, failures arise from length and variance normalization bias in ˆAi, degenerate baselines when all group responses receive the same reward, and coarse credit assignment that broadcasts the advantage uniformly across all token positions. These limitations persist in the agentic setting. As on the trajectory side, the methods below are illustrative. Each shows a Part II reward-side failure reappearing in the agentic setting rather than offering a complete catalog. On reward source, open-ended environments require task-specific verifier designs. Search-R1 (Jin et al., 2025) uses exact match over the final answer, SWE-RL (Wei et al., 2025a) uses a lightweight rule-based reward, such as a similarity score between the ground-truth and LLM-generated solutions, as a graded terminal signal, and ReTool (Feng et al., 2026) derives the reward from whether tool calls ultimately produce correct outcomes, rewarding successful tool-use strategies without requiring step-level annotation. ARTIST (Singh et al., 2025) interleaves reasoning, tool queries, and tool outputs in one trajectory and lets an outcome reward decide when and which tool to invoke. It couples a trajectory-side change, the interleaving of action and observation tokens, with a reward-side choice of outcome-only credit over a heterogeneous action sequence. On degenerate baselines, filtering prompts by difficulty no longer stabilizes σG. In the agentic setting task difficulty depends on the tool-call sequence the policy chooses, not on the prompt alone, so it is harder to ensure that each group contains at least one successful trajectory. 
+
+> 33
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+Table 7: Agentic RL methods grouped by problem dimension: dimensions where Part II problems persist, and qualitatively new dimensions introduced by environment interaction. The final row is a multi-agent boundary case. 
+
+Method Dimension Key mechanism 
+
+Part II problems persist 
+
+Search-R1 (Jin et al., 2025) Collection / validity Retrieved-token masking restricts the policy-gradient loss to policy-generated action tokens. WebRL (Qi et al., 2025) Collection A self-evolving curriculum filters uninformative task-state pairs to keep group rewards non-degenerate. CuSearch (Shen et al., 2026) Collection A search-depth greedy allocation operator concentrates the rollout budget on deeper-search trajectories. WebAgent-R1 (Wei et al., 2025b) Collection & compr. Multi-turn GRPO with context compression and asynchronous roll-out. DeepResearcher (Zheng et al., 2025c) Collection Rollout collection scaled in live web-search environments rather than a static prompt set. ARPO (Lu et al., 2025) Compression & reuse A per-task experience replay buffer substitutes one failed trajectory with a previously successful one when the entire group fails, prevent-ing zero-reward groups. AgentRL (Zhang et al., 2025a) Diversity Cross-Policy Sampling draws actions from multiple policies to increase group exploration diversity. SWE-RL (Wei et al., 2025a) Reward source A patch-similarity score against the ground-truth patch provides a continuous graded terminal reward. ReTool (Feng et al., 2026) Reward source An outcome reward is derived from whether tool calls ultimately pro-duce correct results, rewarding successful tool-use strategies without step-level annotation. ARTIST (Singh et al., 2025) Reward source An outcome reward shapes interleaved reasoning and tool calls with-out step-level supervision. 
+
+New problems from environment interaction 
+
+Search-R1 (Jin et al., 2025) Rollout validity Retrieved-token masking excludes environment-generated observation tokens from the policy-gradient loss. WebRL (Qi et al., 2025) Ratio staleness A self-evolving online curriculum with adaptive RL updates the training distribution as the policy drifts, keeping importance ratios from going stale. ZeroSearch (Sun et al., 2025) Env. interaction cost An LM-based retrieval simulator replaces live search calls and decou-ples rollout throughput from API availability. Simia (Li et al., 2025e) Env. interaction cost An LLM-simulated environment provides feedback for training with-out access to a real environment. AWM (Wang et al., 2026c) Env. interaction cost Procedurally generated synthetic environments remove any depen-dency on external services. SkyRL (Cao et al., 2025) Env. interaction cost Asynchronous rollout dispatch reduces wall-clock time per gradient step in multi-turn training. ProRL (Zhang et al., 2026b) Env. interaction cost A rollout-as-a-service infrastructure fully decouples rollout generation from the training loop. LOOP (Chen et al., 2025a) Env. cost (memory) A memory-efficient PPO variant keeps one policy copy and no value network for long horizons. SWEET-RL (Zhou et al., 2025) Temporal credit An auxiliary model scores partial trajectory prefixes to produce per-turn advantage estimates. MT-GRPO (Zeng et al., 2025) Temporal credit Turn-level rewards blend each turn’s feedback with a share of the final advantage. IGPO (Wang et al., 2025a) Temporal credit Per-turn information gain from the model’s belief update gives dense supervision without a reward model. WebRL (Qi et al., 2025) Reward specification An outcome-supervised reward model scores final web-task success and feeds a self-evolving curriculum for online training. MUA-RL (Zhao et al., 2025b) Reward specification LLM-simulated users are integrated into the RL loop, so task success depends jointly on communication and tool-use behavior. UI-R1 (Lu et al., 2026a) Reward specification A rule-based action reward verifies the predicted action type and coordinates of a GUI step. UI-AGILE (Lian et al., 2026) Reward specification A continuous grounding reward with crop resampling relieves the sparse binary GUI reward. MAGRPO (Liu et al., 2026a) Multi-agent (boundary) The group-relative advantage of GRPO is generalized to cooperative multi-agent RL. 
+
+34 A First-Principles Derivation of LLM Policy Optimization 
+
+What new reward-side failures are introduced by multi-turn interaction with the environment? Multi-turn interaction introduces two new reward-side problems whose severity grows with the horizon H and environment complexity. 
+
+Temporal credit assignment : a terminal reward delivered after H turns must be attributed to tool calls made many steps earlier, and uniformly broadcasting ˆAi across all turns discards all intermediate evidence. SWEET-RL (Zhou et al., 2025) addresses this problem by training a turn-level critic with access to privileged training-time information that is unavailable to the actor, producing step-wise evaluative signals that reduce the need to broadcast a single terminal reward uniformly across all turns. MT-GRPO (Zeng et al., 2025) keeps the critic-free structure and adds turn-level rewards, blending each turn’s immediate feedback with a share of the final advantage so early turns are not credited by the terminal reward alone. IGPO (Wang et al., 2025a) instead rewards the information gain of each turn, read from the model’s own belief update, giving dense supervision without an external reward model. Both refine how ˆAi is spread across turns rather than broadcast uniformly. 
+
+Reward specification : open-ended environments do not admit a single binary verifier, so the reward must be designed to match the natural feedback structure of each environment. WebRL (Qi et al., 2025) uses an outcome-supervised reward model to score whether the final web-task outcome is successful, and integrates this signal into a self-evolving curriculum for online agent training. MUA-RL (Zhao et al., 2025b) instead emphasizes dynamic multi-turn user interaction by integrating LLM-simulated users into the RL loop, illustrating a reward-specification setting in which task success depends on both communication and tool-use behavior. GUI control makes reward specification concrete. UI-R1 (Lu et al., 2026a) uses a rule-based action reward that checks the predicted action type and coordinates, turning a GUI step into a verifiable signal. UI-AGILE (Lian et al., 2026) replaces the binary grounding reward with a continuous one and resamples crops to relieve sparse rewards. This is reward-side shaping against the degenerate baselines analyzed above. These two dimensions are not exhaustive. They are themselves products of the same diagnostic reading, which locates new failures by asking where the environment perturbs the reward side, and the same reading keeps generating further questions. 
+
+Coupled failures. The failures above are coupled because the same loop runs through both sides. In the agentic setting these mechanisms form what we call the sparse-reward closure : sparse terminal rewards lead to degenerate baselines, which produce uninformative gradients, which yield low-quality trajectories, which in turn make rewards even sparser. The curriculum difficulty suitable for the current policy depends on reward statistics, which are reward-side quantities. However, these statistics depend on the trajectory distribution, which is a trajectory-side quantity. Neither side can be fixed independently. WebRL (Qi et al., 2025) can be interpreted as addressing part of this coupling by jointly adapting the curriculum, reward modeling, and online RL procedure as the policy changes. ARPO (Lu et al., 2025) provides another example of this coupling: its replay buffer addresses trajectory scarcity under sparse rewards, while its task selection strategy filters for informative GUI interactions. 
+
+Open problems. The environment adds two questions that single-turn generation never faces. 
+
+> 35 A First-Principles Derivation of LLM Policy Optimization
+
+Open problem 1, the interaction mode. An agentic rollout is a sequence of decisions interleaved with environment responses. The agent must decide when to call which tool, how to keep each call cheap, and how to read a reward from an environment with no single verifier. Existing methods answer these in isolation, and no principled account shapes the interaction protocol to keep each turn informative. The question also extends to who the agent interacts with. With several cooperating policies the environment becomes multi-agent, and reward attribution then runs across agents rather than only across turns, as in MAGRPO (Liu et al., 2026a). 
+
+Open problem 2, the update mode. Updating on a collected multi-turn trajectory couples both sides. On the trajectory side, the state distribution drifts across turns, so importance ratios under πθold go stale, and single-turn fixes such as DAPO clipping or the GSPO sequence ratio do not transfer to interleaved trajectories. On the reward side, a terminal reward must be spread across many earlier turns, yet temporal credit and reward specification are not designed jointly. Together these form the sparse-reward closure above. No method yet derives from J(θ) when the two sides must co-adapt, so a principled multi-turn update rule remains open. 
+
+Summary. Applying the framework to Agentic RL exercises its three properties at once. 
+
+First-principles : the agentic objective is still J(θ) = E[R(τ )], now over multi-turn trajectories, so no new starting point is needed. Diagnostic : every inherited failure keeps its trajectory-side or reward-side location, and each new failure the environment introduces lands on the same two axes, namely rollout validity, importance ratio staleness, and interaction cost on the trajectory side, and temporal credit assignment and reward specification on the reward side. The same reading also exposes the sparse-reward closure, a coupled failure in which sparse rewards and degenerate trajectories feed each other and neither side can be fixed alone. Extensible : the two axes carry over to a structurally harder regime without a new organizing principle, which is the main analytical contribution of this section. 
+
+8 On-Policy Distillation Combined with GRPO 
+
+8.1 Original OPD: Replacing the Reward Objective 
+
+On-Policy Distillation (OPD) in its original form abandons the reward-maximization objective entirely. Rather than optimizing J(θ) = Eτ ∼πθ [R(τ )], the student is trained to minimize a divergence from a teacher policy πT on trajectories sampled from the student’s own distribution. The two canonical objectives are the reverse KL, used by MiniLLM (Gu et al., 2024), 
+
+LRKL (θ) = KL( πθ∥πT ) = Ey∼πθ
+
+"X
+
+> t
+
+log πθ(yt|x, y <t )
+
+πT (yt|x, y <t )
+
+#
+
+, (35) which is mode-seeking and concentrates the student on high-probability teacher outputs, and the forward KL, which corresponds to the standard supervised KD objective and appears as one instantiation within GKD (Agarwal et al., 2024), 
+
+LFKL (θ) = KL( πT ∥πθ) = Ey∼πT
+
+"X
+
+> t
+
+log πT (yt|x, y <t )
+
+πθ(yt|x, y <t )
+
+#
+
+, (36) 
+
+> 36 A First-Principles Derivation of LLM Policy Optimization
+
+which is mode-covering and encourages the student to support all teacher modes. Both objectives replace R(τ ) with a token-level divergence, eliminating the verifier entirely. This yields a distinct and well-studied line of literature focused on efficient knowledge transfer from stronger to weaker models (Gu et al., 2024; Agarwal et al., 2024). 
+
+8.2 This Survey’s Scope: Teacher Signal Inside a Reward Objective 
+
+This section does not survey the independent OPD line. Throughout this survey the optimization objective remains reward maximization: J(θ) = Eτ ∼πθ [R(τ )]. The methods covered here retain this objective and ask a different question: when a teacher πT is available alongside a verifier, how should the teacher’s per-token signal be incorporated into the GRPO update without abandoning the reward-maximization framework? We call this construction the GRPO-OPD hybrid , a teacher signal placed inside the GRPO objective rather than a replacement for it. The term recurs throughout this survey to separate this construction from the original OPD line above. The teacher contributes through a dense per-token signal ˜rt = d(πT (·| x, y <t ), π θ(·| x, y <t )) , (37) where d(·, ·) measures the per-token alignment between the teacher and student distributions at position t, a quantity that reduces to a divergence in expectation (Li et al., 2025d). A common choice is the teacher-preference log-ratio ˜rt = log πT (yt|x, y <t )
+
+πθ(yt|x, y <t ) .
+
+Under student-generated rollouts, maximizing this quantity corresponds to minimizing the student-to-teacher reverse KL on the visited prefixes, since its expectation equals 
+
+−KL (πθ∥πT ). When written as a minimization loss, the corresponding reverse-KL contribu-tion appears with the opposite sign, log (πθ/π T ). Unlike the scalar verifier reward Ri, ˜rt is defined at every token position in every rollout. 
+
+8.3 A Unified Formulation 
+
+To locate where ˜ rt can enter, recall the GRPO objective from Equation (31): 
+
+LGRPO (θ) = E
+
+ 1
+
+G
+
+> G
+
+X
+
+> i=1
+
+1
+
+|yi|
+
+> |yi|
+
+X
+
+> t=1
+
+min 
+
+
+
+ri,t 
+
+|{z} 
+
+> TA
+
+ˆAi
+
+|{z} 
+
+> TB
+
+, clip( ri,t , 1 − ϵ, 1 + ϵ) ˆAi
+
+ − β KL( πθ∥πref )
+
+| {z }
+
+> TD
+
+,
+
+(38) where ri,t = πθ(yi,t |x, y i,<t ) / π θold (yi,t |x, y i,<t ) and ˆAi = ( Ri − μG)/σ G. The teacher πT can enter through four operators, either directly through its trajectories and probabilities or through the dense signal ˜ rt:
+
+• TA: the importance-ratio operator , which determines the behavior policy used to generate rollouts and compute the probability ratio. 
+
+• TB : the advantage operator , which converts verifier scores into the per-token weight. 
+
+> 37 A First-Principles Derivation of LLM Policy Optimization
+
+• TC : the in-expectation distillation operator , an additive on-policy distillation term inside the rollout expectation, computed on the same student-generated trajectories as the GRPO update. 
+
+• TD: the external regularization operator , which penalizes divergence from a reference or teacher policy outside the rollout expectation. 
+
+Lhybrid (θ) = E
+
+ 1
+
+G
+
+> G
+
+X
+
+> i=1
+
+1
+
+|yi|
+
+> |yi|
+
+X
+
+> t=1
+
+
+
+min  TA TB , clip( TA, 1 − ϵ, 1 + ϵ) TB
+
+ + TC (˜ rt)
+
+
+
+− T D(πθ, π T , π ref ), (39) where TA = TA(ri,t , π T ), TB = TB ( ˆAi, ˜rt), TC ( ˜rt) is an optional per-token distillation term inside the rollout expectation, and TD is an external regularization term independent of the rollout. Setting each operator to its GRPO default, TA = ri,t , TB = ˆAi, TC = 0, and 
+
+TD = β KL (πθ∥πref ), recovers plain GRPO exactly. Every method surveyed below is an instance of Equation (39) obtained by modifying one or more operators. 
+
+8.4 Existing Methods: Trajectory Side and Reward Side Trajectory side: modifying TA. Trajectory-side methods ask whether the teacher can replace or complement πθold in the importance-ratio operator. The central motivation is what we call prefix quality . When rollouts from the student are low quality, the prefix distribution 
+
+πθ(·| x, y <t ) deviates from the distribution on which the teacher was trained, which makes ˜rt
+
+unreliable. The teacher signal is informative only for prefixes that are sufficiently close to those seen during training. We use prefix quality as an analytical label for this mismatch rather than as an established quantity from the cited methods. Existing methods form a spectrum ordered by how far they move the behavior distribution from πθold toward πT .dGRPO (Ramos et al., 2026) stays at the near end of the spectrum and addresses the cold-start form of the prefix-quality problem. Before hybrid training begins, it runs an SFT warm-up that improves the coherence of the student’s long-context rollouts, so the prefixes on which ˜rt is evaluated are more reliable from the first RL iteration. The importance ratio itself is not modified at training time. RLAD (Zhang et al., 2026c) modifies the ratio without changing the rollout source, using a geometric mixture of πθold and πT as the denominator: 
+
+TA(ri,t , π T ) = 
+
+ πθ
+
+πθold 
+
+λ πθ
+
+πT
+
+1−λ
+
+, λ ∈ [0 , 1] ,
+
+which anchors the trust region to both the old student policy and the teacher. The advantage ˆAi remains unchanged, so the teacher affects the update only through the clipping boundary. With a positive advantage, teacher-preferred tokens reach the clipping threshold later, which permits a larger update. With a negative advantage, teacher-preferred tokens are less strongly suppressed. Teacher guidance is therefore advantage-aware without directly modifying TB .LUFFY (Yan et al., 2025) sits at the far end of the existing spectrum and modifies the rollout source itself: off-policy traces from a stronger teacher, such as DeepSeek-R1, 
+
+> 38
+
+A First-Principles Derivation of LLM Policy Optimization 
+
+Table 8: GRPO-OPD hybrid methods grouped by the operator through which the teacher signal ˜rt enters the GRPO objective. TA is the importance ratio on the trajectory side and TB is the advantage on the reward side. The final group collects coupled designs that span both sides. 
+
+Method Operator Key mechanism 
+
+Trajectory side: teacher signal enters through TA, the importance ratio 
+
+dGRPO (Ramos et al., 2026) 
+
+TA initialization A cold-start SFT warm-up stabilizes the student prefix distribution before hybrid training begins. The importance ratio itself is not modified at training time. RLAD (Zhang et al., 2026c) 
+
+TA prefix quality A geometric ratio mixture rλ (rT )1−λ anchors the trust region to both the old policy and the teacher. Teacher-preferred tokens reach the clip boundary later. This permits a larger update on those tokens. LUFFY (Yan et al., 2025) 
+
+TA mixed rollouts Off-policy teacher traces are mixed into the rollout group and the group-relative advantage is computed over the mixed group. Regu-larized importance sampling amplifies low-probability crucial tokens and avoids rigid imitation. Prefix-RFT (Huang et al., 2025) 
+
+TA mixed rollouts A teacher prefix is spliced with a student continuation inside each trajectory. Every rollout therefore composes the teacher and student behavior distributions rather than mixing them across separate roll-outs. 
+
+Reward side: teacher signal enters through TB , the advantage 
+
+CoDistill-GRPO (Kwon et al., 2026) 
+
+TB reward shaping The reward is augmented as ˜Ri = Ri + α ˜r. The teacher and student are co-trained jointly. Co-training addresses the teacher accessibility problem. KDRL (Xu et al., 2025) 
+
+TB collapse Reward shaping causes training collapse in early stages when the teacher and verifier signals are not yet aligned. This finding motivates the TD design below. 
+
+Coupled failures: teacher signal across operators (both sides) 
+
+dGRPO (Ramos et al., 2026) 
+
+TC additive loss A per-token log (πT /π θ ) term is added inside the rollout expectation. It provides dense teacher supervision on student trajectories. The supervision holds independently of rollout quality. KDRL (Xu et al., 2025) 
+
+TD external KL The reference-policy KL is replaced by β D KL (πθ ∥πT ). This term sits outside the rollout expectation, so the per-rollout reward does not filter the teacher pull. The placement avoids the collapse seen with reward shaping. HDPO (Ding, 2026) 
+
+TD self-teacher KL The objective adds an external term λLJSD to the GRPO loss. The anchor is a privileged self-teacher conditioned on the ground truth. It engages only on cliff prompts where all rollouts fail and the advantage collapses to zero. RLSD (Yang et al., 2026) 
+
+TA, TB decoupled The verifier sets the update direction through sign ( ˆAi) on the ad-vantage. A privileged self-teacher evidence ratio wt then sets the per-token magnitude on the importance ratio. Splitting the two keeps the teacher from corrupting the reward-driven direction. REOPOLD (Ko et al., 2026) 
+
+TA, TB reward-as-weight A clipped teacher log-ratio reward ˆRλi,t multiplies the importance ratio directly. Reward clipping and an entropy-guided sampling schedule relax strict imitation and stabilize the resulting weight. 
+
+are mixed into the group alongside on-policy rollouts, and the group-relative advantage is computed over the mixed group. A naive importance ratio assigns vanishing weight to exactly the low-probability teacher tokens that carry capabilities the student lacks, so LUFFY reshapes the weight through regularized importance sampling and amplifies the gradient contribution of these tokens while mitigating rigid imitation. The mixed-policy estimator retains the reward-maximization objective and is accompanied by a convergence-
+
+39 A First-Principles Derivation of LLM Policy Optimization 
+
+rate analysis. Prefix-RFT (Huang et al., 2025) carries a related mixing idea inside individual trajectories, splicing a teacher prefix with a student-generated continuation so that each rollout composes the two behavior distributions. 
+
+Reward side: modifying TB . Reward-side methods keep rollout sampling and the importance ratio unchanged, with TA = ri,t , and introduce the teacher signal into the advantage computation. The central motivation is that ˆAi is a scalar verifier reward that is broadcast uniformly to all tokens and therefore provides no per-token credit signal. The dense signal ˜rt can mitigate this limitation. In principle, TB can be augmented through direct interpolation: 
+
+TB ( ˆAi, ˜rt) = (1 − α) ˆAi + α ˜rt, α ∈ [0 , 1) ,
+
+where α = 0 recovers GRPO. The limit α → 1 would discard the verifier advantage entirely, reducing the update to pure distillation and exiting the reward-maximization frame. Accordingly, all methods within this section operate with α < 1. In practice, however, existing methods introduce ˜rt through reward shaping rather than direct advantage interpolation. The teacher log-ratio is folded into the scalar reward Ri
+
+before the group-relative advantage is computed, so the GRPO normalization and clipping mechanisms remain unchanged. CoDistill-GRPO (Kwon et al., 2026) follows this design by setting ˜Ri = Ri + α · ˜r and avoids the teacher accessibility problem by jointly co-training the teacher and the student. The key challenge is signal conflict . The reward Ri measures outcome correctness, whereas ˜rt measures token-level proximity to the teacher. These two signals can disagree when the student reaches correct answers through reasoning paths that differ from those favored by the teacher. KDRL (Xu et al., 2025) also evaluates reward shaping and finds that it causes training collapse in the early stages, which confirms that embedding the teacher signal into the advantage is unstable when the two signals are not yet aligned. 
+
+Coupled failures: modifying TC , TD, and beyond. Reward-side and trajectory-side failures are coupled. When rollout quality is low, ˜rt in TB becomes noisy because the prefixes of the student deviate from the training distribution of the teacher. At the same time, Ri
+
+becomes less informative because the verifier reward is sparse on difficult prompts. The two signals can fail simultaneously, leaving the optimization process without useful gradients. Existing methods address this issue through three strategies. 
+
+Additive loss through TC : rather than modifying the advantage, these methods add the teacher signal as a separate loss term inside the rollout expectation. The term provides gradients independently of rollout quality. dGRPO (Ramos et al., 2026) instantiates TC as a per-token reverse-KL distillation term inside the rollout expectation, with TC ( ˜rt) = βd ˜rRKL  
+
+> t
+
+,where ˜rRKL  
+
+> t
+
+= − log (πθ/π T ) = log (πT /π θ). This term is summed over tokens within the same expectation as the GRPO clipped surrogate. It thereby provides dense per-token teacher supervision on the trajectories visited by the student. 
+
+External regularization through TD: these methods leave the in-expectation update alone and instead anchor the student to a teacher through a term computed outside the rollout expectation. Because the term is external, the per-rollout reward does not filter the teacher pull. KDRL (Xu et al., 2025) modifies TD by replacing the reference-policy KL term with β D KL (πθ∥πT ). This change converts the external regularizer into a persistent 
+
+> 40 A First-Principles Derivation of LLM Policy Optimization
+
+pull toward the teacher. The collapse observed when the teacher signal is injected into the scalar reward is therefore avoided. KDRL is a joint KD and RL objective: the GRPO clipped surrogate maximizes verifier-based reward while the modified TD simultaneously pulls the student toward the teacher. HDPO (Ding, 2026) is a second teacher-directed TD
+
+method alongside KDRL. It uses a different teacher and a different trigger. Its objective is LHDPO = LGRPO + λ LJSD , where LJSD is a token-averaged JSD against a privileged self-teacher on cliff prompts. The accompanying analysis frames this as a KL-regularized objective max π E[R(τ )] − β KL (π∥πθ(·| x, g )). Here the reference anchor is replaced by a teacher conditioned on the ground-truth g. This is exactly the TD substitution that KDRL performs. What distinguishes HDPO from KDRL is the construction of πT and the condition under which the term is active. The teacher is a prompt-conditioned variant of the student rather than a separate model. The JSD anchor engages only on the all-fail cliff groups where the GRPO advantage has collapsed to zero. This points to a broader class of TD methods. Such methods vary the source, scope, and trigger of the teacher anchor rather than the operator through which it enters. 
+
+Coupling TA and TB : these methods keep the teacher inside the GRPO update but split its influence across the importance ratio and the advantage. The two operators are driven by different signals so that the teacher never overrides the verifier. RLSD (Yang et al., 2026) is a self-distilled RLVR method. It splits the per-token update across TA
+
+and TB rather than folding the teacher into a single scalar. The method first constructs a privileged self-teacher conditioned on the ground-truth answer. It then separates the update into a direction and a magnitude, and it sources the two from different operators. The verifier reward determines the update direction through sign ( ˆAi), which is a quantity on the advantage operator TB . The privileged self-teacher log-ratio then determines the per-token magnitude through wt = ( πT /π θ)sign( ˆAi). This magnitude reweights the importance-ratio term TA. The teacher sets only the magnitude, and it never corrupts the reward-driven direction. REOPOLD (Ko et al., 2026) treats the teacher–student log-likelihood ratio as a token-level reward. This reward is multiplied directly onto the importance ratio. The objective takes the form ρi,t (θ) ˆRλi,t (θ) M (k) 
+
+> i,t
+
+, where ˆRλi,t is a clipped teacher reward and 
+
+M (k) 
+
+> i,t
+
+is a token-level mask. The teacher signal therefore enters as a reward weight on TB
+
+that acts through the TA ratio. It is not a separate additive TC term as in dGRPO. The method relaxes the strict imitation constraint of standard on-policy distillation. It stabilizes the resulting reward through three mechanisms. These are mixture-based reward clipping, entropy-guided token-level dynamic sampling, and an exploration-to-refinement training schedule. 
+
+8.5 Summary and Open Problems Summary. Combining OPD with GRPO exercises the three properties of the framework at once. First-principles : every method retains J(θ) = E[R(τ )] and is an instance of the unified family in Equation (39) , introducing the teacher signal ˜rt through one or more of the four operators TA, TB , TC , TD. Diagnostic : each method is located by the operator it modifies and by the residual failure that follows. Modifying TA reduces prefix-quality mismatch but strains the off-policy correction when the student and teacher are far apart. This is why LUFFY must reshape the importance weights on teacher tokens. Modifying 
+
+> 41 A First-Principles Derivation of LLM Policy Optimization
+
+TB adds density and credit but introduces signal conflict. The update stays unstable until the teacher and verifier agree. A coupled failure then appears once rollout quality drops, because low quality degrades ˜rt and Ri at the same time. The teacher must then enter at the level of the full objective. dGRPO adds it inside the rollout expectation through 
+
+TC . KDRL and HDPO instead place a teacher-directed term in TD outside the expectation. RLSD and REOPOLD take a third route and couple TA with TB . RLSD lets the verifier set the update direction while the teacher sets only the per-token magnitude. REOPOLD multiplies a clipped teacher reward directly onto the importance ratio. Extensible : the same two axes carry over. The reward side is now driven by a dense teacher signal rather than a verifier scalar. This shift is what makes the four-operator account a reward-side structural extension rather than a new framework. 
+
+Open problems. The four-operator structure of Equation (39) exposes one gap per operator: existing substitutions cluster near the GRPO default, and the principled version of each is missing. Gap 1, the substitution endpoint of TA: existing methods move the behavior distribution only partway toward πT . The limiting configuration in which 
+
+πT fully replaces πθold as the sole behavior policy remains unexplored to our knowledge. The framework makes the obstacles visible. The importance correction degrades as the student and teacher grow further apart. The group-relative baseline also degenerates when near-uniformly successful teacher rollouts drive σG → 0. Gap 2, the teacher signal as a reward in TB : existing methods route the teacher into the advantage through heuristic reward shaping, as in CoDistill-GRPO, which folds the teacher log-ratio into the scalar reward before normalization. None of these designs derives the optimal mixing between ˆAi and ˜rt from the structure of J(θ). The deeper gap is that ˜rt is itself a reward signal, yet none of the Part II reward-side machinery has been applied to it. Whether it should carry its own group-relative baseline, credit assignment, or bias correction is open. Gap 3, the in-expectation term of TC : dGRPO fixes this term to a reverse KL with a constant weight. The choice of divergence, the weight schedule, and the interaction with the clipped surrogate all remain unexplored. The operator is occupied by a single method. Even basic alternatives such as a forward-KL or JSD in-expectation term remain untried. Gap 4, the external regularizer of TD: KDRL replaces the reference KL with a teacher KL wholesale. HDPO swaps in a privileged self-teacher KL that is gated to cliff prompts. In both methods the choice of anchor, KL direction, coefficient schedule, and trigger remains heuristic. There is also no principled account of when the teacher pull should enter inside the rollout expectation through TC and when it should act outside it through TD. The contrast between KDRL and HDPO already shows that the placement and the gating change stability. Read from first principles, these gaps share one root question: how should a teacher reward be introduced to guide the optimization objective without abandoning J(θ). Two directions follow from this question. The first is to perfect each operator on its own. Every operator above is still occupied by a handful of heuristic instantiations, so the principled form of TA, TB , TC , and TD each remains to be derived from the structure of J(θ). The second direction is to fuse operators rather than treat them in isolation. The four gaps do not act independently. Most methods already pair one primary operator with auxiliary choices about initialization, scheduling, or teacher construction, and RLSD and REOPOLD 
+
+> 42 A First-Principles Derivation of LLM Policy Optimization
+
+show that a single method can span TA and TB at once. A systematic account of how the teacher signal should be split across operators, and of which operator combinations are complementary rather than redundant, is therefore a promising direction that remains underexplored. 
+
+9 Discussion 
+
+9.1 Scope and Framework Boundary 
+
+This survey focuses on the policy gradient line, in which the optimization objective remains reward maximization: J(θ) = Eτ ∼πθ [R(τ )]. Before drawing conclusions from the two-sided framework, it is necessary to situate two prominent families of methods that address similar infrastructure costs from a structurally different direction. 
+
+Direct Preference Optimization. DPO (Rafailov et al., 2023) begins from the same KL-regularized RLHF objective as PPO but observes that its optimality condition admits a closed-form solution in terms of the policy itself. Substituting this solution into a preference likelihood yields a supervised classification objective that eliminates the reward model, online rollouts, and critic entirely. The trajectory probability side disappears not because it was improved but because the new objective performs no rollout. This is not a refinement of the estimator: it replaces the optimization problem entirely. From the two-sided perspective, DPO is neither a trajectory-side nor a reward-side fix. It exits the policy gradient frame. What DPO gains is simplicity and training stability. What it loses is the ability to perform on-policy exploration, which is precisely what makes GRPO-line methods effective on verifiable tasks where a reward signal is available at inference time. 
+
+Divergence-minimization On-Policy Distillation. The independent OPD line, rep-resented by MiniLLM (Gu et al., 2024) and GKD (Agarwal et al., 2024), minimizes a divergence from a teacher on student-generated trajectories but does not retain J(θ) as the objective. The gradient of KL (πθ∥πT ) points toward increasing similarity to the teacher, not toward increasing task reward. Although the trajectory probability factor is present because trajectories are sampled from πθ, the reward factor is replaced by a divergence that carries no notion of task performance. As a consequence, these divergence-minimization OPD methods cannot benefit from process reward supervision, group-relative baselines, or any of the reward-side improvements in Part II, because none of those constructs applies to a pure divergence objective. The GRPO-OPD hybrid surveyed in Section 8 is structurally distinct: it retains J(θ) as the primary objective and uses the teacher signal as one component of the reward, not as a replacement for it. Methods that exit this frame, whether by eliminating rollouts as DPO does or by replacing the reward factor with a divergence as in the divergence-minimization OPD line, require their own first-principles derivations, which proceed from different starting objectives and produce different gradient directions. Comparing methods across this boundary by empirical benchmark alone, without accounting for the structural difference in what each gradient actually optimizes, is a common source of misleading conclusions in the literature. 
+
+> 43 A First-Principles Derivation of LLM Policy Optimization
+
+9.2 The Two-Sided Framework: Unified, Diagnostic, and Extensible 
+
+The introduction identifies three properties the framework must have: it must be unified and first-principles, diagnostic, and extensible. Applying the framework across all three parts confirms that each property holds in practice. 
+
+Unified and first-principles. Every method reviewed, from REINFORCE to GRPO to the latest agentic and distillation variants, can be located on the two-sided map as a modification of one or both factors of ∇θJ(θ) in response to a specific failure the preceding formulation left unresolved. This traceability is not merely organizational. It reveals that what appears in the literature as a collection of independent proposals is in fact a structured sequence of failure-motivated responses along two axes. 
+
+Diagnostic. When a method fails, whether through entropy collapse, reward over-optimization, exposure bias, or sparse training signal, the failure can be located on the map before a fix is proposed. Reward hacking, for instance, is located on the reward side as a failure of signal fidelity and bounded by the KL penalty toward πref (Section 6.3). A trajectory-side failure such as ratio drift or rollout diversity collapse cannot be resolved by a reward-side intervention, and vice versa. Many published methods that appear to address compound failures are modifying only one side while leaving the other unresolved. The map makes this visible and prevents the confusion of symptom with cause. Given any new method, three questions apply: which factor does it modify, in response to which failure, and what residual instability does the modification introduce. 
+
+Extensible. The same two axes apply beyond single-turn GRPO to both structural extensions in Part III. The primary differentiator across the three regimes is the nature of the reward signal entering the advantage estimate. The GRPO line uses a verifiable outcome scalar normalized by group statistics. The Agentic extension uses an environment return accumulated over multi-turn interaction. The GRPO-OPD hybrid uses a dense per-token teacher log-probability. The advantage estimation layer inherits a different failure structure in each case, yet the two-sided decomposition applies identically to all three. Compound failures confirm this: Part II identifies clip–variance coupling and granularity coupling as cases where single-side fixes leave residual instability on the other side. Part III adds the sparse-reward closure in the agentic setting and the simultaneous degradation of verifier reward and teacher signal in the GRPO-OPD hybrid setting. All four are located on the same two axes. The open problems that appear throughout Parts II and III share the same structure: they are termination points of the first-principles derivation where neither side has yet found a principled resolution, not gaps in coverage. 
+
+9.3 Open Problems at the Intersection of Lines 
+
+Parts II and III each close with the open problems internal to their own regime: the both-side gaps of single-turn GRPO in Section 6.4, the interaction-mode and update-mode problems of the agentic setting in Section 7, and the four operator-level gaps of the GRPO-OPD hybrid in Section 8.5. The open problems collected here are not new entries in that list. They are the same missing joint theory, recurring one level up. 
+
+One missing theory across three scales. Section 6.4 states the root gap for the single-turn line: J(θ) couples pθ(τ ) with R(τ ), yet no theory derives when a trajectory-side 
+
+> 44 A First-Principles Derivation of LLM Policy Optimization
+
+and a reward-side fix must co-vary rather than act alone. The same gap reappears at two larger scales once the two structural extensions are admitted. At the line-to-line scale, the question is whether a fix established on one axis in one regime transfers to the same axis in another regime. At the combination scale, it is whether fixes drawn from different lines compose into a well-behaved joint system, the cross-line form of the warning in Section 6.4 that independently validated single-side methods carry no such guarantee. Each scale is the previous one with more axes free to interact, and none has a principled account. The first systems to combine both Part III extensions make the combination scale concrete. When a teacher signal is placed inside a multi-turn agentic objective, the naive combination of on-policy distillation and GRPO destabilizes training, and stability is recovered only by gating the teacher term or by a curriculum on trajectory depth (Lu et al., 2026b; Wang et al., 2026a). This is an emerging direction rather than a settled one, and no theory yet predicts when the two lines compose safely. 
+
+Transfer across lines. The transfer question is sharp because the single-turn fixes are defined for fixed-length single-turn responses, so their validity in a multi-turn or teacher-driven regime cannot be assumed. Toward the agentic extension, asymmetric clipping from DAPO is motivated by single-turn entropy collapse, and whether the same mechanism operates at the same rate across multi-turn trajectories with interleaved observations is open. The sequence-level ratio of GSPO is defined for a fixed-length response, and extending it to action–observation interleaving requires a non-trivial reformulation. Toward the GRPO-OPD hybrid, Gap 2 of Section 8.5 is exactly this transfer on the reward side: the teacher signal ˜rt is itself a reward signal, yet the Part II density, credit-assignment, and bias-correction interventions have not been applied to it. In every case the framework locates the question precisely, namely which single-turn fix, on which axis, transfers to which extension, while the empirical and theoretical study remains to be done. 
+
+9.4 Extensions Beyond the Single-Model, Single-Modality Setting 
+
+The survey focuses on single-model, text-only policy optimization. Two extensions are worth noting as directions where the two-sided framework applies but requires adaptation. 
+
+Diffusion language models. Diffusion language models (Nie et al., 2025; Sahoo et al., 2024) generate text by iterative denoising rather than autoregressive token prediction. The trajectory probability factor log πθ(τ ) in the policy gradient estimator is then defined over a sequence of denoising steps rather than token selections. The importance ratio and clipping mechanisms developed for autoregressive models do not transfer directly: the denoising trajectory has a different Markov structure, and the per-step action space is a distribution over masked tokens rather than a vocabulary distribution. Early work (Zhao et al., 2025a; Rojas et al., 2025) applies GRPO-style updates to diffusion LLMs by treating each denoising step as an action, but the reward-side interventions, including process reward and group-relative baseline, are not yet adapted to the denoising setting, where intermediate states have a different interpretation than intermediate reasoning steps. Whether the two-sided decomposition remains the right organizing principle for diffusion LLM policy optimization, and how the trajectory probability factor should be re-derived for the denoising Markov chain, is an open structural question. 
+
+> 45 A First-Principles Derivation of LLM Policy Optimization
+
+Multimodal language models. Multimodal language models (Liu et al., 2023; Chen et al., 2024) extend the action space to include both text tokens and visual inputs processed through a vision encoder. The trajectory probability side extends relatively naturally: autoregressive text generation proceeds as in the text-only case, and the vision encoder parameters can be treated as part of the policy or held fixed. The reward side is more complex. Verifiable reward signals that work well for text, such as math correctness and code execution, do not cover the full range of multimodal tasks, and the LLM-as-judge reward source must be adapted to evaluate outputs that depend jointly on visual and textual inputs. Recent work (Huang et al., 2026; Yao et al., 2025a) applies GRPO-line methods to multimodal models, but the reward-side taxonomy developed in Part II is not yet fully applied: multi-objective balancing across text and vision objectives, process reward supervision for visual reasoning chains, and advantage granularity for vision-language interleaved generation remain open engineering problems. The two-sided framework provides a clear agenda: systematically apply each reward-side and trajectory-side intervention from Part II to the multimodal setting, identify which transfer and which require adaptation, and resolve the failures that are new to the multimodal regime. 
+
+10 Conclusion 
+
+This survey revisited LLM policy optimization from the shared objective J(θ) = E[R(τ )]. The objective has two factors, the trajectory probability and the reward, and these define the two axes along which every method is placed. Read this way, the rapid post-GRPO expansion is not a collection of independent proposals but a structured response to failures that arise, in a predictable order, along the trajectory and reward axes. The framework is therefore diagnostic: each method is located by which factor it modifies, what failure motivates the modification, and what residual instability remains. It is also extensible, since the same two axes carry from single-turn GRPO to the agentic and distillation extensions with no new organizing principle. Methods that replace J(θ) itself, such as DPO and divergence-minimization distillation, fall outside this frame as boundary cases, so comparisons across it require accounting for the structural difference rather than benchmark numbers alone. The open problems in Section 9.3 are the precise locations where the derivation stops generating solutions. They recur as one missing joint theory across three scales, from the two sides of a single update to the transfer and combination of fixes across lines. This is the most actionable output of a first-principles reading: it tells a researcher not only what has been solved but where the next solution must come from. 
+
+> 46 A First-Principles Derivation of LLM Policy Optimization
+
+References 
+
+Rishabh Agarwal, Nino Vieillard, Yongchao Zhou, Piotr Stanczyk, Sabela Ramos Garea, Matthieu Geist, and Olivier Bachem. On-policy distillation of language models: Learning from self-generated mistakes. In B. Kim, Y. Yue, S. Chaudhuri, K. Fragkiadaki, M. Khan, and Y. Sun, editors, International Conference on Learning Representations , volume 2024, pages 21246–21263, 2024. URL https://proceedings.iclr.cc/paper_files/paper/ 2024/file/5be69a584901a26c521c2b51e40a4c20-Paper-Conference.pdf .Arash Ahmadian, Chris Cremer, Matthias Gall´ e, Marzieh Fadaee, Julia Kreutzer, Olivier Pietquin, Ahmet ¨Ust¨ un, and Sara Hooker. Back to basics: Revisiting REINFORCE-style optimization for learning from human feedback in LLMs. In Lun-Wei Ku, Andre Martins, and Vivek Srikumar, editors, Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 12248–12267, Bangkok, Thailand, August 2024. Association for Computational Linguistics. doi: 10.18653/v1/ 2024.acl-long.662. URL https://aclanthology.org/2024.acl-long.662/ .Oron Anschel, Alon Shoshan, Adam Botach, Shunit Haviv Hakimi, Asaf Gendler, Emanuel Ben Baruch, Nadav Bhonker, Igor Kviatkovsky, Manoj Aggarwal, and Gerard Medioni. Group-aware reinforcement learning for output diversity in large language models. In Christos Christodoulopoulos, Tanmoy Chakraborty, Carolyn Rose, and Violet Peng, editors, 
+
+Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing ,pages 32394–32415, Suzhou, China, November 2025. Association for Computational Linguistics. ISBN 979-8-89176-332-6. doi: 10.18653/v1/2025.emnlp-main.1649. URL 
+
+https://aclanthology.org/2025.emnlp-main.1649/ .Yuntao Bai, Andy Jones, Kamal Ndousse, Amanda Askell, Anna Chen, Nova DasSarma, Dawn Drain, Stanislav Fort, Deep Ganguli, Tom Henighan, et al. Training a helpful and harmless assistant with reinforcement learning from human feedback. arXiv preprint arXiv:2204.05862 , 2022. Andrei Baroian and Rutger Berger. Prompt replay: speeding up grpo with on-policy reuse of high-signal prompts. arXiv preprint arXiv:2603.21177 , 2026. RALPH ALLAN BRADLEY and MILTON E. TERRY. Rank analysis of incomplete block designs: The method of paired comparisons. Biometrika , 39(3-4):324–345, 12 1952. ISSN 0006-3444. doi: 10.1093/biomet/39.3-4.324. URL https://doi.org/10.1093/biomet/ 39.3-4.324 .Shiyi Cao, Dacheng Li, Fangzhou Zhao, Shuo Yuan, Sumanth R Hegde, Connor Chen, Charlie Ruan, Tyler Griggs, Shu Liu, Eric Tang, et al. Skyrl-agent: Efficient rl training for multi-turn llm agent. arXiv preprint arXiv:2511.16108 , 2025. Kevin Chen, Marco Cusumano-Towner, Brody Huval, Aleksei Petrenko, Jackson Ham-burger, Vladlen Koltun, and Philipp Kr¨ ahenb¨ uhl. Reinforcement learning for long-horizon interactive llm agents. arXiv preprint arXiv:2502.01600 , 2025a. 
+
+> 47 A First-Principles Derivation of LLM Policy Optimization
+
+Liang Chen, Lei Li, Haozhe Zhao, Yifan Song, and Vinci. R1-V: Reinforcing super gen-eralization ability in vision-language models with less than $3. https://github.com/ Deep-Agent/R1-V , 2025b. Accessed: 2025-02-02. Xiwen Chen, Wenhui Zhu, Peijie Qiu, Xuanzhao Dong, Hao Wang, Haiyu Wu, Huayu Li, Aristeidis Sotiras, Yalin Wang, and Abolfazl Razi. Dra-grpo: Your grpo needs to know diverse reasoning paths for mathematical reasoning. arXiv preprint arXiv:2505.09655 ,2025c. Zhe Chen, Jiannan Wu, Wenhai Wang, Weijie Su, Guo Chen, Sen Xing, Muyan Zhong, Qinglong Zhang, Xizhou Zhu, Lewei Lu, Bin Li, Ping Luo, Tong Lu, Yu Qiao, and Jifeng Dai. Internvl: Scaling up vision foundation models and aligning for generic visual-linguistic tasks. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 24185–24198, June 2024. Paul F Christiano, Jan Leike, Tom Brown, Miljan Martic, Shane Legg, and Dario Amodei. Deep reinforcement learning from human preferences. In I. Guyon, U. Von Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett, edi-tors, Advances in Neural Information Processing Systems , volume 30. Curran Associates, Inc., 2017. URL https://proceedings.neurips.cc/paper_files/paper/2017/file/ d5e2c0adad503c91f91df240d0cd4e49-Paper.pdf .Karl Cobbe, Vineet Kosaraju, Mohammad Bavarian, Mark Chen, Heewoo Jun, Lukasz Kaiser, Matthias Plappert, Jerry Tworek, Jacob Hilton, Reiichiro Nakano, et al. Training verifiers to solve math word problems. arXiv preprint arXiv:2110.14168 , 2021. Ganqu Cui, Lifan Yuan, Zefan Wang, Hanbin Wang, Yuchen Zhang, Jiacheng Chen, Wendi Li, Bingxiang He, Yuchen Fan, Tianyu Yu, et al. Process reinforcement through implicit rewards. arXiv preprint arXiv:2502.01456 , 2025. Muzhi Dai, Chenxu Yang, and Qingyi Si. S-grpo: Early exit via reinforcement learning in reasoning models. In D. Belgrave, C. Zhang, H. Lin, R. Pas-canu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural In-formation Processing Systems , volume 38, pages 48178–48204. Curran Associates, Inc., 2025. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 44f09d1973a88529b40029e6c3693ded-Paper-Conference.pdf .Ken Ding. Hdpo: Hybrid distillation policy optimization via privileged self-distillation. 
+
+arXiv preprint arXiv:2603.23871 , 2026. Jiazhan Feng, Shijue Huang, Xingwei Qu, Ge Zhang, Yujia Qin, Baoquan Zhong, Chengquan Jiang, Jinxin Chi, and Wanjun Zhong. Retool: Reinforcement learning for strategic tool use in llms. In International Conference on Learning Representations , 2026. Bofei Gao, Feifan Song, Yibo Miao, Zefan Cai, Zhe Yang, Liang Chen, Helan Hu, Runxin Xu, Qingxiu Dong, Ce Zheng, et al. Towards a unified view of preference learning for large language models: A survey. arXiv preprint arXiv:2409.02795 , 2024. 
+
+> 48 A First-Principles Derivation of LLM Policy Optimization
+
+Chang Gao, Chujie Zheng, Xiong-Hui Chen, Kai Dang, Shixuan Liu, Bowen Yu, An Yang, Shuai Bai, Jingren Zhou, and Junyang Lin. Soft adaptive policy optimization. arXiv preprint arXiv:2511.20347 , 2025. Leo Gao, John Schulman, and Jacob Hilton. Scaling laws for reward model overoptimization. In International Conference on Machine Learning , pages 10835–10866. PMLR, 2023. Shiran Ge, Chenyi Huang, Yuang Ai, Qihang Fan, Huaibo Huang, and Ran He. Expand and prune: Maximizing trajectory diversity for effective grpo in generative models. In 
+
+Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition ,pages 41913–41922, 2026. Evan Greensmith, Peter L Bartlett, and Jonathan Baxter. Variance reduction techniques for gradient estimates in reinforcement learning. Journal of Machine Learning Research , 5 (Nov):1471–1530, 2004. Yuxian Gu, Li Dong, Furu Wei, and Minlie Huang. Minillm: Knowledge distillation of large language models. In B. Kim, Y. Yue, S. Chaudhuri, K. Fragkiadaki, M. Khan, and Y. Sun, editors, International Conference on Learning Representations , volume 2024, pages 32694–32717, 2024. URL https://proceedings.iclr.cc/paper_files/paper/ 2024/file/8ac015d409635f196f9e3e9dcfb9a94e-Paper-Conference.pdf .Daya Guo, Dejian Yang, Haowei Zhang, Junxiao Song, Peiyi Wang, Qihao Zhu, Runxin Xu, et al. DeepSeek-R1 incentivizes reasoning in LLMs through reinforcement learning. Nature ,645(8081):633–638, September 2025a. ISSN 1476-4687. doi: 10.1038/s41586-025-09422-z. URL https://doi.org/10.1038/s41586-025-09422-z .Yiran Guo, Lijie Xu, Jie Liu, DAN YE, and Shuang Qiu. Segment policy optimization: Effective segment-level credit assignment in rl for large language models. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 114399–114431. Curran Associates, Inc., 2025b. URL https://proceedings.neurips.cc/paper_files/paper/ 2025/file/a6536243037d1e32c20de85137d478da-Paper-Conference.pdf .Wenyi Hong, Wenmeng Yu, Xiaotao Gu, Guo Wang, Guobing Gan, Haomiao Tang, Jiale Cheng, Ji Qi, Junhui Ji, Lihang Pan, et al. Glm-4.5 v and glm-4.1 v-thinking: Towards versatile multimodal reasoning with scalable reinforcement learning. arXiv preprint arXiv:2507.01006 , 2025. Bairu Hou, Yang Zhang, Jiabao Ji, Yujian Liu, Kaizhi Qian, Jacob Andreas, and Shiyu Chang. Thinkprune: Pruning long chain-of-thought of llms via reinforcement learning. 
+
+arXiv preprint arXiv:2504.01296 , 2025. Jian Hu, Jason Klein Liu, Haotian Xu, and Wei Shen. Reinforce++: Stabilizing critic-free policy optimization with global advantage normalization. arXiv preprint arXiv:2501.03262 ,2025a. 
+
+> 49 A First-Principles Derivation of LLM Policy Optimization
+
+Jingcheng Hu, Yinmin Zhang, Qi Han, Daxin Jiang, Xiangyu Zhang, and Heung-Yeung Shum. Open-reasoner-zero: An open source approach to scaling up rein-forcement learning on the base model. In D. Belgrave, C. Zhang, H. Lin, R. Pas-canu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural In-formation Processing Systems , volume 38, pages 162239–162262. Curran Associates, Inc., 2025b. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ ed873d79e7c268c020c4b4db13a2812a-Paper-Conference.pdf .Zican Hu, Shilin Zhang, Yafu Li, Jianhao Yan, Xuyang Hu, Leyang Cui, Xiaoye Qu, Chunlin Chen, Yu Cheng, and Zhi Wang. Diversity-incentivized exploration for versatile reasoning. In International Conference on Learning Representations , 2026. Wenxuan Huang, Bohan Jia, Zijie Zhai, Shaosheng Cao, Zheyu Ye, Fei Zhao, Zhe Xu, Xu Tang, Yao Hu, and Shaohui Lin. Vision-r1: Incentivizing reasoning capability in mul-timodal large language models. In International Conference on Learning Representations ,2026. Zeyu Huang, Tianhao Cheng, Zihan Qiu, Zili Wang, Yinghui Xu, Edoardo M. Ponti, and Ivan Titov. Blending supervised and reinforcement fine-tuning with prefix sampling. arXiv preprint arXiv:2507.01679 , 2025. Xitai Jiang, Zihan Tang, Wenze Lin, Yang Yue, Shenzhi Wang, and Gao Huang. From reasoning chains to verifiable subproblems: Curriculum reinforcement learning enables credit assignment for llm reasoning. arXiv preprint arXiv:2605.22074 , 2026. Yuhua Jiang, Yuwen Xiong, Yufeng Yuan, Chao Xin, Wenyuan Xu, Yu Yue, Qianchuan Zhao, and Lin Yan. Pag: Multi-turn reinforced llm self-correction with policy as generative verifier. arXiv preprint arXiv:2506.10406 , 2025. Bowen Jin, Hansi Zeng, Zhenrui Yue, Jinsung Yoon, Sercan Arik, Dong Wang, Hamed Zamani, and Jiawei Han. Search-r1: Training llms to reason and leverage search engines with reinforcement learning. In Conference on Language Modeling , 2025. Timo Kaufmann, Paul Weng, Viktor Bengs, and Eyke H¨ ullermeier. A survey of reinforcement learning from human feedback. Transactions on Machine Learning Research , 2025. ISSN 2835-8856. URL https://openreview.net/forum?id=f7OkIurx4b . Survey Certification. Jongwoo Ko, Sara Abdali, Young Jin Kim, Tianyi Chen, and Pashmina Cameron. Scaling reasoning efficiently via relaxed on-policy distillation. arXiv preprint arXiv:2603.11137 ,2026. Vijay Konda and John Tsitsiklis. Actor-critic algorithms. 12, 1999. URL https://proceedings.neurips.cc/paper_files/paper/1999/file/ 6449f44a102fde848669bdd9eb6b76fa-Paper.pdf .Aviral Kumar, Vincent Zhuang, Rishabh Agarwal, Yi Su, JD Co-Reyes, Avi Singh, Kate Baumli, Shariq Iqbal, Colton Bishop, Rebecca Roelofs, Lei Zhang, Kay McK-inney, Disha Shrivastava, Cosmin Paduraru, George Tucker, Doina Precup, Feryal 
+
+> 50 A First-Principles Derivation of LLM Policy Optimization
+
+Behbahani, and Aleksandra Faust. Training language models to self-correct via re-inforcement learning. In Y. Yue, A. Garg, N. Peng, F. Sha, and R. Yu, editors, 
+
+International Conference on Learning Representations , volume 2025, pages 54523– 54549, 2025. URL https://proceedings.iclr.cc/paper_files/paper/2025/file/ 871ac99fdc5282d0301934d23945ebaa-Paper-Conference.pdf .Soo Min Kwon, Ziteng Sun, Ananda Theertha Suresh, Himanshu Jain, and Sanjiv Kumar. Codistill-grpo: A co-distillation recipe for efficient group relative policy optimization. 
+
+arXiv preprint arXiv:2605.08873 , 2026. Chen Li, Nazhou Liu, and Kai Yang. Adaptive group policy optimization: Towards stable training and token-efficient reasoning. arXiv preprint arXiv:2503.15952 , 2025a. Siheng Li, Zhanhui Zhou, Wai Lam, Chao Yang, and Chaochao Lu. Repo: Replay-enhanced policy optimization. arXiv preprint arXiv:2506.09340 , 2025b. Wenjun Li, Zhi Chen, Jingru Lin, Hannan Cao, Wei Han, Sheng Liang, Zhi Zhang, Kuicai Dong, Dexun Li, Chen Zhang, et al. Reinforcement learning foundations for deep research systems: A survey. arXiv preprint arXiv:2509.06733 , 2025c. Yingru Li, Ziniu Li, and Jiacai Liu. A note on hybrid online reinforcement and imitation learning for llms: Formulations and algorithms. arXiv preprint arXiv:2512.23097 , 2025d. Yuetai Li, Huseyin A Inan, Xiang Yue, Wei-Ning Chen, Lukas Wutschitz, Janardhan Kulkarni, Radha Poovendran, Robert Sim, and Saravan Rajmohan. Simulating environments with reasoning models for agent training. arXiv preprint arXiv:2511.01824 , 2025e. Ziniu Li, Tian Xu, Yushun Zhang, Zhihang Lin, Yang Yu, Ruoyu Sun, and Zhi-Quan Luo. ReMax: A simple, effective, and efficient reinforcement learning method for aligning large language models. In International Conference on Machine Learning , pages 29128–29163. PMLR, 2024. Shuquan Lian, Yuhang Wu, Jia Ma, Yifan Ding, Zihan Song, Bingqi Chen, Xiawu Zheng, Hui Li, and Rongrong Ji. Ui-agile: Advancing gui agents with effective reinforcement learning and precise inference-time grounding. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) Findings , pages 8575–8584, June 2026. Hunter Lightman, Vineet Kosaraju, Yuri Burda, Harrison Edwards, Bowen Baker, Teddy Lee, Jan Leike, John Schulman, Ilya Sutskever, and Karl Cobbe. Let 's verify step by step. In B. Kim, Y. Yue, S. Chaudhuri, K. Fragkiadaki, M. Khan, and Y. Sun, editors, International Conference on Learning Representations , volume 2024, pages 39578–39601, 2024. URL https://proceedings.iclr.cc/paper_files/paper/2024/ file/aca97732e30bcf1303bc22ac3924fd16-Paper-Conference.pdf .Zhihang Lin, Mingbao Lin, Yuan Xie, and Rongrong Ji. Cppo: Accelerating the training of group relative policy optimization-based reasoning models. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 61043–61068. Curran Associates, 
+
+> 51 A First-Principles Derivation of LLM Policy Optimization
+
+Inc., 2025. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 57ec371599f3d4123c9b054ffa3ef0ca-Paper-Conference.pdf .Haotian Liu, Chunyuan Li, Qingyang Wu, and Yong Jae Lee. Visual instruction tuning. In A. Oh, T. Naumann, A. Globerson, K. Saenko, M. Hardt, and S. Levine, editors, 
+
+Advances in Neural Information Processing Systems , volume 36, pages 34892–34916. Curran Associates, Inc., 2023. URL https://proceedings.neurips.cc/paper_files/ paper/2023/file/6dcf277ea32ce3288914faf369fe6de0-Paper-Conference.pdf .Keliang Liu, Dingkang Yang, Ziyun Qian, Weijie Yin, Yuchi Wang, Hongsheng Li, Jun Liu, Peng Zhai, Yang Liu, and Lihua Zhang. Reinforcement learning meets large language models: A survey of advancements and applications across the llm lifecycle. arXiv preprint arXiv:2509.16679 , 2025a. Shuo Liu, Zeyu Liang, Xueguang Lyu, and Christopher Amato. Llm collaboration with multi-agent reinforcement learning. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 32150–32158, 2026a. Wei Liu, Ruochen Zhou, Yiyun Deng, Yuzhen Huang, Junteng Liu, Yuntian Deng, Yizhe Zhang, and Junxian He. Learn to reason efficiently with adaptive length-based reward shaping. In International Conference on Learning Representations , 2026b. Zichen Liu, Changyu Chen, Wenjun Li, Penghui Qi, Tianyu Pang, Chao Du, Wee Sun Lee, and Min Lin. Understanding r1-zero-like training: A critical perspective. In Conference on Language Modeling , 2025b. Fanbin Lu, Zhisheng Zhong, Shu Liu, Chi-Wing Fu, and Jiaya Jia. Arpo: End-to-end policy optimization for gui agents with experience replay. arXiv preprint arXiv:2505.16282 , 2025. Zhengxi Lu, Yuxiang Chai, Yaxuan Guo, Xi Yin, Liang Liu, Hao Wang, Han Xiao, Shuai Ren, Pengxiang Zhao, Guangyi Liu, et al. Ui-r1: Enhancing efficient action prediction of gui agents by reinforcement learning. In Proceedings of the AAAI Conference on Artificial Intelligence , volume 40, pages 17608–17616, 2026a. Zhengxi Lu, Zhiyuan Yao, Zhuowen Han, Zi-Han Wang, Jinyang Wu, Qi Gu, Xunliang Cai, Weiming Lu, Jun Xiao, Yueting Zhuang, and Yongliang Shen. Self-distilled agentic reinforcement learning. arXiv preprint arXiv:2605.15155 , 2026b. Siqi Luo, Jianghan Shen, Yi Xin, Huayu Zheng, Haoxing Chen, Yan Tai, Yue Li, Junjun He, Yihao Liu, Guangtao Zhai, et al. Sketch then paint: Hierarchical reinforcement learning for diffusion multi-modal large language models. arXiv preprint arXiv:2605.16842 , 2026. Ruotian Ma, Peisong Wang, Cheng Liu, Xingyan Liu, Jiaqi Chen, Bang Zhang, Xin Zhou, Nan Du, and Jia Li. S2R: Teaching LLMs to self-verify and self-correct via reinforcement learning. In Wanxiang Che, Joyce Nabende, Ekaterina Shutova, and Mohammad Taher Pilehvar, editors, Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pages 22632–22654, Vienna, Austria, July 2025. Association for Computational Linguistics. ISBN 979-8-89176-251-0. doi: 10.18653/v1/2025.acl-long.1104. URL https://aclanthology.org/2025. acl-long.1104/ .
+
+> 52 A First-Principles Derivation of LLM Policy Optimization
+
+Volodymyr Mnih, Adria Puigdomenech Badia, Mehdi Mirza, Alex Graves, Timothy Lillicrap, Tim Harley, David Silver, and Koray Kavukcuoglu. Asynchronous methods for deep reinforcement learning. In International Conference on Machine Learning , pages 1928– 1937. PMLR, 2016. Gongrui Nan, Siye Chen, Jing Huang, Mengyu Lu, Dexun Wang, Chunmei Xie, Weiqi Xiong, Xianzhou Zeng, Qixuan Zhou, Yadong Li, et al. Ngrpo: Negative-enhanced group relative policy optimization. arXiv preprint arXiv:2509.18851 , 2025. Shen Nie, Fengqi Zhu, Zebin You, Xiaolu Zhang, Jingyang Ou, Jun Hu, Jun Zhou, Yankai Lin, Ji-Rong Wen, and Chongxuan LI. Large language diffusion models. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 50608–50646. Curran Associates, Inc., 2025. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 48b383b24230e0e6e649d9c98dae4d8c-Paper-Conference.pdf .Long Ouyang, Jeffrey Wu, Xu Jiang, Diogo Almeida, Carroll Wainwright, Pamela Mishkin, Chong Zhang, Sandhini Agarwal, Katarina Slama, Alex Ray, John Schulman, Jacob Hilton, Fraser Kelton, Luke Miller, Maddie Simens, Amanda Askell, Peter Welinder, Paul F Christiano, Jan Leike, and Ryan Lowe. Training language models to follow instructions with human feedback. In S. Koyejo, S. Mohamed, A. Agarwal, D. Belgrave, K. Cho, and A. Oh, editors, Advances in Neural Information Processing Systems , volume 35, pages 27730–27744. Curran Associates, Inc., 2022. URL https://proceedings.neurips.cc/paper_files/ paper/2022/file/b1efde53be364a73914f58805a001731-Paper-Conference.pdf .Prasanna Parthasarathi, Mathieu Reymond, Boxing Chen, Yufei Cui, and Sarath Chandar. Grpo-λ: Credit assignment improves llm reasoning. arXiv preprint arXiv:2510.00194 ,2025. Zehan Qi, Xiao Liu, Iat Long Iong, Hanyu Lai, Xueqiao Sun, Jiadai Sun, Xinyue Yang, Yu Yang, Shuntian Yao, Wei Xu, Jie Tang, and Yuxiao Dong. We-brl: Training llm web agents via self-evolving online curriculum reinforcement learning. In Y. Yue, A. Garg, N. Peng, F. Sha, and R. Yu, editors, In-ternational Conference on Learning Representations , volume 2025, pages 79791– 79821, 2025. URL https://proceedings.iclr.cc/paper_files/paper/2025/file/ c66e1fcc9691aae706250638f36f681b-Paper-Conference.pdf .Rafael Rafailov, Archit Sharma, Eric Mitchell, Christopher D Manning, Stefano Ermon, and Chelsea Finn. Direct preference optimization: Your language model is secretly a reward model. In A. Oh, T. Naumann, A. Globerson, K. Saenko, M. Hardt, and S. Levine, editors, 
+
+Advances in Neural Information Processing Systems , volume 36, pages 53728–53741. Curran Associates, Inc., 2023. URL https://proceedings.neurips.cc/paper_files/ paper/2023/file/a85b405ed65c6477a4fe8302b5e06ce7-Paper-Conference.pdf .Miguel Moura Ramos, Duarte M Alves, and Andr´ e FT Martins. Combining on-policy optimization and distillation for long-context reasoning in large language models. arXiv preprint arXiv:2605.12227 , 2026. 
+
+> 53 A First-Principles Derivation of LLM Policy Optimization
+
+Tao Ren, Jinyang Jiang, Hui Yang, Wan Tian, Minhao Zou, Guanghao Li, Zishi Zhang, Qinghao Wang, Shentao Qin, Yanjun Zhao, et al. Riskpo: Risk-based policy optimization via verifiable reward for llm post-training. arXiv preprint arXiv:2510.00911 , 2025. Kevin Rojas, Jiahe Lin, Kashif Rasul, Anderson Schneider, Yuriy Nevmyvaka, Molei Tao, and Wei Deng. Improving reasoning for diffusion language models via group diffusion policy optimization. arXiv preprint arXiv:2510.08554 , 2025. Subham Sekhar Sahoo, Marianne Arriola, Yair Schiff, Aaron Gokaslan, Edgar Marro-quin, Justin T Chiu, Alexander Rush, and Volodymyr Kuleshov. Simple and effective masked diffusion language models. In A. Globerson, L. Mackey, D. Belgrave, A. Fan, U. Paquet, J. Tomczak, and C. Zhang, editors, Advances in Neural Information Pro-cessing Systems , volume 37, pages 130136–130184. Curran Associates, Inc., 2024. doi: 10.52202/079017-4135. URL https://proceedings.neurips.cc/paper_files/paper/ 2024/file/eb0b13cc515724ab8015bc978fdde0ad-Paper-Conference.pdf .John Schulman, Sergey Levine, Pieter Abbeel, Michael Jordan, and Philipp Moritz. Trust region policy optimization. In International Conference on Machine Learning , pages 1889–1897. PMLR, 2015. John Schulman, Philipp Moritz, Sergey Levine, Michael Jordan, and Pieter Abbeel. High-dimensional continuous control using generalized advantage estimation. In International Conference on Learning Representations , 2016. John Schulman, Filip Wolski, Prafulla Dhariwal, Alec Radford, and Oleg Klimov. Proximal policy optimization algorithms. arXiv preprint arXiv:1707.06347 , 2017. Zhihong Shao, Peiyi Wang, Qihao Zhu, Runxin Xu, Junxiao Song, Xiao Bi, Haowei Zhang, Mingchuan Zhang, YK Li, Yang Wu, et al. Deepseekmath: Pushing the limits of mathematical reasoning in open language models. arXiv preprint arXiv:2402.03300 , 2024. Jianghan Shen, Siqi Luo, Xinyu Cheng, Jing Xiong, Yue Li, Jiyao Liu, Jiashi Lin, Yirong Chen, and Junjun He. Cusearch: Curriculum rollout sampling via search depth for agentic rag. arXiv preprint arXiv:2605.11611 , 2026. Yi Shen, Jian Zhang, Jieyun Huang, Shuming Shi, Wenjing Zhang, Jiangze Yan, Ning Wang, Kai Wang, Zhaoxiang Liu, and Shiguo Lian. DAST: Difficulty-adaptive slow-thinking for large reasoning models. In Saloni Potdar, Lina Rojas-Barahona, and Sebastien Montella, editors, Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing: Industry Track , pages 2322–2331, Suzhou (China), November 2025. Association for Computational Linguistics. ISBN 979-8-89176-333-3. doi: 10.18653/ v1/2025.emnlp-industry.160. URL https://aclanthology.org/2025.emnlp-industry. 160/ .Joykirat Singh, Raghav Magazine, Yash Pandya, and Akshay Nambi. Agentic reasoning and tool integration for llms via reinforcement learning. arXiv preprint arXiv:2505.01441 ,2025. 
+
+> 54 A First-Principles Derivation of LLM Policy Optimization
+
+Mingyang Song and Mao Zheng. A survey of on-policy distillation for large language models. 
+
+arXiv preprint arXiv:2604.00626 , 2026. Saksham Sahai Srivastava and Vaneet Aggarwal. A technical survey of reinforcement learning techniques for large language models. arXiv preprint arXiv:2507.04136 , 2025. Nisan Stiennon, Long Ouyang, Jeffrey Wu, Daniel Ziegler, Ryan Lowe, Chelsea Voss, Alec Radford, Dario Amodei, and Paul F Christiano. Learning to summarize with human feedback. In H. Larochelle, M. Ranzato, R. Hadsell, M.F. Balcan, and H. Lin, editors, 
+
+Advances in Neural Information Processing Systems , volume 33, pages 3008–3021. Curran Associates, Inc., 2020. URL https://proceedings.neurips.cc/paper_files/paper/ 2020/file/1f89885d556929e98d3ef9b86448f951-Paper.pdf .Hao Sun, Zile Qiao, Jiayan Guo, Xuanbo Fan, Yingyan Hou, Yong Jiang, Pengjun Xie, Yan Zhang, Fei Huang, and Jingren Zhou. Zerosearch: Incentivize the search capability of llms without searching. arXiv preprint arXiv:2505.04588 , 2025. Richard S Sutton, David McAllester, Satinder Singh, and Yishay Mansour. Pol-icy gradient methods for reinforcement learning with function approximation. 12, 1999. URL https://proceedings.neurips.cc/paper_files/paper/1999/file/ 464d828b85b0bed98e80ade0a5c43b0f-Paper.pdf .Richard S Sutton, Andrew G Barto, et al. Reinforcement Learning: An Introduction . MIT Press, 2 edition, 2018. Hongze Tan, Zihan Wang, Jianfei Pan, Jinghao Lin, Hao Wang, Yifan Wu, Tao Chen, Zhihang Zheng, Zhihao Tang, and Haihua Yang. Gtpo and grpo-s: Token and sequence-level reward shaping with policy entropy. arXiv preprint arXiv:2508.04349 , 2025. Kimi Team, Angang Du, Bofei Gao, Bowei Xing, Changjiu Jiang, Cheng Chen, Cheng Li, Chenjun Xiao, Chenzhuang Du, Chonghua Liao, et al. Kimi k1.5: Scaling reinforcement learning with llms. arXiv preprint arXiv:2501.12599 , 2025. Qwen Team. Qwq-32b: Embracing the power of reinforcement learning, March 2025. URL 
+
+https://qwenlm.github.io/blog/qwq-32b/ .Zhongwei Wan, Yun Shen, Zhihao Dou, Donghao Zhou, Yu Zhang, Xin Wang, Hui Shen, Jing Xiong, Chaofan Tao, Zixuan Zhong, et al. Dsdr: Dual-scale diversity regularization for exploration in llm reasoning. arXiv preprint arXiv:2602.19895 , 2026. Guoqing Wang, Sunhao Dai, Guangze Ye, Zeyu Gan, Wei Yao, Yong Deng, Xiaofeng Wu, and Zhenzhe Ying. Information gain-based policy optimization: A simple and effective approach for multi-turn llm agents. arXiv preprint arXiv:2510.14967 , 2025a. Jiaqi Wang, Wenhao Zhang, Weijie Shi, Yaliang Li, and James Cheng. Tcod: Exploring temporal curriculum in on-policy distillation for multi-turn autonomous agents. arXiv preprint arXiv:2604.24005 , 2026a. 
+
+> 55 A First-Principles Derivation of LLM Policy Optimization
+
+Jingyi Wang, Lei Zhu, Tengjin Weng, Song-Li Wu, Haochen Tan, Jierun Chen, Chaofan Tao, Haoli Bai, Lu Hou, Lifeng Shang, et al. Grpo-vps: Enhancing group relative policy optimization with verifiable process supervision for effective reasoning. arXiv preprint arXiv:2604.20659 , 2026b. Shenzhi Wang, Le Yu, Chang Gao, Chujie Zheng, Shixuan Liu, Rui Lu, Kai Dang, Xiong-Hui Chen, Jianxin Yang, Zhenru Zhang, Yuqiong Liu, An Yang, Andrew Zhao, Yang Yue, Shiji Song, Bowen Yu, Gao Huang, and Junyang Lin. Beyond the 80/20 rule: High-entropy minority tokens drive effective reinforcement learning for llm reasoning. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 115452–115486. Curran Associates, Inc., 2025b. URL https://proceedings.neurips.cc/paper_files/paper/ 2025/file/a797c2d2e0c1fdabf4d1ab8cd0b465c6-Paper-Conference.pdf .Shuhe Wang, Shengyu Zhang, Jie Zhang, Runyi Hu, Xiaoya Li, Tianwei Zhang, Jiwei Li, Fei Wu, Guoyin Wang, and Eduard Hovy. Reinforcement learning enhanced llms: A survey. 
+
+arXiv preprint arXiv:2412.10400 , 2024. Yiping Wang, Qing Yang, Zhiyuan Zeng, Liliang Ren, Liyuan Liu, Baolin Peng, Hao Cheng, Xuehai He, Kuan Wang, Jianfeng Gao, Weizhu Chen, Shuohang Wang, Si-mon Du, and yelong shen. Reinforcement learning for reasoning in large language models with one training example. In D. Belgrave, C. Zhang, H. Lin, R. Pas-canu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural In-formation Processing Systems , volume 38, pages 122721–122764. Curran Associates, Inc., 2025c. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ b1ea3f93167c55f3fc2999b68a170ff3-Paper-Conference.pdf .Yufei Wang, Wanjun Zhong, Liangyou Li, Fei Mi, Xingshan Zeng, Wenyong Huang, Lifeng Shang, Xin Jiang, and Qun Liu. Aligning large language models with human: A survey. 
+
+arXiv preprint arXiv:2307.12966 , 2023. Zhaoyang Wang, Canwen Xu, Boyi Liu, Yite Wang, Siwei Han, Zhewei Yao, Huaxiu Yao, and Yuxiong He. Agent world model: Infinity synthetic environments for agentic reinforcement learning. arXiv preprint arXiv:2602.10090 , 2026c. Zhichao Wang, Bin Bi, Shiva Kumar Pentyala, Kiran Ramnath, Sougata Chaudhuri, Shub-ham Mehrotra, Xiang-Bo Mao, Sitaram Asur, et al. Reinforcement learning for llm post-training: A survey. arXiv preprint arXiv:2407.16216 , 2026d. Yuxiang Wei, Olivier Duchenne, Jade Copet, Quentin Carbonneaux, LINGMING ZHANG, Daniel Fried, Gabriel Synnaeve, Rishabh Singh, and Sida Wang. Swe-rl: Advancing llm reasoning via reinforcement learning on open software evolution. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 78500–78525. Curran Associates, Inc., 2025a. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 7107d4d2e837bde2171c6b71b5bde954-Paper-Conference.pdf .
+
+> 56 A First-Principles Derivation of LLM Policy Optimization
+
+Zhepei Wei, Wenlin Yao, Yao Liu, Weizhi Zhang, Qin Lu, Liang Qiu, Changlong Yu, Puyang Xu, Chao Zhang, Bing Yin, Hyokun Yun, and Lihong Li. WebAgent-r1: Training web agents via end-to-end multi-turn reinforcement learning. In Christos Christodoulopoulos, Tanmoy Chakraborty, Carolyn Rose, and Violet Peng, editors, Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing , pages 7909–7928, Suzhou, China, November 2025b. Association for Computational Linguistics. ISBN 979-8-89176-332-6. doi: 10.18653/v1/2025.emnlp-main.401. URL https://aclanthology.org/ 2025.emnlp-main.401/ .Xumeng Wen, Zihan Liu, Shun Zheng, Shengyu Ye, Zhirong Wu, Yang Wang, Zhijian Xu, Xiao Liang, Junjie Li, Ziming Miao, et al. Reinforcement learning with verifiable rewards implicitly incentivizes correct reasoning in base llms. arXiv preprint arXiv:2506.14245 ,2025. Ronald J Williams. Simple statistical gradient-following algorithms for connectionist rein-forcement learning. Machine learning , 8(3):229–256, 1992. Xuan Xie, Xuan Wang, Wenjie Wang, Shuai Chen, and Wei Lin. Dagrpo: Rectifying gradient conflict in reasoning via distinctiveness-aware group relative policy optimization. arXiv preprint arXiv:2512.06337 , 2025. Hongling Xu, Qi Zhu, Heyuan Deng, Jinpeng Li, Lu Hou, Yasheng Wang, Lifeng Shang, Ruifeng Xu, and Fei Mi. Kdrl: Post-training reasoning llms via unified knowledge distillation and reinforcement learning. arXiv preprint arXiv:2506.02208 , 2025. Yixuan Even Xu, Yash Savani, Fei Fang, and J Zico Kolter. Not all rollouts are useful: Down-sampling rollouts in LLM reinforcement learning. Transactions on Machine Learning Research , 2026. ISSN 2835-8856. URL https://openreview.net/forum?id=MfHOmgqVXM .J2C Certification. Jianhao Yan, Yafu Li, Zican Hu, Zhi Wang, Ganqu Cui, Xiaoye Qu, Yu Cheng, and Yue Zhang. Learning to reason under off-policy guidance. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 117157–117186. Curran Associates, Inc., 2025. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ a9d5c33e38442450f9781bd7bad3c81e-Paper-Conference.pdf .An Yang, Beichen Zhang, Binyuan Hui, Bofei Gao, Bowen Yu, Chengpeng Li, Dayiheng Liu, Jianhong Tu, Jingren Zhou, Junyang Lin, et al. Qwen2.5-math technical report: Toward mathematical expert model via self-improvement. arXiv preprint arXiv:2409.12122 , 2024. Chenxu Yang, Chuanyu Qin, Qingyi Si, Minghui Chen, Naibin Gu, Dingyu Yao, Zheng Lin, Weiping Wang, Jiaqi Wang, and Nan Duan. Self-distilled rlvr. arXiv preprint arXiv:2604.03128 , 2026. Shihui Yang, Chengfeng Dou, Peidong Guo, Kai Lu, Qiang Ju, Fei Deng, and Rihui Xin. Dcpo: Dynamic clipping policy optimization. arXiv preprint arXiv:2509.02333 , 2025a. 
+
+> 57 A First-Principles Derivation of LLM Policy Optimization
+
+Zhicheng Yang, Zhijiang Guo, Yinya Huang, Xiaodan Liang, Yiwei Wang, and Jing Tang. Treerpo: Tree relative policy optimization. arXiv preprint arXiv:2506.05183 , 2025b. Zhihe Yang, Xufang Luo, Zilong Wang, Dongqi Han, Zhiyuan He, Dongsheng Li, and Yunjian Xu. Do not let low-probability tokens over-dominate in rl for llms. arXiv preprint arXiv:2505.12929 , 2025c. Huanjin Yao, Qixiang Yin, Jingyi Zhang, Min Yang, Yibo Wang, Wenhao Wu, Fei Su, Li Shen, Minghui Qiu, Dacheng Tao, and Jiaxing Huang. R1-sharevl: Incentivizing reasoning capabilities of multimodal large language models via share-grpo. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 80424–80451. Curran Associates, Inc., 2025a. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 73b75e4eafbdb617822bba262cc81c76-Paper-Conference.pdf .Jian Yao, Ran Cheng, Xingyu Wu, Jibin Wu, and KC Tan. Diversity-aware policy op-timization for large language model reasoning. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 94801–94826. Curran Associates, Inc., 2025b. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 8808b4c72d5ade9bbcf9270ac6411314-Paper-Conference.pdf .Qiying Yu, Zheng Zhang, Ruofei Zhu, Yufeng Yuan, Xiaochen Zuo, Yu Yue, Weinan Dai, Tiantian Fan, Gaohong Liu, juncai liu, LingJun Liu, Xin Liu, Haibin Lin, Zhiqi Lin, Bole Ma, Guangming Sheng, Yuxuan Tong, Chi Zhang, Mofan Zhang, Ru Zhang, Wang Zhang, Hang Zhu, Jinhua Zhu, Jiaze Chen, Jiangjie Chen, Chengyi Wang, Hongli Yu, Yuxuan Song, Xiangpeng Wei, Hao Zhou, Jingjing Liu, Wei-Ying Ma, Ya-Qin Zhang, Lin Yan, Yonghui Wu, and Mingxuan Wang. Dapo: An open-source llm reinforcement learning system at scale. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural In-formation Processing Systems , volume 38, pages 113222–113244. Curran Associates, Inc., 2025. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ a4277440d50f1f15d2cb4c14f7e0c0d2-Paper-Conference.pdf .Yu Yue, Yufeng Yuan, Qiying Yu, Xiaochen Zuo, Ruofei Zhu, Wenyuan Xu, Jiaze Chen, Chengyi Wang, TianTian Fan, Zhengyin Du, et al. Vapo: Efficient and reliable re-inforcement learning for advanced reasoning tasks. arXiv preprint arXiv:2504.05118 ,2025. Siliang Zeng, Quan Wei, William Brown, Oana Frunza, Yuriy Nevmyvaka, Yang Katie Zhao, and Mingyi Hong. Reinforcing multi-turn reasoning in llm agents via turn-level credit assignment. In ICML 2025 Workshop on Computer Use Agents , 2025. Runzhe Zhan, Yafu Li, Zhi Wang, Xiaoye Qu, Dongrui Liu, Jing Shao, Derek F Wong, and Yu Cheng. Exgrpo: Learning to reason from experience. arXiv preprint arXiv:2510.02245 ,2025. 
+
+> 58 A First-Principles Derivation of LLM Policy Optimization
+
+Guibin Zhang, Hejia Geng, Xiaohang Yu, Zhenfei Yin, Zaibin Zhang, Zelin Tan, Heng Zhou, Zhong-Zhi Li, Xiangyuan Xue, Yijiang Li, Yifan Zhou, Yang Chen, Chen Zhang, Yutao Fan, Zihu Wang, Songtao Huang, Francisco Piedrahita Velez, Yue Liao, Hongru WANG, Mengyue Yang, Heng Ji, Jun Wang, Shuicheng YAN, Philip Torr, and LEI BAI. The landscape of agentic reinforcement learning for LLMs: A survey. Transactions on Machine Learning Research , 2026a. ISSN 2835-8856. URL https://openreview.net/forum?id= RY19y2RI1O . Survey Certification. Hanchen Zhang, Xiao Liu, Bowen Lv, Xueqiao Sun, Bohao Jing, Iat Long Iong, Zhenyu Hou, Zehan Qi, Hanyu Lai, Yifan Xu, et al. Agentrl: Scaling agentic reinforcement learning with a multi-turn, multi-task framework. arXiv preprint arXiv:2510.04206 , 2025a. Hao Zhang, Mingjie Liu, Shaokun Zhang, Songyang Han, Jian Hu, Zhenghui Jin, Yuchi Zhang, Shizhe Diao, Ximing Lu, Binfeng Xu, et al. Prorl agent: Rollout-as-a-service for rl training of multi-turn llm agents. arXiv preprint arXiv:2603.18815 , 2026b. Weizhi Zhang, Yangning Li, Yuanchen Bei, Junyu Luo, Guancheng Wan, Liangwei Yang, Chenxuan Xie, Yuyao Yang, Wei-Chieh Huang, Chunyu Miao, et al. From web search towards agentic deep research: Incentivizing search with reasoning agents. arXiv preprint arXiv:2506.18959 , 2025b. Yuheng Zhang, Wenlin Yao, Changlong Yu, Yao Liu, Qingyu Yin, Bing Yin, Hyokun Yun, and Lihong Li. Improving sampling efficiency in rlvr through adaptive rollout and response reuse. arXiv preprint arXiv:2509.25808 , 2025c. Zhaoyang Zhang, Shuli Jiang, Yantao Shen, Yuting Zhang, Dhananjay Ram, Shuo Yang, Zhuowen Tu, Wei Xia, and Stefano Soatto. Reinforcement-aware knowledge distillation for llm reasoning. arXiv preprint arXiv:2602.22495 , 2026c. Zhi Zhang, Zhen Han, Costas Mavromatis, Qi Zhu, Yunyi Zhang, Sheng Guan, Dingmin Wang, Xiong Zhou, Shuai Wang, Soji Adeshina, et al. Train less, learn more: Adaptive efficient rollout optimization for group-based reinforcement learning. arXiv preprint arXiv:2602.14338 , 2026d. Siyan Zhao, Devaansh Gupta, Qinqing Zheng, and Aditya Grover. d1: Scaling reasoning in diffusion large language models via reinforcement learning. In D. Belgrave, C. Zhang, H. Lin, R. Pascanu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural Information Processing Systems , volume 38, pages 56729–56762. Curran Associates, Inc., 2025a. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ 52190a0362148d179f1cbd9080956872-Paper-Conference.pdf .Weikang Zhao, Xili Wang, Chengdi Ma, Lingbin Kong, Zhaohua Yang, Mingxiang Tuo, Xiaowei Shi, Yitao Zhai, and Xunliang Cai. Mua-rl: Multi-turn user-interacting agent reinforcement learning for agentic tool use. arXiv preprint arXiv:2508.18669 , 2025b. Chujie Zheng, Shixuan Liu, Mingze Li, Xiong-Hui Chen, Bowen Yu, Chang Gao, Kai Dang, Yuqiong Liu, Rui Men, An Yang, et al. Group sequence policy optimization. arXiv preprint arXiv:2507.18071 , 2025a. 
+
+> 59 A First-Principles Derivation of LLM Policy Optimization
+
+Haizhong Zheng, Yang Zhou, Brian Bartoldson, Bhavya Kailkhura, Fan Lai, Jiawei Zhao, and Beidi Chen. Act only when it pays: Efficient reinforcement learning for llm reasoning via selective rollouts. In D. Belgrave, C. Zhang, H. Lin, R. Pas-canu, P. Koniusz, M. Ghassemi, and N. Chen, editors, Advances in Neural In-formation Processing Systems , volume 38, pages 124321–124346. Curran Associates, Inc., 2025b. URL https://proceedings.neurips.cc/paper_files/paper/2025/file/ b42fb82fc3ffb88b872c4714f093875d-Paper-Conference.pdf .Lianmin Zheng, Wei-Lin Chiang, Ying Sheng, Siyuan Zhuang, Zhanghao Wu, Yonghao Zhuang, Zi Lin, Zhuohan Li, Dacheng Li, Eric Xing, Hao Zhang, Joseph Gonzalez, and Ion Stoica. Judging llm-as-a-judge with mt-bench and chatbot arena. In A. Oh, T. Naumann, A. Globerson, K. Saenko, M. Hardt, and S. Levine, editors, Advances in Neural Information Processing Systems , volume 36, pages 46595–46623. Curran Associates, Inc., 2023. URL https://proceedings.neurips.cc/paper_files/paper/2023/file/ 91f18a1287b398d378ef22505bf41832-Paper-Datasets_and_Benchmarks.pdf .Yuxiang Zheng, Dayuan Fu, Xiangkun Hu, Xiaojie Cai, Lyumanshan Ye, Pengrui Lu, and Pengfei Liu. DeepResearcher: Scaling deep research via reinforcement learning in real-world environments. In Christos Christodoulopoulos, Tanmoy Chakraborty, Carolyn Rose, and Violet Peng, editors, Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing , pages 414–431, Suzhou, China, November 2025c. Association for Computational Linguistics. ISBN 979-8-89176-332-6. doi: 10.18653/v1/2025.emnlp-main. 22. URL https://aclanthology.org/2025.emnlp-main.22/ .Yifei Zhou, Song Jiang, Yuandong Tian, Jason Weston, Sergey Levine, Sainbayar Sukhbaatar, and Xian Li. Sweet-rl: Training multi-turn llm agents on collaborative reasoning tasks. 
+
+arXiv preprint arXiv:2503.15478 , 2025. Daniel M Ziegler, Nisan Stiennon, Jeffrey Wu, Tom B Brown, Alec Radford, Dario Amodei, Paul Christiano, and Geoffrey Irving. Fine-tuning language models from human preferences. 
+
+arXiv preprint arXiv:1909.08593 , 2019.
