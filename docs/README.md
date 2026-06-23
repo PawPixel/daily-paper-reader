@@ -6,67 +6,63 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-22
-- 运行时间：2026-06-22 22:19:06 UTC
+- 最新运行日期：2026-06-23
+- 运行时间：2026-06-23 21:41:22 UTC
 - 运行状态：成功
-- 本次总论文数：15
-- 精读区：6
-- 速读区：9
+- 本次总论文数：13
+- 精读区：7
+- 速读区：6
 
 ### 今日简报（AI）
-今日聚焦LLM推理中的策略蒸馏与自蒸馏稳定性，精读两篇高分论文分别提出有界幂变换和路径条件化方法。  
-最值得关注方向：策略蒸馏的稳定化技术（PowerOPD）与token级信用定位（Localizing Credit），速读中的梯度视角和熵稳定性补充了理论支撑。  
-建议下一步重点对比精读两文的实验设置，并参考速读中的优势重加权方法，以提升推理模型训练鲁棒性。
-- 详情：[/202606/22/README](/202606/22/README)
+今日聚焦奖励监督与策略优化，精读两篇10分论文《Rethinking Reward Supervision》和《VIMPO》。
+
+最值得关注的两个方向：Rubric-Conditioned Self-Distillation 重新定义奖励标尺，Value-Implicit Policy Optimization 实现隐式价值对齐。
+
+建议优先精读两篇满分论文，再选看速读中的 STARE 与 Group-Graph Policy Optimization 作为补充理解。
+- 详情：[/202606/23/README](/202606/23/README)
 
 ### 精读区论文标签
-1. [PowerOPD: Stabilizing On-Policy Distillation with Bounded Power Transformation](/202606/22/2606.17199v1-poweropd-stabilizing-on-policy-distillation-with-bounded-power-transformation)  
+1. [Rethinking Reward Supervision: Rubric-Conditioned Self-Distillation](/202606/23/2606.19327v1-rethinking-reward-supervision-rubric-conditioned-self-distillation)  
    标签：评分：10.0/10、query:on-policy
-   evidence：通过有界幂变换稳定LLM的在策略蒸馏
-2. [Localizing Credit at the Divergence: Path-Conditioned Self-Distillation for LLM Reasoning](/202606/22/2606.15576v1-localizing-credit-at-the-divergence-path-conditioned-self-distillation-for-llm-reasoning)  
-   标签：评分：9.0/10、query:on-policy
-   evidence：面向LLM推理的在策略自蒸馏
-3. [On-Policy Distillation with Curriculum Turn-level Guidance for Multi-turn Agents](/202606/22/2606.15912v1-on-policy-distillation-with-curriculum-turn-level-guidance-for-multi-turn-agents)  
-   标签：评分：9.0/10、query:on-policy
-   evidence：基于课程指导的多轮智能体在策略蒸馏
-4. [OmniOPSD: Rationale-Privileged On-Policy Self-Distillation for Affective Computing](/202606/22/2606.15920v1-omniopsd-rationale-privileged-on-policy-self-distillation-for-affective-computing)  
-   标签：评分：9.0/10、query:on-policy
-   evidence：在策略自我蒸馏用于情感计算中的多模态大语言模型
-5. [Rethinking Reward Supervision: Rubric-Conditioned Self-Distillation](/202606/22/2606.19327v1-rethinking-reward-supervision-rubric-conditioned-self-distillation)  
+   evidence：基于评分标准的有条件自蒸馏用于在策略蒸馏
+2. [VIMPO: Value-Implicit Policy Optimization for LLMs](/202606/23/2606.20008v1-vimpo-value-implicit-policy-optimization-for-llms)  
+   标签：评分：10.0/10、query:llm-papers
+   evidence：面向LLM推理的值隐式策略优化
+3. [Finding the Evidence: Discovering Decision-Supporting Tokens for On-Policy Reasoning Distillation](/202606/23/2606.22830v1-finding-the-evidence-discovering-decision-supporting-tokens-for-on-policy-reasoning-distillation)  
+   标签：评分：10.0/10、query:on-policy
+   evidence：在策略推理蒸馏方法
+4. [ReNIO: Reweighting Negative Trajectory Importance for LLM On-Policy Distillation](/202606/23/2606.23104v1-renio-reweighting-negative-trajectory-importance-for-llm-on-policy-distillation)  
+   标签：评分：10.0/10、query:on-policy
+   evidence：直接针对LLM在线策略蒸馏，通过重加权负轨迹重要性
+5. [Beyond Entropy: Learning from Token-Level Distributional Deviations for LLM Reasoning](/202606/23/2606.19771v1-beyond-entropy-learning-from-token-level-distributional-deviations-for-llm-reasoning)  
    标签：评分：9.0/10、query:llm-papers
-   evidence：基于评分标准的在策略自蒸馏用于LLM推理
-6. [VIMPO: Value-Implicit Policy Optimization for LLMs](/202606/22/2606.20008v1-vimpo-value-implicit-policy-optimization-for-llms)  
-   标签：评分：9.0/10、query:llm-papers
-   evidence：通过无评论家策略优化改进LLM推理
+   evidence：直接通过词元级分布偏差解决大语言模型推理不稳定性
+6. [On the Position Bias of On-Policy Distillation](/202606/23/2606.22600v1-on-the-position-bias-of-on-policy-distillation)  
+   标签：评分：9.0/10、query:on-policy
+   evidence：在策略蒸馏中的位置偏差分析
+7. [A Formula-Driven Survey and Research Agenda for On-Policy Distillation](/202606/23/2606.22793v1-a-formula-driven-survey-and-research-agenda-for-on-policy-distillation)  
+   标签：评分：9.0/10、query:on-policy
+   evidence：在策略蒸馏的最新进展综述
 
 ### 速读区论文标签
-1. [A Gradient Perspective on RLVR Stability and Winner Advantage Policy Optimization](/202606/22/2606.16154v1-a-gradient-perspective-on-rlvr-stability-and-winner-advantage-policy-optimization)  
+1. [STARE: Surprisal-Guided Token-Level Advantage Reweighting for Policy Entropy Stability](/202606/23/2606.19236v1-stare-surprisal-guided-token-level-advantage-reweighting-for-policy-entropy-stability)  
    标签：评分：8.0/10、query:llm-papers
-   evidence：RLVR稳定性分析与面向LLM推理的胜者优势策略优化
-2. [STARE: Surprisal-Guided Token-Level Advantage Reweighting for Policy Entropy Stability](/202606/22/2606.19236v1-stare-surprisal-guided-token-level-advantage-reweighting-for-policy-entropy-stability)  
+   evidence：通过惊奇引导的优势重加权稳定LLM推理策略的熵
+2. [Group-Graph Policy Optimization for Long-Horizon Agentic Reinforcement Learning](/202606/23/2606.22995v1-group-graph-policy-optimization-for-long-horizon-agentic-reinforcement-learning)  
    标签：评分：8.0/10、query:llm-papers
-   evidence：改善GRPO的熵稳定性以增强LLM推理
-3. [Beyond Entropy: Learning from Token-Level Distributional Deviations for LLM Reasoning](/202606/22/2606.19771v1-beyond-entropy-learning-from-token-level-distributional-deviations-for-llm-reasoning)  
-   标签：评分：8.0/10、query:llm-papers
-   evidence：利用token级分布偏差改进LLM推理
-4. [A First-Principles Derivation of LLM Policy Optimization: From Expected Reward to GRPO and Its Structural Extensions](/202606/22/2606.16733v1-a-first-principles-derivation-of-llm-policy-optimization-from-expected-reward-to-grpo-and-its-structural-extensions)  
+   evidence：面向长视界大语言模型智能体的群体图策略优化
+3. [A Gradient Perspective on RLVR Stability and Winner Advantage Policy Optimization](/202606/23/2606.16154v1-a-gradient-perspective-on-rlvr-stability-and-winner-advantage-policy-optimization)  
    标签：评分：7.0/10、query:llm-papers
-   evidence：从第一性原理全面综述LLM策略优化方法
-5. [GD$^2$PO: Mitigating Multi-Reward Conflicts via Group-Dynamic reward-Decoupled Policy Optimization](/202606/22/2606.16771v1-gd2po-mitigating-multi-reward-conflicts-via-group-dynamic-reward-decoupled-policy-optimization)  
+   evidence：通过在线策略梯度优化提升LLM推理稳定性
+4. [EnvRL: Learn from Environment Dynamics in Agentic Reinforcement Learning](/202606/23/2606.17680v1-envrl-learn-from-environment-dynamics-in-agentic-reinforcement-learning)  
    标签：评分：7.0/10、query:llm-papers
-   evidence：缓解LLM后训练RL中的多奖励冲突
-6. [When in Doubt, Plan It Out: Committed Small Language Model Deliberation for Reactive Reinforcement Learning](/202606/22/2606.16995v1-when-in-doubt-plan-it-out-committed-small-language-model-deliberation-for-reactive-reinforcement-learning)  
-   标签：评分：7.0/10、query:llm-papers
-   evidence：结合小语言模型的混合强化学习架构提升推理和适应性
-7. [Learning from Your Own Mistakes: Constructing Learnable Micro-Reflective Trajectories for Self-Distillation](/202606/22/2606.18844v1-learning-from-your-own-mistakes-constructing-learnable-micro-reflective-trajectories-for-self-distillation)  
-   标签：评分：7.0/10、query:llm-papers
-   evidence：通过轨迹增强的自我蒸馏提升LLM推理
-8. [Skill-Guided Continuation Distillation for GUI Agents](/202606/22/2606.18890v1-skill-guided-continuation-distillation-for-gui-agents)  
-   标签：评分：7.0/10、query:on-policy
-   evidence：技能引导的延续蒸馏应对策略偏移
-9. [Learning from Own Solutions: Self-Conditioned Credit Assignment for Reinforcement Learning with Verifiable Rewards](/202606/22/2606.18810v1-learning-from-own-solutions-self-conditioned-credit-assignment-for-reinforcement-learning-with-verifiable-rewards)  
+   evidence：EnvRL：利用环境动力学改进大语言模型智能体强化学习
+5. [Reversal Q-Learning](/202606/23/2606.17551v1-reversal-q-learning)  
    标签：评分：6.0/10、query:on-policy
-   evidence：将对策略蒸馏作为基线方法进行讨论，并提出面向RLVR的自我条件信用分配
+   evidence：生成虚拟在策略轨迹用于离线强化学习
+6. [Closing the Feedback Loop: From Experience Extraction to Insight Governance in Verbal Reinforcement Learning](/202606/23/2606.17591v1-closing-the-feedback-loop-from-experience-extraction-to-insight-governance-in-verbal-reinforcement-learning)  
+   标签：评分：6.0/10、query:llm-papers
+   evidence：通过口头强化学习从世界反馈中改进大语言模型推理
 
 
 <div class="dpr-home-promo-card">
