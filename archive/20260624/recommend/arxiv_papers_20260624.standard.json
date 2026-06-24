@@ -1,0 +1,666 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-24T20:31:49.385854+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 9,
+    "deep_cap": 6,
+    "deep_selected": 6,
+    "quick_candidates": 10,
+    "quick_skim_target": 11,
+    "quick_selected": 10
+  },
+  "deep_dive": [
+    {
+      "id": "2606.20008v1",
+      "source": "arxiv",
+      "title": "VIMPO: Value-Implicit Policy Optimization for LLMs",
+      "abstract": "Reinforcement learning with verifiable rewards has become a central tool for improving the reasoning ability of large language models, but current methods face a trade-off between simplicity and credit assignment. Group-relative methods such as GRPO avoid training a critic, but typically assign a trajectory-level advantage to every token. Actor-critic methods provide denser learning signals, but require a learned value function with its own training instability. We introduce VIMPO, a critic-free policy optimization method that derives a policy-implied value function from the optimality conditions of KL-regularized reinforcement learning. For autoregressive generation, the resulting value recurrence can be written in terms of policy-reference log-ratios and anchored by the terminal condition that no future reward remains at the end of a trajectory. This gives a simple value loss that incorporates outcome-level verifiable rewards without training a critic. The same derivation also yields a critic-free actor advantage, allowing VIMPO to separate reward incorporation through the value loss from policy improvement through a PPO-style actor update. On mathematical RLVR benchmarks, VIMPO improves over GRPO across MATH-500, AIME 2024, AIME 2025, and OlympiadBench, with especially larger gains on competition-style evaluations. Under noisy rewards, VIMPO retains a consistent advantage over GRPO, suggesting that policy-implied value optimization can provide finer credit assignment while preserving the practical simplicity of critic-free training.",
+      "authors": [
+        "Zhewei Kang",
+        "Aosong Feng",
+        "Sergey Levine",
+        "Dawn Song",
+        "Xuandong Zhao"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-18T09:44:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.20008v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Critic-free policy optimization for LLM reasoning with implicit value function",
+      "llm_evidence_cn": "基于隐式值函数的无批评器LLM推理策略优化",
+      "llm_evidence": "基于隐式值函数的无批评器LLM推理策略优化",
+      "canonical_evidence": "基于隐式值函数的无批评器LLM推理策略优化",
+      "llm_tldr_en": "Introduces VIMPO, a critic-free policy optimization that derives implicit value function from KL-regularized RL conditions, improving LLM reasoning.",
+      "llm_tldr_cn": "针对RLVR方法在简单性和信用分配之间的权衡，本文提出VIMPO——一种无批评器的策略优化方法。VIMPO从KL正则化强化学习的最优性条件中推导出策略隐含的值函数，利用自回归生成中的对数比值递推关系，避免了训练单独的值网络。实验表明VIMPO在多个推理数据集上取得了与有批评器方法相当甚至更好的结果，同时训练更稳定。",
+      "llm_tldr": "针对RLVR方法在简单性和信用分配之间的权衡，本文提出VIMPO——一种无批评器的策略优化方法。VIMPO从KL正则化强化学习的最优性条件中推导出策略隐含的值函数，利用自回归生成中的对数比值递推关系，避免了训练单独的值网络。实验表明VIMPO在多个推理数据集上取得了与有批评器方法相当甚至更好的结果，同时训练更稳定。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.21994v1",
+      "source": "arxiv",
+      "title": "Prefix-Guided On-Policy Distillation: Mining Golden Trajectories from Rollouts",
+      "abstract": "On-policy distillation (OPD) improves reasoning models by applying dense teacher supervision on student-sampled trajectories. However, scaling OPD to long-horizon mathematical reasoning exposes a reliability and efficiency problem: standard OPD assigns every sampled candidate the same long rollout budget, even though some trajectories may quickly become weakly aligned with the teacher and provide less useful supervision. Prior analyses suggest that successful OPD depends on local teacher-student compatibility, which can be measured by top-k overlap on student-visited prefixes. When this overlap is low, continuing to generate or train on long suffixes may waste computation and introduce noisy learning signal. To address this, we introduce Prefix-Guided On-Policy Distillation (PG-OPD), a simple rollout-allocation framework that uses fixed-length prefixes to estimate trajectory value before expensive long-horizon generation. PG-OPD first decodes every sampled candidate to the same prefix length, computes teacher-student top-k overlap within an early probe window of that prefix, and selectively continues high-overlap candidates to a fixed long length. Low-overlap candidates stop at the fixed prefix, avoiding unnecessary suffix generation. Across diverse teacher-student combinations on AMC, AIME, and HMMT benchmarks, PG-OPD improves average accuracy by up to 4.80 points while reducing training time by up to 2.46x. These results suggest that prefix-level compatibility provides a practical signal for directing OPD computation toward trajectories that remain learnable from the teacher.",
+      "authors": [
+        "Qingfei Zhao",
+        "Huan Song",
+        "Shuyu Tian",
+        "Jiawei Shao",
+        "Xuelong Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-20T11:18:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.21994v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "directly addresses on-policy distillation in RL/reasoning",
+      "llm_evidence_cn": "直接探讨在线策略蒸馏在RL/推理中的应用",
+      "llm_evidence": "直接探讨在线策略蒸馏在RL/推理中的应用",
+      "canonical_evidence": "直接探讨在线策略蒸馏在RL/推理中的应用",
+      "llm_tldr_en": "Prefix-Guided On-Policy Distillation addresses inefficiency in standard OPD by using prefix overlap to detect weak teacher-student alignment early, reducing computation and noise in long-horizon reasoning tasks.",
+      "llm_tldr_cn": "针对在线策略蒸馏（OPD）在长视界数学推理中存在的可靠性和效率问题，标准OPD对所有采样轨迹分配相同的长滚动预算，导致计算浪费和噪声学习信号。本文提出前缀引导的在线策略蒸馏，通过测量学生访问前缀的top-k重叠来评估局部师生兼容性，当重叠低时提前终止生成或训练。实验表明该方法有效减少计算开销并提升学习信号质量，为OPD在复杂推理任务中的可扩展应用提供了新思路。",
+      "llm_tldr": "针对在线策略蒸馏（OPD）在长视界数学推理中存在的可靠性和效率问题，标准OPD对所有采样轨迹分配相同的长滚动预算，导致计算浪费和噪声学习信号。本文提出前缀引导的在线策略蒸馏，通过测量学生访问前缀的top-k重叠来评估局部师生兼容性，当重叠低时提前终止生成或训练。实验表明该方法有效减少计算开销并提升学习信号质量，为OPD在复杂推理任务中的可扩展应用提供了新思路。",
+      "llm_tags": [
+        "query:on-policy"
+      ],
+      "matched_query_tag": "query:on-policy",
+      "matched_query_text": "on policy distillation in reinforcement learning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.22600v2",
+      "source": "arxiv",
+      "title": "On the Position Bias of On-Policy Distillation",
+      "abstract": "On-Policy Distillation (OPD) improves the learning efficiency of standard reinforcement learning through dense, token-level supervision from teachers. In the standard KL objective of OPD, token-level losses are uniformly averaged, implying equal weights for all tokens. However, we discover that not all tokens are created equal: as student rollouts grow longer, they deviate further from the teacher's distribution, leading to degraded supervision quality at later positions. As a result, OPD using only the first 30% of tokens can perform comparably to using all tokens, whereas OPD using only the last 30% of tokens barely learns anything. In this work, we provide a principled understanding of this issue through the lens of constrained optimization. Based on these insights, we derive Importance-Weighted On-Policy Distillation (IW-OPD), in which the weight assigned to each token depends on the accumulated discrepancy between the student's and teacher's distributions, naturally upweighting earlier tokens and downweighting later ones with larger deviations. We show that IW-OPD converges significantly faster than OPD, with better learning efficiency, and achieves better final performance than standard OPD in both same-size and cross-scale settings, improving performance up to 6.9 points on AIME-2025.",
+      "authors": [
+        "Yan Xie",
+        "Sijie Zhu",
+        "Tiansheng Wen",
+        "Bo Chen",
+        "Yifei Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-21T17:20:21+00:00",
+      "link": "https://arxiv.org/pdf/2606.22600v2",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "studies position bias in on-policy distillation",
+      "llm_evidence_cn": "研究在策略蒸馏中的位置偏差",
+      "llm_evidence": "研究在策略蒸馏中的位置偏差",
+      "canonical_evidence": "研究在策略蒸馏中的位置偏差",
+      "llm_tldr_en": "On-Policy Distillation (OPD) suffers from position bias: later tokens degrade supervision quality. The paper provides a principled understanding via constrained optimization and derives better weighting schemes.",
+      "llm_tldr_cn": "在策略蒸馏（OPD）存在位置偏差问题：学生生成的长序列中，后续token的监督质量下降。本文通过约束优化框架提供了对该问题的理论理解，并推导出更优的token加权方案，仅使用前30%的token即可达到与全部token相当的性能。该工作揭示了OPD中token重要性差异，为提高蒸馏效率提供了新视角。",
+      "llm_tldr": "在策略蒸馏（OPD）存在位置偏差问题：学生生成的长序列中，后续token的监督质量下降。本文通过约束优化框架提供了对该问题的理论理解，并推导出更优的token加权方案，仅使用前30%的token即可达到与全部token相当的性能。该工作揭示了OPD中token重要性差异，为提高蒸馏效率提供了新视角。",
+      "llm_tags": [
+        "query:on-policy"
+      ],
+      "matched_query_tag": "query:on-policy",
+      "matched_query_text": "recent advances in on policy distillation for reinforcement learning",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23104v1",
+      "source": "arxiv",
+      "title": "ReNIO: Reweighting Negative Trajectory Importance for LLM On-Policy Distillation",
+      "abstract": "On-policy distillation (OPD) improves LLM reasoning by training a student model on its own generated outputs, but standard OPD treats all student-generated outputs (SGOs) equally regardless of their informativeness. We observe a consistent asymmetry in controlled filtering experiments: in both OPD and on-policy self distillation (OPSD), training only on incorrect SGOs outperforms training only on correct ones. Our further analysis suggests that models trained on correct-only SGOs tend to generate shorter reasoning traces and show weaker reflection behavior, while incorrect SGOs better preserve exploratory reasoning near the model's capability boundary. To exploit this signal without requiring full answer-containing rollouts, we introduce ReNIO, which Reweights Negative trajectory Importance for LLM On-policy distillation. By using the student-to-teacher probability ratio, ReNIO identifies pivotal tokens leading to wrong reasoning traces and aggregates their information into a normalized sample weight, inherently assigning larger weights to likely negative trajectories without observing the correctness of final-answer. Since Re-NIO only uses prefix-conditioned token probabilities, it preserves OPD's prefix training advantage over full-rollout reinforcement learning. Across both mathematical reasoning and code generation tasks, ReNIO improves both OPD and OPSD, with representative relative gains of up to 8.90% for Qwen3-1.7B and 10.00% for R1-Distill-Qwen-7B on mathematical reasoning benchmarks. Code repo: https://github.com/BDML-lab/ReNIO.",
+      "authors": [
+        "Chen Lin",
+        "Kedi Chen",
+        "Wei Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T09:46:35+00:00",
+      "link": "https://arxiv.org/pdf/2606.23104v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Reweighting negative trajectories for LLM on-policy distillation",
+      "llm_evidence_cn": "通过重加权负轨迹提升LLM在策略蒸馏",
+      "llm_evidence": "通过重加权负轨迹提升LLM在策略蒸馏",
+      "canonical_evidence": "通过重加权负轨迹提升LLM在策略蒸馏",
+      "llm_tldr_en": "ReNIO improves LLM on-policy distillation by reweighting negative trajectories, showing that training only on incorrect outputs outperforms training on correct ones, preserving exploratory reasoning.",
+      "llm_tldr_cn": "在LLM在策略蒸馏中，标准方法平等对待所有学生生成输出。本文发现训练仅使用错误输出优于正确输出，因为错误输出保留了模型能力边界附近的探索性推理。据此提出ReNIO，通过重加权负轨迹重要性来提升蒸馏效果，无需完整答案rollout即可利用这一信号。实验表明ReNIO显著提升了LLM推理能力。",
+      "llm_tldr": "在LLM在策略蒸馏中，标准方法平等对待所有学生生成输出。本文发现训练仅使用错误输出优于正确输出，因为错误输出保留了模型能力边界附近的探索性推理。据此提出ReNIO，通过重加权负轨迹重要性来提升蒸馏效果，无需完整答案rollout即可利用这一信号。实验表明ReNIO显著提升了LLM推理能力。",
+      "llm_tags": [
+        "query:on-policy:composite"
+      ],
+      "matched_query_tag": "query:on-policy:composite",
+      "matched_query_text": "Papers central to 关于在策略蒸馏, especially work that connects or combines: a; on policy distillation in reinforcement learning; recent advances in on policy distillation for reinforcement learning.",
+      "matched_requirement_id": "req-composite-on-policy",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24084v1",
+      "source": "arxiv",
+      "title": "Blockwise Policy-Drift Gating for On-Policy Distillation",
+      "abstract": "On-policy distillation (OPD) trains a student policy using teacher signals computed on trajectories sampled by the student itself. Recent work shows that sampled-token OPD can be fragile on long-horizon reasoning tasks and that local teacher-support matching is a simple and effective repair. This paper introduces blockwise policy-drift gating, a lightweight student-only old-current drift controller for OPD under rollout reuse. The method computes log-probability shifts between the behavior student and the current student on the sampled token path, aggregates these shifts over fixed blocks or spans, and uses the resulting detached, mean-normalized gates to reweight OPD position losses. It does not change teacher targets, teacher top-K supports, or the rollout policy. In a six-variant Qwen3 math reasoning benchmark with a uniform 200-step training budget for all trained variants, we use pass@8 as the primary problem-level solve-rate metric. Fixed 64-token block gating improves sampled-token OPD mean pass@8 from 0.4978 to 0.5160 across AIME24, AIME25, MATH500, and AMC23. On Teacher-TopK/LSM, Block64 gives the best four-benchmark mean pass@8 among trained students. The results identify local old-current policy drift as a practical control signal for reused OPD rollouts and motivate block-level gating as a simple default for improving solve-rate robustness.",
+      "authors": [
+        "Liwen Zheng",
+        "Haiyun Jiang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-23T02:58:16+00:00",
+      "link": "https://arxiv.org/pdf/2606.24084v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes blockwise policy-drift gating for on-policy distillation",
+      "llm_evidence_cn": "提出块状策略漂移门控改进在策略蒸馏",
+      "llm_evidence": "提出块状策略漂移门控改进在策略蒸馏",
+      "canonical_evidence": "提出块状策略漂移门控改进在策略蒸馏",
+      "llm_tldr_en": "Lightweight student-only drift controller for on-policy distillation under rollout reuse, improving long-horizon reasoning.",
+      "llm_tldr_cn": "针对在策略蒸馏（OPD）在长程推理任务中的脆弱性，本文提出块状策略漂移门控方法。该方法在重用rollout时通过计算行为学生与当前学生的对数概率偏移，按块聚合后重新加权OPD位置损失。实验证明该方法轻量且有效，不改变教师目标或采样策略，显著提升了长序列任务的稳定性。",
+      "llm_tldr": "针对在策略蒸馏（OPD）在长程推理任务中的脆弱性，本文提出块状策略漂移门控方法。该方法在重用rollout时通过计算行为学生与当前学生的对数概率偏移，按块聚合后重新加权OPD位置损失。实验证明该方法轻量且有效，不改变教师目标或采样策略，显著提升了长序列任务的稳定性。",
+      "llm_tags": [
+        "query:on-policy:composite"
+      ],
+      "matched_query_tag": "query:on-policy:composite",
+      "matched_query_text": "Papers central to 关于在策略蒸馏, especially work that connects or combines: a; on policy distillation in reinforcement learning; recent advances in on policy distillation for reinforcement learning.",
+      "matched_requirement_id": "req-composite-on-policy",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24143v1",
+      "source": "arxiv",
+      "title": "AsyncOPD: How Stale Can On-Policy Distillation Be?",
+      "abstract": "On-policy distillation (OPD) trains a student on its own rollouts guided by teacher feedback and is becoming increasingly important for large language model (LLM) post-training. Like reinforcement learning (RL), however, OPD faces an on-policy systems bottleneck, as rollouts can dominate training time for reasoning workloads. Asynchronous training pipelines can alleviate this bottleneck by decoupling rollout generation from learner updates, but doing so introduces stale-policy data. While prior work has studied stale data in asynchronous RL, its effects in OPD remain underexplored. We present the first systematic study of staleness in asynchronous OPD, focusing on a practical setting where teacher feedback is implemented through local KL losses and full-vocabulary teacher logits are too expensive to store or transfer, necessitating finite teacher-score caches. We first show that KL direction changes the stale-data problem: teacher-weighted forward KL is more robust to stale rollouts, whereas student-weighted reverse KL is vulnerable. Second, for this vulnerable reverse-KL case, we study whether methods designed to stabilize asynchronous RL can mitigate OPD staleness. In our experiments, they do not improve over a simpler OPD-specific surrogate: recomputing the reverse-KL signal under the current student at learner time. Third, we analyze how finite teacher-score caches create a bias-variance tradeoff for sparse and sampled reverse-KL OPD estimators. This motivates multi-sample Monte Carlo (MC), which preserves MC correctability while reducing one-sample variance. Finally, we present and open-source AsyncOPD, a fully asynchronous OPD training pipeline built from these estimator choices. Experiments show that AsyncOPD improves training throughput by $1.6\\times$ to $3.8\\times$ over strict synchronous training while reaching comparable accuracy.",
+      "authors": [
+        "Wonjun Kang",
+        "Kevin Galim",
+        "Seunghyuk Oh",
+        "Minjun Kang",
+        "Sanghyun Park",
+        "Donghoon Kim",
+        "Minjae Lee",
+        "Minseo Kim",
+        "Rishabh Tiwari",
+        "Yuchen Zeng",
+        "Hyung Il Koo",
+        "Kangwook Lee"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-23T04:50:49+00:00",
+      "link": "https://arxiv.org/pdf/2606.24143v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "On-policy distillation study in RL, addressing staleness in asynchronous training",
+      "llm_evidence_cn": "强化学习中的在策略蒸馏研究，针对异步训练中的陈旧性问题",
+      "llm_evidence": "强化学习中的在策略蒸馏研究，针对异步训练中的陈旧性问题",
+      "canonical_evidence": "强化学习中的在策略蒸馏研究，针对异步训练中的陈旧性问题",
+      "llm_tldr_en": "First systematic study of stale-policy data in asynchronous on-policy distillation for LLM post-training, revealing the impact of staleness on student performance.",
+      "llm_tldr_cn": "本文首次系统研究了异步在策略蒸馏（OPD）中陈旧策略数据的影响。OPD通过学生自身轨迹和教师反馈进行训练，在LLM后训练中日益重要，但异步流水线引入陈旧数据。实验分析了不同程度的陈旧性对学生性能的影响，为构建高效的异步OPD系统提供了指导。该工作填补了异步RL中陈旧性研究在蒸馏领域的空白。",
+      "llm_tldr": "本文首次系统研究了异步在策略蒸馏（OPD）中陈旧策略数据的影响。OPD通过学生自身轨迹和教师反馈进行训练，在LLM后训练中日益重要，但异步流水线引入陈旧数据。实验分析了不同程度的陈旧性对学生性能的影响，为构建高效的异步OPD系统提供了指导。该工作填补了异步RL中陈旧性研究在蒸馏领域的空白。",
+      "llm_tags": [
+        "query:on-policy"
+      ],
+      "matched_query_tag": "query:on-policy",
+      "matched_query_text": "on policy distillation in reinforcement learning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.19236v1",
+      "source": "arxiv",
+      "title": "STARE: Surprisal-Guided Token-Level Advantage Reweighting for Policy Entropy Stability",
+      "abstract": "Reinforcement Learning with Verifiable Rewards algorithms like GRPO have emerged as the dominant post-training paradigm for complex reasoning in LLMs, yet commonly suffer from policy entropy collapse during training. We conduct a first-order gradient analysis of token-level entropy dynamics under GRPO and identify a token-level credit assignment mismatch: the per-token entropy variation decomposes into the product of the trajectory-level advantage and an entropy sensitivity function over the next-token distribution, yielding an advantage-surprisal four-quadrant structure and a near-criticality property. Motivated by it, we propose STARE (Surprisal-guided Token-level Advantage Reweighting for policy Entropy stability), which identifies entropy-critical token subsets via batch-internal surprisal quantiles, selectively reweights their effective advantages, and incorporates a target-entropy closed-loop gate for stable entropy regulation. Across model scales from 1.5B to 32B and three task families (Short CoT, Long CoT, and Multi-Turn Tool Use), STARE sustains stable RL training over thousands of steps while maintaining policy entropy within the target band. On AIME24 and AIME25, STARE outperforms DAPO and other competitive baselines by 4%-8% in average accuracy, with reflection tokens and response length growing in tandem, indicating sustained exploration-exploitation balance that further unlocks RL training potential.Code is available at https://github.com/hp-luo/STARE.",
+      "authors": [
+        "Haipeng Luo",
+        "Qingfeng Sun",
+        "Songli Wu",
+        "Can Xu",
+        "Wenfeng Deng",
+        "Han Hu",
+        "Yansong Tang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-17T16:13:42+00:00",
+      "link": "https://arxiv.org/pdf/2606.19236v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Improves LLM reasoning via GRPO with entropy stability",
+      "llm_evidence_cn": "通过GRPO和熵稳定性提升大语言模型推理",
+      "llm_evidence": "通过GRPO和熵稳定性提升大语言模型推理",
+      "canonical_evidence": "通过GRPO和熵稳定性提升大语言模型推理",
+      "llm_tldr_en": "Identifies token-level credit assignment mismatch in GRPO leading to entropy collapse, and proposes STARE that reweights advantages based on surprisal to stabilize policy entropy for LLM reasoning.",
+      "llm_tldr_cn": "论文分析了GRPO中导致策略熵崩溃的token级信用分配问题，提出基于惊奇度的优势重加权方法STARE以稳定熵。该方法在数学推理任务上维持了更高的策略熵，提升了生成多样性与最终性能。",
+      "llm_tldr": "论文分析了GRPO中导致策略熵崩溃的token级信用分配问题，提出基于惊奇度的优势重加权方法STARE以稳定熵。该方法在数学推理任务上维持了更高的策略熵，提升了生成多样性与最终性能。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.17591v1",
+      "source": "arxiv",
+      "title": "Closing the Feedback Loop: From Experience Extraction to Insight Governance in Verbal Reinforcement Learning",
+      "abstract": "Training-free verbal reinforcement learning enables LLM agents to learn from world feedback -- objective signals such as dynamic task outcomes, market returns, or demand forecasts -- by extracting verbal rules from experience and injecting them as context, updating the agent's behavior without parameter changes. However, in non-stationary environments these agents face a retention-forgetting dilemma: retaining stale insights causes negative transfer, while discarding them causes catastrophic forgetting when conditions recur. We identify four requirements for navigating this dilemma -- outcome-driven evaluation, persistent structured evidence, non-monotonic knowledge lifecycle, and compositional governance -- and show that existing methods invest heavily in experience extraction while underinvesting in insight governance. We propose a three-layer architecture -- rules, evidence, and skills -- connected by a feedback-driven curation loop that closes the governance gap. Rules capture distilled experience from world outcomes; evidence logs track each rule's reliability across episodes; skills govern which rules to apply, how to resolve conflicts, and when to abstain. On financial forecasting as a case study, where world feedback is naturally abundant, noisy, and non-stationary, we show that the same accumulated experience either degrades performance below the zero-shot baseline or dramatically improves accuracy and risk-adjusted returns, depending on whether the curation loop is present.",
+      "authors": [
+        "Yanwei Cui",
+        "Xing Zhang",
+        "Yulong Zhang",
+        "Li Shao",
+        "Xiaofeng Shi",
+        "Guanghui Wang",
+        "Peiyang He"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-16T06:55:55+00:00",
+      "link": "https://arxiv.org/pdf/2606.17591v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Verbal RL for LLM agents without parameter updates",
+      "llm_evidence_cn": "面向LLM智能体的无参数更新语言强化学习",
+      "llm_evidence": "面向LLM智能体的无参数更新语言强化学习",
+      "canonical_evidence": "面向LLM智能体的无参数更新语言强化学习",
+      "llm_tldr_en": "Addresses the retention-forgetting dilemma in verbal RL for LLM agents, proposing a governance framework to dynamically manage extracted rules from world feedback.",
+      "llm_tldr_cn": "论文针对LLM智能体在非平稳环境中语言强化学习的保留-遗忘困境，提出包括结果驱动评估、持久证据管理等四方面要求的治理框架，实现知识生命周期管理。",
+      "llm_tldr": "论文针对LLM智能体在非平稳环境中语言强化学习的保留-遗忘困境，提出包括结果驱动评估、持久证据管理等四方面要求的治理框架，实现知识生命周期管理。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.19632v1",
+      "source": "arxiv",
+      "title": "Formal Verification of Learned Multi-Agent Communication Policies via Decision Tree Distillation",
+      "abstract": "Multi-agent reinforcement learning (MARL) enables agents to develop coordination strategies through emergent communication, but neural policies lack the formal safety guarantees required for safety-critical robotic deployment in drone swarms and autonomous vehicle fleets. We present the first end-to-end framework for safety verification of learned multi-agent communication policies through policy abstraction: neural policies are distilled into interpretable decision trees, then formally verified, with empirical validation confirming that verified safety properties transfer to original networks. Our four-stage pipeline consists of domain-specific feature extraction from agent observations, decision tree distillation achieving 97.9% +/- 1.2% fidelity to neural policies, automated translation to PRISM probabilistic model checker specifications with complete feature-to-state-variable correspondence, and compositional verification of Probabilistic Computation Tree Logic (PCTL) properties via pairwise decomposition with union-bound aggregation and empirical neighbor modeling. Evaluating Vector-Quantized Variational Information Bottleneck (VQ-VIB) policies for multi-drone coordination with 5-7 agents, we verify 18 temporal logic properties across safety, liveness, and cooperation, achieving 88.9% property satisfaction with all five safety thresholds satisfied (0.3% collision probability vs. 1% threshold). Monte Carlo validation of original neural policies confirms that verified safety properties transfer with <=0.6 percentage-point deviation (95% CI). Discrete VQ-VIB messages provide +11.6 to +13.6 percentage-point fidelity advantages over continuous methods, enabling 3-4x faster verification. Our framework provides empirically validated safety verification for distilled policy abstractions, serving as a practical bridge between deep MARL and formal safety workflows for multi-robot deployment.",
+      "authors": [
+        "Ahmad Farooq",
+        "Kamran Iqbal"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.LG",
+        "cs.LO",
+        "cs.MA"
+      ],
+      "published": "2026-06-17T22:22:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.19632v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Policy distillation for verification",
+      "llm_evidence_cn": "用于验证的策略蒸馏",
+      "llm_evidence": "用于验证的策略蒸馏",
+      "canonical_evidence": "用于验证的策略蒸馏",
+      "llm_tldr_en": "Presents a framework to distill neural multi-agent communication policies into decision trees for formal verification, ensuring safety properties transfer back.",
+      "llm_tldr_cn": "该论文提出将多智能体通信策略蒸馏为可解释决策树的框架，通过形式化验证保证安全性，并证明验证结果可迁移回原始网络，在仿真环境中验证了有效性。",
+      "llm_tldr": "该论文提出将多智能体通信策略蒸馏为可解释决策树的框架，通过形式化验证保证安全性，并证明验证结果可迁移回原始网络，在仿真环境中验证了有效性。",
+      "llm_tags": [
+        "query:on-policy:composite"
+      ],
+      "matched_query_tag": "query:on-policy:composite",
+      "matched_query_text": "Papers central to 关于在策略蒸馏, especially work that connects or combines: a; on policy distillation in reinforcement learning; recent advances in on policy distillation for reinforcement learning.",
+      "matched_requirement_id": "req-composite-on-policy",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.19771v1",
+      "source": "arxiv",
+      "title": "Beyond Entropy: Learning from Token-Level Distributional Deviations for LLM Reasoning",
+      "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR) has significantly advanced Large Language Model (LLM) reasoning; however, it faces a fundamental optimization instability: uniform token updates precipitate entropy collapse, leading to premature convergence to suboptimal strategies, whereas excessive Shannon Entropy maximization can cause entropy explosion, driving blind exploration toward incoherent reasoning chains. To resolve this dichotomy, we introduce the Independent Combinatorial Tokens (ICT) framework, which shifts the optimization focus from scalar uncertainty to the distributional properties of token logits. By leveraging the Jensen-Shannon (JS) divergence between token logits distributions, ICT identifies tokens with distinctive distributional patterns as critical branching points for guiding effective exploration in LLM reasoning. Our theoretical analysis, grounded in both Shannon and second-order Rényi entropy, proves that selectively updating on these tokens regulates policy concentration: it reduces the overall distribution uncertainty measured by Shannon entropy, while controlling probability concentration captured by second-order Rényi entropy. This dual effect prevents over-concentrated token generation from weakening exploration and effectively stabilizes the training landscape. Empirical results demonstrate that updating only the top 10% of unique tokens on Qwen2.5 (0.5B/1.5B/7B) models yields an average pass@4 improvement of 4.58%, with a maximum gain of 14.9%, over GRPO, 20-Entropy, and STAPO baselines across seven benchmarks spanning math, commonsense, and Olympiad-level problems.",
+      "authors": [
+        "Xuanzhi Feng",
+        "Zhengyang Li",
+        "Zeyu Liu",
+        "Haoxi Li",
+        "Yuming Jiang",
+        "Bing Guo",
+        "Jingcai Guo",
+        "Jie Zhang",
+        "Song Guo"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-18T04:11:56+00:00",
+      "link": "https://arxiv.org/pdf/2606.19771v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Addresses entropy collapse in LLM reasoning via token-level distributional deviations",
+      "llm_evidence_cn": "通过词元级分布偏差解决LLM推理中的熵坍缩问题",
+      "llm_evidence": "通过词元级分布偏差解决LLM推理中的熵坍缩问题",
+      "canonical_evidence": "通过词元级分布偏差解决LLM推理中的熵坍缩问题",
+      "llm_tldr_en": "Proposes Independent Combinatorial Tokens (ICT) framework to optimize token logits distributions for LLM reasoning, improving over RLVR.",
+      "llm_tldr_cn": "针对RLVR训练LLM时出现的熵坍缩或熵爆炸问题，本文提出独立组合词元（ICT）框架。该框架通过Jensen-Shannon散度衡量词元logits的分布特性，识别分布偏差显著的关键词元并加以优化。实验表明ICT框架有效缓解了过早收敛和探索失控，显著提升了LLM在推理任务上的性能。",
+      "llm_tldr": "针对RLVR训练LLM时出现的熵坍缩或熵爆炸问题，本文提出独立组合词元（ICT）框架。该框架通过Jensen-Shannon散度衡量词元logits的分布特性，识别分布偏差显著的关键词元并加以优化。实验表明ICT框架有效缓解了过早收敛和探索失控，显著提升了LLM在推理任务上的性能。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.17680v1",
+      "source": "arxiv",
+      "title": "EnvRL: Learn from Environment Dynamics in Agentic Reinforcement Learning",
+      "abstract": "Reinforcement learning (RL) has emerged as a powerful paradigm for training Large Language Models (LLMs) as agents. However, conventional RL methods for long-horizon agentic tasks often struggle with sparse outcome rewards. Intuitively, this overlooks the rich environment dynamics information contained in rollout interaction trajectories. We argue that the interaction experience inherently serves as an implicit supervision signal, reveals the underlying transition mechanisms of the environment, and enables the agent to construct a more accurate internal model of the environment.. Therefore, in this work, we investigate how to leverage this additional signal to improve policy learning. Specifically, we propose EnvRL, a framework that incorporates environment dynamics learning into agentic RL via two auxiliary objectives: state prediction and inverse dynamics. By jointly optimizing with the primary RL objective, we encourage the agent to internalize environment dynamics from its own interaction experience. Extensive experiments on two long-horizon agentic benchmarks demonstrate that EnvRL achieves significant improvements on success-rates over RL-only baselines, e.g., when trained with GRPO, lifting Qwen-2.5-1.5B-Instruct from 72.8% to 77.4% on ALFWorld, and from 56.8% to 67.0% on WebShop.",
+      "authors": [
+        "Zhitong Wang",
+        "Songze Li",
+        "Hao Peng",
+        "Shuzheng Si",
+        "Yi Wang",
+        "Maosong Sun",
+        "Juanzi Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CL"
+      ],
+      "published": "2026-06-16T08:48:09+00:00",
+      "link": "https://arxiv.org/pdf/2606.17680v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Enhances LLM agent reasoning by incorporating environment dynamics into RL training",
+      "llm_evidence_cn": "通过融入环境动力学增强LLM代理推理能力",
+      "llm_evidence": "通过融入环境动力学增强LLM代理推理能力",
+      "canonical_evidence": "通过融入环境动力学增强LLM代理推理能力",
+      "llm_tldr_en": "Proposes EnvRL, a framework that leverages environment dynamics from rollout trajectories as implicit supervision to improve policy learning for LLM agents, addressing sparse reward issues.",
+      "llm_tldr_cn": "EnvRL提出从交互轨迹中的环境动力学中学习，为LLM代理提供隐式监督信号，构建更精确的内部环境模型，从而提升策略学习。该方法解决了长周期稀疏奖励场景下传统RL方法忽视环境动态信息的问题。实验表明，该框架能显著提高LLM代理在复杂任务上的表现，为改进LLM推理能力提供了新途径。",
+      "llm_tldr": "EnvRL提出从交互轨迹中的环境动力学中学习，为LLM代理提供隐式监督信号，构建更精确的内部环境模型，从而提升策略学习。该方法解决了长周期稀疏奖励场景下传统RL方法忽视环境动态信息的问题。实验表明，该框架能显著提高LLM代理在复杂任务上的表现，为改进LLM推理能力提供了新途径。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.22995v1",
+      "source": "arxiv",
+      "title": "Group-Graph Policy Optimization for Long-Horizon Agentic Reinforcement Learning",
+      "abstract": "Group-based Reinforcement Learning (RL) has significantly enhanced Large Language Models (LLMs) in agentic scenarios. To achieve finer-grained policy updates, recent agentic RL frameworks have shifted from trajectory-level to step-level training. However, long-horizon agentic RL suffers from severe reward sparsity and delay, as feedback is often deferred for dozens of interaction steps. While existing step-level frameworks refine training granularity, their credit assignment remains coarse-grained and still treats agent exploration as isolated, linear trajectories. This oversimplified perspective ignores the inherent graph structure of state transitions, leading to high-variance state-value estimation and myopic, localized credit assignment. To overcome these critical bottlenecks, we propose Group-Graph Policy Optimization (G2PO), a novel group-based RL algorithm tailored for multi-turn agentic tasks. G2PO explicitly transforms linear interaction trajectories into a global state-transition graph. By aggregating identical observations across different trajectories, we introduce group-aggregation state-value estimation that reduces sampling variance and trajectory-dependent bias. Furthermore, we redefine agent actions as transitions between state nodes and propose an edge-centric advantage estimation strategy. By globally standardizing Temporal Difference (TD) errors across the entire graph, G2PO explicitly identifies and prioritizes critical transitions that drive absolute task progress. Extensive experiments on representative long-horizon benchmarks-WebShop, ALFWorld, and AppWorld-demonstrate that G2PO substantially outperforms state-of-the-art prompt-based and RL baselines, achieving remarkable success rate improvements of up to 22.2% over GRPO.",
+      "authors": [
+        "Yunan Wang",
+        "Minghui Song",
+        "Zihan Zhang",
+        "Shaohan Huang",
+        "Haizhen Huang",
+        "Furu Wei",
+        "Weiwei Deng",
+        "Feng Sun",
+        "Qi Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-22T08:12:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.22995v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Enhances LLM agentic RL with group-graph policy optimization",
+      "llm_evidence_cn": "通过组图策略优化增强LLM智能体强化学习",
+      "llm_evidence": "通过组图策略优化增强LLM智能体强化学习",
+      "canonical_evidence": "通过组图策略优化增强LLM智能体强化学习",
+      "llm_tldr_en": "Group-Graph Policy Optimization addresses credit assignment in long-horizon agentic RL for LLMs by modeling state transition graph, improving step-level training.",
+      "llm_tldr_cn": "在长程智能体强化学习中，现有基于LLM的方法面临奖励稀疏和延迟问题。本文提出组图策略优化（GGPO），通过建模状态转移图来改进信用分配，在步级训练中降低方差。该方法将探索视为图结构而非孤立轨迹，增强了LLM在复杂任务中的推理能力。实验表明GGPO在多个环境上优于现有方法。",
+      "llm_tldr": "在长程智能体强化学习中，现有基于LLM的方法面临奖励稀疏和延迟问题。本文提出组图策略优化（GGPO），通过建模状态转移图来改进信用分配，在步级训练中降低方差。该方法将探索视为图结构而非孤立轨迹，增强了LLM在复杂任务中的推理能力。实验表明GGPO在多个环境上优于现有方法。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24064v1",
+      "source": "arxiv",
+      "title": "Beyond Trajectory Imitation: Strategy-Guided Policy Optimization for LLM Reasoning",
+      "abstract": "Distilling reasoning capabilities from strong to weak language models typically involves imitating specific solution trajectories, effectively transferring what to answer rather than how to reason. This trajectory-level imitation encourages memorization of instance-specific steps rather than acquisition of transferable problem-solving skills, limiting generalization to novel problems. We propose Strategy-Guided Policy Optimization (SGPO), which replaces instance-level trajectory imitation with reusable strategy distillation. SGPO extracts structured strategy descriptions from strong-model responses and, for each problem, constructs both autonomous and strategy-guided trajectories to enable direct comparison of the model's behavior with and without strategic guidance. The framework then addresses two key questions. For how to distill, a token-level forward-KL objective selectively transfers the distributional shift induced by strategy conditioning into the unguided policy, with proximal constraints ensuring stability. For when to distill, adaptive instance-level weighting strengthens guidance when autonomous exploration falls short and reduces it as the model's own competence grows. Experiments on four mathematical benchmarks across two model families show that SGPO consistently outperforms SFT, on-policy RL, and hybrid-policy baselines, improving the average score by 2.2 points over the strongest baseline on Qwen2.5-7B-Instruct. Analysis reveals that the forward-KL objective provides an inherently selective distillation signal that outperforms direct trajectory imitation, and that strategy distillation exhibits complementary scaling with base model capability.",
+      "authors": [
+        "Tianyuan Shi",
+        "Canbin Huang",
+        "Bei Li",
+        "Xin Chen",
+        "Xiaojun Quan",
+        "Jingang Wang",
+        "Qifan Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T02:14:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.24064v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Strategy-guided policy optimization for LLM reasoning via distillation of structured strategies",
+      "llm_evidence_cn": "通过结构化策略蒸馏实现LLM推理的策略引导优化",
+      "llm_evidence": "通过结构化策略蒸馏实现LLM推理的策略引导优化",
+      "canonical_evidence": "通过结构化策略蒸馏实现LLM推理的策略引导优化",
+      "llm_tldr_en": "Replaces trajectory imitation with reusable strategy distillation to improve LLM reasoning generalization.",
+      "llm_tldr_cn": "针对轨迹级模仿导致记忆特定步骤而泛化能力弱的问题，本文提出策略引导策略优化（SGPO）。该方法从强模型响应中提取结构化策略描述，为每个问题构建自主轨迹和策略引导轨迹，通过对比学习可复用的策略知识。实验表明SGPO显著提升了弱模型在未见问题上的推理能力，且学习到的策略具有可迁移性。",
+      "llm_tldr": "针对轨迹级模仿导致记忆特定步骤而泛化能力弱的问题，本文提出策略引导策略优化（SGPO）。该方法从强模型响应中提取结构化策略描述，为每个问题构建自主轨迹和策略引导轨迹，通过对比学习可复用的策略知识。实验表明SGPO显著提升了弱模型在未见问题上的推理能力，且学习到的策略具有可迁移性。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.17682v1",
+      "source": "arxiv",
+      "title": "From Trainee to Trainer: LLM-Designed Training Environment for RL with Multi-Agent Reasoning",
+      "abstract": "Reinforcement learning pipelines for Large Language Model (LLM) training often rely on manually redesigned environments between stages, requiring practitioners to heuristically infer which configuration will best improve the current policy. To automate this process, we propose the LLM-as-Environment-Engineer framework in which the current policy model analyzes failure trajectories together with contextual information and proposes modifications to the next-stage training environment configuration. We also introduce MAPF-FrozenLake, a controllable testbed whose generator exposes multi-dimensional environment configurations, making it suitable for studying and benchmarking environment redesign. On this testbed, we condition the environment engineer on structured summaries of policy behavior, failure cases, and environment statistics, from which it produces the configuration for the next training stage. With Qwen3-4B as the backbone, our framework achieves the strongest aggregate performance on our benchmarks, outperforming larger proprietary LLMs (e.g., GPT, Gemini) and fixed-environment training baselines. We further analyze which forms of context are most effective, finding that successful environment updates rely on failure evidence and preserve configurations that already work. Interestingly, the current RL checkpoint serves as a better environment engineer than the original base model, suggesting that policy learning improves the model's ability to diagnose its remaining weaknesses.",
+      "authors": [
+        "Chao Chen",
+        "Chengzu Li",
+        "Zhiwei Li",
+        "Yinhong Liu",
+        "Zhijiang Guo"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-16T08:48:58+00:00",
+      "link": "https://arxiv.org/pdf/2606.17682v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM designs training environment for RL",
+      "llm_evidence_cn": "大语言模型设计强化学习训练环境",
+      "llm_evidence": "大语言模型设计强化学习训练环境",
+      "canonical_evidence": "大语言模型设计强化学习训练环境",
+      "llm_tldr_en": "Proposes LLM-as-Environment-Engineer framework where the policy LLM analyzes failures and modifies training environment configurations to improve RL for LLMs.",
+      "llm_tldr_cn": "该论文提出LLM作为环境工程师的框架，让当前策略模型分析失败轨迹并自动修改下一阶段训练环境配置，在MAPF-FrozenLake测试床上显著提升了策略学习效率。",
+      "llm_tldr": "该论文提出LLM作为环境工程师的框架，让当前策略模型分析失败轨迹并自动修改下一阶段训练环境配置，在MAPF-FrozenLake测试床上显著提升了策略学习效率。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23038v1",
+      "source": "arxiv",
+      "title": "EvoRubrics: Dynamic Rubrics as Rewards via Adversarial Co-Evolution for LLM Reinforcement Learning",
+      "abstract": "Rubric-based rewards offer interpretable and fine-grained optimization signals for reinforcement learning in open-ended tasks where verifiable answers are unavailable. However, pre-constructed rubrics remain static throughout training, creating a fundamental mismatch with the evolving policy: fixed criteria gradually lose discriminative power as the model improves, leading to reward saturation and potential hacking. Recent dynamic rubric methods partially address this but rely on external frontier models or ground-truth answers, and update rubrics only at coarse granularity. We propose EvoRubrics, a co-evolutionary RL framework where a Policy LLM and a Rubric Generator jointly improve through adversarial interaction within each training step. As the policy improves under the rubric generator's guidance, the rubric generator adapts its criteria to remain discriminative and informative, enabling evaluation to track the policy in real time and naturally inducing an automatic curriculum. Experiments show that EvoRubrics consistently outperforms static and dynamic rubric baselines across benchmarks. The learned Rubric Generator further generalizes as a transferable reward model. Notably, even a fully self-supervised variant without any external supervision achieves meaningful gains, suggesting that co-evolution between generation and evaluation alone can provide sufficiently rich learning signals. Our code is publicly available at https://anonymous.4open.science/r/EvoRubrics-2155/.",
+      "authors": [
+        "Hongxin Ding",
+        "Baixiang Huang",
+        "Yue Fang",
+        "Weibin Liao",
+        "Zheng Li",
+        "Jinyang Zhang",
+        "Zhijing Wu",
+        "Junfeng Zhao",
+        "Yasha Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T08:46:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.23038v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "LLM reinforcement learning with dynamic rubrics",
+      "llm_evidence_cn": "大语言模型强化学习中的动态评分标准",
+      "llm_evidence": "大语言模型强化学习中的动态评分标准",
+      "canonical_evidence": "大语言模型强化学习中的动态评分标准",
+      "llm_tldr_en": "Proposes EvoRubrics, a co-evolutionary RL framework for LLMs where policy and rubric generator improve adversarially, addressing reward saturation from static rubrics.",
+      "llm_tldr_cn": "该论文提出EvoRubrics框架，通过策略LLM和评分标准生成器的对抗共进化来动态调整奖励信号，解决静态评分标准在LLM强化学习中的奖励饱和和策略过拟合问题。实验表明该方法能持续提供有效优化信号，提升开放任务的学习效果。",
+      "llm_tldr": "该论文提出EvoRubrics框架，通过策略LLM和评分标准生成器的对抗共进化来动态调整奖励信号，解决静态评分标准在LLM强化学习中的奖励饱和和策略过拟合问题。实验表明该方法能持续提供有效优化信号，提升开放任务的学习效果。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23932v1",
+      "source": "arxiv",
+      "title": "KLip-PPO: A per-sample KL perspective on PPO-Clip",
+      "abstract": "Proximal Policy Optimization (PPO) is the standard policy-gradient algorithm for on-policy reinforcement learning. The literature presents it in two forms, a clipped surrogate that bounds the importance ratio between successive policies and a Kullback-Leibler penalty between them. These forms are treated as separate algorithms with their own gradients, their own hyperparameters, and their own reference implementations, and a sizeable body of empirical work compares them. We show that the gradient of the clipped surrogate is reproduced exactly by a Kullback-Leibler surrogate whose coefficient varies per sample, with closed-form dependence on the importance ratio and the advantage. The identity holds at every minibatch step and across the entire inner loop, and on five MuJoCo continuous-control benchmarks the two losses produce indistinguishable training curves. The reformulation exposes a structural feature of the clipped surrogate that the min notation hides. PPO-Clip's implicit per-sample penalty is a step function at the boundary of the trust region, and the shape of this coefficient is the natural design axis for generalising the algorithm. We sketch the resulting follow-up directions in the discussion.",
+      "authors": [
+        "Riccardo Colletti",
+        "Robin Holzinger"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-22T20:52:03+00:00",
+      "link": "https://arxiv.org/pdf/2606.23932v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "On-policy RL algorithm analysis (PPO)",
+      "llm_evidence_cn": "在策略强化学习算法（PPO）分析",
+      "llm_evidence": "在策略强化学习算法（PPO）分析",
+      "canonical_evidence": "在策略强化学习算法（PPO）分析",
+      "llm_tldr_en": "Shows that the gradient of PPO-clip is exactly reproduced by a per-sample KL surrogate, unifying two forms of PPO for on-policy RL.",
+      "llm_tldr_cn": "论文证明PPO的剪切代理梯度可由逐样本KL惩罚精确再现，统一了PPO的两种常见形式，并在MuJoCo任务上验证了理论一致性。",
+      "llm_tldr": "论文证明PPO的剪切代理梯度可由逐样本KL惩罚精确再现，统一了PPO的两种常见形式，并在MuJoCo任务上验证了理论一致性。",
+      "llm_tags": [
+        "query:on-policy"
+      ],
+      "matched_query_tag": "query:on-policy",
+      "matched_query_text": "on policy distillation in reinforcement learning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
