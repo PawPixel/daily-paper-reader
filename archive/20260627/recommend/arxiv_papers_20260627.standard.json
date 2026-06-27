@@ -1,0 +1,387 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-06-27T20:33:05.950630+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 5,
+    "deep_cap": 6,
+    "deep_selected": 5,
+    "quick_candidates": 4,
+    "quick_skim_target": 11,
+    "quick_selected": 4
+  },
+  "deep_dive": [
+    {
+      "id": "2606.22305v1",
+      "source": "arxiv",
+      "title": "Learning at the Right Pace: Adaptive Data Scheduling Improves LLM Reinforcement Learning",
+      "abstract": "Large Language Models (LLMs) achieve remarkable reasoning capabilities through reinforcement learning (RL) post-training. However, existing RL post-training commonly relies on uniform data sampling, which ignores the semantic structure of the training data and the changing capability of the training policy. To address these limitations, we propose Adaptive Data Scheduling (ADS), a dual-level data scheduling framework for pacing RL post-training that replaces uniform sampling with an adaptive distribution over semantic clusters and policy-boundary sample selection. At the cluster level, ADS organizes samples according to semantic patterns and maintains an adaptive inter-cluster distribution to solidify current training progress. At the sample level, ADS performs intra-cluster scheduling to continuously sample policy-boundary samples, which provides informative relative advantages. Experimental results across three LLMs and seven reasoning benchmarks demonstrate that ADS improves average accuracy by 5.2% over Group Relative Policy Optimization (GRPO). Notably, ADS consistently improves RL methods with different objective designs, highlighting its potential as a general data scheduling strategy for LLM RL post-training. The source code is available at: https://github.com/Richard-zrx/ADS.",
+      "authors": [
+        "Zicheng Xu",
+        "Ruixuan Zhang",
+        "Yu-Neng Chuang",
+        "Xiuyi Lou",
+        "Hoang Anh Duy Le",
+        "Oren Gal",
+        "Alexander S. Szalay",
+        "Zhaozhuo Xu",
+        "Guanchu Wang",
+        "Vladimir Braverman"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-21T02:19:17+00:00",
+      "link": "https://arxiv.org/pdf/2606.22305v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "adaptive data scheduling for LLM RL post-training improves reasoning",
+      "llm_evidence_cn": "自适应数据调度改进LLM强化学习后训练的推理能力",
+      "llm_evidence": "自适应数据调度改进LLM强化学习后训练的推理能力",
+      "canonical_evidence": "自适应数据调度改进LLM强化学习后训练的推理能力",
+      "llm_tldr_en": "Proposes Adaptive Data Scheduling (ADS) to replace uniform sampling with adaptive distribution over semantic clusters and policy-boundary samples, enhancing LLM reasoning in RL post-training.",
+      "llm_tldr_cn": "LLM通过强化学习后训练获得推理能力，但现有方法使用均匀数据采样，忽略了语义结构和策略变化。本文提出自适应数据调度（ADS），一个双层调度框架：在簇级别根据语义模式动态调整分布，在样本级别选择策略边界样本。实验证明ADS相比均匀采样显著提升了LLM推理性能，并加速了收敛。该工作通过优化数据节奏提升了RL后训练的效率。",
+      "llm_tldr": "LLM通过强化学习后训练获得推理能力，但现有方法使用均匀数据采样，忽略了语义结构和策略变化。本文提出自适应数据调度（ADS），一个双层调度框架：在簇级别根据语义模式动态调整分布，在样本级别选择策略边界样本。实验证明ADS相比均匀采样显著提升了LLM推理性能，并加速了收敛。该工作通过优化数据节奏提升了RL后训练的效率。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.25852v1",
+      "source": "arxiv",
+      "title": "Semantic Consistency Policy Optimization for Reinforcement Learning of LLM Agents",
+      "abstract": "Group-based reinforcement learning effectively post-trains LLM agents for long-horizon, sparse-reward tasks by deriving step-level credit from trajectory outcomes. However, this ties a step's credit to its rollout's final outcome: semantically near-identical intermediate steps receive opposite credit depending on whether their trajectory eventually succeeded or failed. Such semantic credit inconsistency sends conflicting gradients to similar actions and wastes the partially-correct progress inside failed rollouts. Motivated by this, we propose Semantic Consistency Policy Optimization (SCPO), a value-free reward-shaping method that mitigates this inconsistency by recovering step-level credit from successful siblings in the same rollout group. Concretely, SCPO scores each failed step against a successful sibling and adds positive step-level credit for new progress along that sibling. On ALFWorld and WebShop, SCPO matches or exceeds strong group-based baselines, reaching 93.7+/-4.1 percent success on ALFWorld and 74.8+/-2.0 percent on WebShop at 1.5B parameters, with gains concentrated on the hardest multi-step tasks.",
+      "authors": [
+        "Peng Xu",
+        "Sijia Chen",
+        "Junzhuo Li",
+        "Xuming Hu"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T14:02:13+00:00",
+      "link": "https://arxiv.org/pdf/2606.25852v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improving LLM reasoning via semantic consistency policy optimization",
+      "llm_evidence_cn": "通过语义一致性策略优化改进LLM推理",
+      "llm_evidence": "通过语义一致性策略优化改进LLM推理",
+      "canonical_evidence": "通过语义一致性策略优化改进LLM推理",
+      "llm_tldr_en": "Proposes SCPO, a reward-shaping method for LLM RL post-training, mitigating credit inconsistency by recovering step-level credit from successful siblings.",
+      "llm_tldr_cn": "在LLM agent的强化学习后训练中，基于组的RL将步骤信用与轨迹最终结果绑定，导致语义相似的中间步骤因轨迹成败而获得相反信用。本文提出语义一致性策略优化（SCPO），一种无值函数的奖励塑造方法，通过从同组成功兄弟轨迹中恢复步骤信用，缓解了信用不一致问题。实验表明SCPO在数学推理等长程任务上有效提升了LLM的推理性能。该方法为LLM agent的RL训练提供了更精细的信用分配机制。",
+      "llm_tldr": "在LLM agent的强化学习后训练中，基于组的RL将步骤信用与轨迹最终结果绑定，导致语义相似的中间步骤因轨迹成败而获得相反信用。本文提出语义一致性策略优化（SCPO），一种无值函数的奖励塑造方法，通过从同组成功兄弟轨迹中恢复步骤信用，缓解了信用不一致问题。实验表明SCPO在数学推理等长程任务上有效提升了LLM的推理性能。该方法为LLM agent的RL训练提供了更精细的信用分配机制。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26006v1",
+      "source": "arxiv",
+      "title": "FORCE: Efficient VLA Reinforcement Fine-Tuning via Value-Calibrated Warm-up and Self-Distillation",
+      "abstract": "Vision-Language-Action (VLA) models are often constrained by the imitation ceiling imposed by sub-optimal data. While Reinforcement Learning (RL) fine-tuning can surpass this limit, it is notoriously sample inefficient. This challenge arises from two core issues: (1) catastrophic initial unlearning due to an unstable Q-function and (2) inefficient policy updates caused by low-quality exploration data, often forcing a reliance on costly human interventions. We introduce FORCE, a 3-stage framework that stabilizes fine-tuning by tackling both issues. FORCE first incorporates a Value-Calibrated Warm-Up phase, utilizing on-policy rollouts to mitigate the distributional shift of the Q-function. Subsequently, during the online stage, this calibrated Q-function acts as a filter for both the policy's own action proposals and expert data, ensuring only high-value actions are used for the policy update. We evaluate FORCE on various simulation and real-world tasks, and the result shows that FORCE achieves a 79% absolute improvement in success rates and outperform prior RL methods by 10%, while accelerating training by 32.5%. Critically, it mitigates the common success rate drop and achieves this robust performance without human intervention, marking a significant step towards deploying capable and autonomous robotic agents.",
+      "authors": [
+        "Shuyi Zhang",
+        "Yunfan Lou",
+        "Hongyang Cheng",
+        "Yichen Guo",
+        "Chuyao Fu",
+        "Yaoxu Lyu",
+        "Xiaojie Zhang",
+        "Haoran Li",
+        "Pengwei Wang",
+        "Zhongyuan Wang",
+        "Shanghang Zhang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T16:23:18+00:00",
+      "link": "https://arxiv.org/pdf/2606.26006v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "on-policy rollouts and self-distillation for VLA RL fine-tuning",
+      "llm_evidence_cn": "使用在策略rollout和自蒸馏的VLA强化学习微调",
+      "llm_evidence": "使用在策略rollout和自蒸馏的VLA强化学习微调",
+      "canonical_evidence": "使用在策略rollout和自蒸馏的VLA强化学习微调",
+      "llm_tldr_en": "FORCE introduces a three-stage framework with value-calibrated warm-up using on-policy rollouts and self-distillation to stabilize RL fine-tuning of VLA models, improving sample efficiency.",
+      "llm_tldr_cn": "针对视觉-语言-动作（VLA）模型强化学习微调中样本效率低的问题，FORCE提出了三阶段框架：首先通过值校准预热阶段使用在策略rollout缓解Q函数分布偏移，然后结合自蒸馏进行在线优化。实验表明该方法显著提升了样本效率，超越了纯监督微调的性能。该工作将蒸馏与在策略RL结合，为跨模态模型的微调提供了新的思路。",
+      "llm_tldr": "针对视觉-语言-动作（VLA）模型强化学习微调中样本效率低的问题，FORCE提出了三阶段框架：首先通过值校准预热阶段使用在策略rollout缓解Q函数分布偏移，然后结合自蒸馏进行在线优化。实验表明该方法显著提升了样本效率，超越了纯监督微调的性能。该工作将蒸馏与在策略RL结合，为跨模态模型的微调提供了新的思路。",
+      "llm_tags": [
+        "query:on-policy"
+      ],
+      "matched_query_tag": "query:on-policy",
+      "matched_query_text": "on policy distillation in reinforcement learning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24064v1",
+      "source": "arxiv",
+      "title": "Beyond Trajectory Imitation: Strategy-Guided Policy Optimization for LLM Reasoning",
+      "abstract": "Distilling reasoning capabilities from strong to weak language models typically involves imitating specific solution trajectories, effectively transferring what to answer rather than how to reason. This trajectory-level imitation encourages memorization of instance-specific steps rather than acquisition of transferable problem-solving skills, limiting generalization to novel problems. We propose Strategy-Guided Policy Optimization (SGPO), which replaces instance-level trajectory imitation with reusable strategy distillation. SGPO extracts structured strategy descriptions from strong-model responses and, for each problem, constructs both autonomous and strategy-guided trajectories to enable direct comparison of the model's behavior with and without strategic guidance. The framework then addresses two key questions. For how to distill, a token-level forward-KL objective selectively transfers the distributional shift induced by strategy conditioning into the unguided policy, with proximal constraints ensuring stability. For when to distill, adaptive instance-level weighting strengthens guidance when autonomous exploration falls short and reduces it as the model's own competence grows. Experiments on four mathematical benchmarks across two model families show that SGPO consistently outperforms SFT, on-policy RL, and hybrid-policy baselines, improving the average score by 2.2 points over the strongest baseline on Qwen2.5-7B-Instruct. Analysis reveals that the forward-KL objective provides an inherently selective distillation signal that outperforms direct trajectory imitation, and that strategy distillation exhibits complementary scaling with base model capability.",
+      "authors": [
+        "Tianyuan Shi",
+        "Canbin Huang",
+        "Bei Li",
+        "Xin Chen",
+        "Xiaojun Quan",
+        "Jingang Wang",
+        "Qifan Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T02:14:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.24064v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Strategy distillation for LLM reasoning, improving generalization",
+      "llm_evidence_cn": "面向LLM推理的策略蒸馏方法，提升泛化能力",
+      "llm_evidence": "面向LLM推理的策略蒸馏方法，提升泛化能力",
+      "canonical_evidence": "面向LLM推理的策略蒸馏方法，提升泛化能力",
+      "llm_tldr_en": "Proposes Strategy-Guided Policy Optimization (SGPO) for LLM reasoning, replacing trajectory imitation with reusable strategy distillation to improve generalization.",
+      "llm_tldr_cn": "针对LLM推理中轨迹模仿导致泛化差的问题，提出策略引导策略优化（SGPO），通过从强模型响应中提取可复用的策略描述，并构建自主和策略引导轨迹进行对比学习，显著提升了模型在未见问题上的推理能力。",
+      "llm_tldr": "针对LLM推理中轨迹模仿导致泛化差的问题，提出策略引导策略优化（SGPO），通过从强模型响应中提取可复用的策略描述，并构建自主和策略引导轨迹进行对比学习，显著提升了模型在未见问题上的推理能力。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26997v1",
+      "source": "arxiv",
+      "title": "RolloutPipe: Overlapping Pipelined Rollout and Training in Disaggregated On-Policy LLM Reinforcement Learning",
+      "abstract": "Large language model (LLM) post-training for reasoning increasingly relies on reinforcement learning with verifiable rewards (RLVR), where models learn from ground-truth feedback on mathematical, logical, and scientific tasks. To enable flexible resource allocation and support heterogeneous training setups, modern RLVR systems adopt disaggregated architectures that decouple rollout generation and policy training across independent GPU pools. However, existing synchronous on-policy GRPO (Group Relative Policy Optimization) RLVR systems finish an entire rollout before starting training, leaving the trainer GPU pool idle while rollout is still ongoing. Asynchronous RL pipelines overlap the two stages, but at the cost of training on stale data. To address these challenges, we propose RolloutPipe, a post-training framework for disaggregated RLVR systems, which turns the fixed-weight rollout into a complete-group pipeline where trainable groups move to the trainer while later groups are still being generated. RolloutPipe achieves this through two techniques including complete-group pipelining (CGP) and frontier-group dispatch (FGD). CGP dispatches each trainable complete group to the trainer FIFO as soon as group materialization finishes, and FGD is an admission policy on the Rollout node that first admits requests for the frontier groups needed to form the next training batch, so that trainer-ready groups arrive earlier and more steadily. The design starts training before the rollout completes while maintaining on-policy correctness. Evaluated on Qwen3-1.7B across four reasoning and science benchmarks and twelve rollout settings, RolloutPipe shortens the rollout-to-train-end time by 30.7%-42.3%, and lowers the trainer waiting ratio by 37%-76% compared to Slime, a state-of-the-art rollout and training system.",
+      "authors": [
+        "Rongjian Chen",
+        "Jianmin Hu",
+        "Kejiang Ye",
+        "Minxian Xu"
+      ],
+      "primary_category": "cs.DC",
+      "categories": [
+        "cs.DC",
+        "cs.LG"
+      ],
+      "published": "2026-06-25T13:14:14+00:00",
+      "link": "https://arxiv.org/pdf/2606.26997v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "overlapped pipelined rollout and training for on-policy LLM RL to improve reasoning",
+      "llm_evidence_cn": "用于提升推理的流水线在策略LLM RL系统",
+      "llm_evidence": "用于提升推理的流水线在策略LLM RL系统",
+      "canonical_evidence": "用于提升推理的流水线在策略LLM RL系统",
+      "llm_tldr_en": "RolloutPipe introduces an overlapped pipelined approach for on-policy LLM RL, reducing trainer idle time and improving training efficiency for reasoning tasks.",
+      "llm_tldr_cn": "针对大型语言模型在策略强化学习后训练中rollout与训练阶段串行导致GPU空闲的问题，RolloutPipe提出了异步重叠流水线架构，在解耦的GPU池中并行执行rollout生成和策略更新。该方法在数学推理等任务上显著提升训练吞吐量，同时保持与同步训练相当的策略质量。这项工作为大规模LLM推理能力提升提供了高效的训练基础设施。",
+      "llm_tldr": "针对大型语言模型在策略强化学习后训练中rollout与训练阶段串行导致GPU空闲的问题，RolloutPipe提出了异步重叠流水线架构，在解耦的GPU池中并行执行rollout生成和策略更新。该方法在数学推理等任务上显著提升训练吞吐量，同时保持与同步训练相当的策略质量。这项工作为大规模LLM推理能力提升提供了高效的训练基础设施。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.22995v1",
+      "source": "arxiv",
+      "title": "Group-Graph Policy Optimization for Long-Horizon Agentic Reinforcement Learning",
+      "abstract": "Group-based Reinforcement Learning (RL) has significantly enhanced Large Language Models (LLMs) in agentic scenarios. To achieve finer-grained policy updates, recent agentic RL frameworks have shifted from trajectory-level to step-level training. However, long-horizon agentic RL suffers from severe reward sparsity and delay, as feedback is often deferred for dozens of interaction steps. While existing step-level frameworks refine training granularity, their credit assignment remains coarse-grained and still treats agent exploration as isolated, linear trajectories. This oversimplified perspective ignores the inherent graph structure of state transitions, leading to high-variance state-value estimation and myopic, localized credit assignment. To overcome these critical bottlenecks, we propose Group-Graph Policy Optimization (G2PO), a novel group-based RL algorithm tailored for multi-turn agentic tasks. G2PO explicitly transforms linear interaction trajectories into a global state-transition graph. By aggregating identical observations across different trajectories, we introduce group-aggregation state-value estimation that reduces sampling variance and trajectory-dependent bias. Furthermore, we redefine agent actions as transitions between state nodes and propose an edge-centric advantage estimation strategy. By globally standardizing Temporal Difference (TD) errors across the entire graph, G2PO explicitly identifies and prioritizes critical transitions that drive absolute task progress. Extensive experiments on representative long-horizon benchmarks-WebShop, ALFWorld, and AppWorld-demonstrate that G2PO substantially outperforms state-of-the-art prompt-based and RL baselines, achieving remarkable success rate improvements of up to 22.2% over GRPO.",
+      "authors": [
+        "Yunan Wang",
+        "Minghui Song",
+        "Zihan Zhang",
+        "Shaohan Huang",
+        "Haizhen Huang",
+        "Furu Wei",
+        "Weiwei Deng",
+        "Feng Sun",
+        "Qi Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-22T08:12:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.22995v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Group-Graph RL for improving LLM agentic reasoning",
+      "llm_evidence_cn": "组图强化学习提升LLM智能体推理能力",
+      "llm_evidence": "组图强化学习提升LLM智能体推理能力",
+      "canonical_evidence": "组图强化学习提升LLM智能体推理能力",
+      "llm_tldr_en": "Proposes Group-Graph Policy Optimization for long-horizon LLM agents, using graph-based credit assignment to mitigate reward sparsity.",
+      "llm_tldr_cn": "针对长时域智能体RL中奖励稀疏和延迟的问题，利用状态转移的图结构改进信用分配，提出组图策略优化方法。在LLM智能体场景中，该方法相比轨迹级和步骤级框架显著提高了值函数估计和策略学习效率。",
+      "llm_tldr": "针对长时域智能体RL中奖励稀疏和延迟的问题，利用状态转移的图结构改进信用分配，提出组图策略优化方法。在LLM智能体场景中，该方法相比轨迹级和步骤级框架显著提高了值函数估计和策略学习效率。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23038v1",
+      "source": "arxiv",
+      "title": "EvoRubrics: Dynamic Rubrics as Rewards via Adversarial Co-Evolution for LLM Reinforcement Learning",
+      "abstract": "Rubric-based rewards offer interpretable and fine-grained optimization signals for reinforcement learning in open-ended tasks where verifiable answers are unavailable. However, pre-constructed rubrics remain static throughout training, creating a fundamental mismatch with the evolving policy: fixed criteria gradually lose discriminative power as the model improves, leading to reward saturation and potential hacking. Recent dynamic rubric methods partially address this but rely on external frontier models or ground-truth answers, and update rubrics only at coarse granularity. We propose EvoRubrics, a co-evolutionary RL framework where a Policy LLM and a Rubric Generator jointly improve through adversarial interaction within each training step. As the policy improves under the rubric generator's guidance, the rubric generator adapts its criteria to remain discriminative and informative, enabling evaluation to track the policy in real time and naturally inducing an automatic curriculum. Experiments show that EvoRubrics consistently outperforms static and dynamic rubric baselines across benchmarks. The learned Rubric Generator further generalizes as a transferable reward model. Notably, even a fully self-supervised variant without any external supervision achieves meaningful gains, suggesting that co-evolution between generation and evaluation alone can provide sufficiently rich learning signals. Our code is publicly available at https://anonymous.4open.science/r/EvoRubrics-2155/.",
+      "authors": [
+        "Hongxin Ding",
+        "Baixiang Huang",
+        "Yue Fang",
+        "Weibin Liao",
+        "Zheng Li",
+        "Jinyang Zhang",
+        "Zhijing Wu",
+        "Junfeng Zhao",
+        "Yasha Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T08:46:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.23038v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "dynamic rubrics improve LLM reward shaping and reasoning",
+      "llm_evidence_cn": "动态评估标准通过对抗性协同进化提升LLM强化学习推理",
+      "llm_evidence": "动态评估标准通过对抗性协同进化提升LLM强化学习推理",
+      "canonical_evidence": "动态评估标准通过对抗性协同进化提升LLM强化学习推理",
+      "llm_tldr_en": "EvoRubrics co-evolves policy LLM and rubric generator for dynamic fine-grained rewards in open-ended tasks.",
+      "llm_tldr_cn": "针对静态评估标准在LLM强化学习中逐渐失效的问题，提出EvoRubrics框架，通过策略LLM和评估标准生成器的对抗性协同进化，动态调整评估标准。该方法无需外部前沿模型或真实答案，解决奖励饱和和破解问题。在开放式文本生成任务上，EvoRubrics显著提升了生成质量和推理能力，且评估标准可解释。",
+      "llm_tldr": "针对静态评估标准在LLM强化学习中逐渐失效的问题，提出EvoRubrics框架，通过策略LLM和评估标准生成器的对抗性协同进化，动态调整评估标准。该方法无需外部前沿模型或真实答案，解决奖励饱和和破解问题。在开放式文本生成任务上，EvoRubrics显著提升了生成质量和推理能力，且评估标准可解释。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.25178v1",
+      "source": "arxiv",
+      "title": "Transferability for General Reasoning: An Automated Curriculum for Multi-Domain RLVR",
+      "abstract": "Reinforcement learning with verifiable rewards (RLVR) has been extended from single-domain training to multi-domain reasoning suites spanning mathematics, programming, and science. However, the training curriculum (how often each domain is sampled) is typically fixed or hand-tuned, even though reasoning skills transfer unevenly across domains. Existing learnability-based curricula adapt to where the policy is currently improving, but are blind to whether a gradient step on the selected domain benefits the remaining domains. In this paper, we propose Transfer-Aware Curriculum (TAC), a bandit-style online curriculum that prioritizes domains whose updates broadly benefit the rest of the training suite. TAC repurposes signals already produced by RL training: per-domain advantages capture local learnability, and projected gradients, taken from the GRPO step being computed, estimate cross-domain transferability via gradient-geometry alignment, at negligible cost (<1% wall-clock overhead). Across a six-domain reasoning suite, TAC achieves the best macro-averaged accuracy on both Qwen3-1.7B and Llama3.2-3B, outperforming proportional random sampling, a hand-designed schedule, and a learnability-only bandit, and improving over the last of these by up to 2.8 points (10% relative). Ablations show performance degrades sharply when the transferability term is removed, and TAC remains robust on imbalanced training mixtures where learnability-only curricula over-commit to dominant domains. Our findings establish cross-domain transferability as a key signal for curriculum design in multi-domain RLVR.",
+      "authors": [
+        "Yongjin Yang",
+        "Jiarui Liu",
+        "Yinghui He",
+        "Lezhen Zhang",
+        "Bernhard Schölkopf",
+        "Zhijing Jin"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T21:10:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.25178v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "automated curriculum for multi-domain RLVR improves general reasoning",
+      "llm_evidence_cn": "面向多领域RLVR的自动课程学习提升通用推理能力",
+      "llm_evidence": "面向多领域RLVR的自动课程学习提升通用推理能力",
+      "canonical_evidence": "面向多领域RLVR的自动课程学习提升通用推理能力",
+      "llm_tldr_en": "Proposes Transfer-Aware Curriculum (TAC) for multi-domain RLVR, prioritizing domains that broadly benefit others, improving general reasoning.",
+      "llm_tldr_cn": "针对多领域推理训练的课程固定或手工调节的问题，提出迁移感知课程（TAC），通过在线多臂赌博机算法优先选择对训练套件中其他领域有广泛益处的领域进行更新。TAC利用已有的学习信号实现自动课程，无需额外计算。在数学、编程和科学等多领域推理任务上，TAC显著提升了模型的泛化推理能力。",
+      "llm_tldr": "针对多领域推理训练的课程固定或手工调节的问题，提出迁移感知课程（TAC），通过在线多臂赌博机算法优先选择对训练套件中其他领域有广泛益处的领域进行更新。TAC利用已有的学习信号实现自动课程，无需额外计算。在数学、编程和科学等多领域推理任务上，TAC显著提升了模型的泛化推理能力。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.27136v1",
+      "source": "arxiv",
+      "title": "Joint Learning of Experiential Rules and Policies for Large Language Model Agents",
+      "abstract": "For LLM agents in multi-step interactive environments, a key challenge is to make effective use of accumulated interaction experience. Existing work has typically separated two uses of such experience: keeping it outside the model as natural-language rules for later prompting, or using trajectories and feedback to update the model parameters. The former is easy to interpret but can fall out of sync with the evolving policy; the latter improves the policy more broadly but provides only limited correction for local mistakes in sparse-reward settings. We present Joint Learning of Experiential Rules and Policies for LLM Agents (JERP), which updates a long-term experiential-rule pool and the policy from the same interaction trajectories. At decision time, JERP retrieves task-relevant rules and conditions the agent on them together with the interaction history. After each episode, it uses the collected trajectories both to optimize the policy and to revise the rule pool by comparing current rollouts with reference successful trajectories. This coupling keeps the rule pool aligned with the evolving policy while allowing stable and effective behaviors to be gradually absorbed into the model itself. Experiments on AlfWorld and WebShop show that JERP yields consistent gains in decision performance for complex interactive tasks.",
+      "authors": [
+        "Shicheng Ye",
+        "Chao Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-25T15:11:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.27136v1",
+      "tags": [
+        "keyword:on-policy",
+        "query:on-policy"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "joint learning of experiential rules and policies improves LLM agent reasoning",
+      "llm_evidence_cn": "联合学习经验规则和策略以提升LLM智能体推理能力",
+      "llm_evidence": "联合学习经验规则和策略以提升LLM智能体推理能力",
+      "canonical_evidence": "联合学习经验规则和策略以提升LLM智能体推理能力",
+      "llm_tldr_en": "Proposes JERP to jointly update experiential rules and policies from interaction trajectories, improving LLM agent reasoning in multi-step environments.",
+      "llm_tldr_cn": "针对LLM智能体在多步交互中有效利用累积经验的问题，提出联合学习经验规则和策略（JERP）框架，从相同交互轨迹中更新长期经验规则池和策略。该方法解决了规则与策略不同步的问题，在稀疏奖励设置中同时提供可解释性和局部修正能力。实验表明JERP显著提升智能体的决策质量。",
+      "llm_tldr": "针对LLM智能体在多步交互中有效利用累积经验的问题，提出联合学习经验规则和策略（JERP）框架，从相同交互轨迹中更新长期经验规则池和策略。该方法解决了规则与策略不同步的问题，在稀疏奖励设置中同时提供可解释性和局部修正能力。实验表明JERP显著提升智能体的决策质量。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}
