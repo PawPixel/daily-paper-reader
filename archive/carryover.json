@@ -1,247 +1,47 @@
 {
-  "generated_at": "2026-06-30T21:00:32.875193+00:00",
-  "updated_date": "20260630",
+  "generated_at": "2026-07-01T02:44:04.856056+00:00",
+  "updated_date": "20260622-20260701",
   "carryover_days": 9,
   "tag_states": {
     "llm-papers": {
-      "updated_date": "20260612-20260621",
+      "updated_date": "20260622-20260701",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2606.17945v1",
+          "id": "2606.30093v1",
           "source": "arxiv",
-          "title": "Small Initialization Matters for Large Language Models",
-          "abstract": "Large language models provide a tractable system for asking how intelligence itself emerges, rather than only how LLMs can be engineered. Although progress is usually attributed to scale, data and architecture, we show that parameter initialization is a gene-like determinant of training and, in particular, of model capacity. Reducing the initialization scale consistently improves pretraining, with the largest gains on reasoning-demanding tasks. We identify two widely used empirical settings that restrain the advantage of small initialization, and show how relaxing them restores favorable scaling. We further uncover a critical initialization that balances the reasoning and training. Mechanistically, small initialization drives a distinct developmental trajectory: parameters first condense into low-complexity structures and later expand into richer representations, giving concrete form to the idea that compression is intelligence. Token-level analyses show that the gains concentrate on non-trivial, context-constrained predictions rather than all tokens uniformly. These results motivate a simple $γ$-initialization rule: expose initialization rage as an explicit knob and use small initialization by default, an almost cost-free intervention that improves pretraining and strengthens reasoning across model scales.",
+          "title": "Efficient Retrieval-Augmented Generation via Token Co-occurrence Graphs",
+          "abstract": "Retrieval-Augmented Generation (RAG) mitigates hallucinations in Large Language Models (LLMs) by grounding the generation process on external knowledge. However, standard RAG approaches struggle with multi-hop reasoning. While recent graph-based RAG methods improve the retrieval of interconnected chunks, they often rely on computationally expensive and error-prone LLM-based extraction pipelines. To address these issues, we propose TIGRAG (Token-Induced GraphRAG), an efficient graph-augmented RAG framework based on a token co-occurrence Knowledge Graph. TIGRAG directly models topological relationships between tokens using sliding-window co-occurrence statistics, thus enabling scalable graph construction. During inference, it combines graph-based semantic expansion and neural reranking to retrieve interconnected evidence for multi-hop reasoning. Specifically, it introduces an iterative entity-driven retrieval strategy that progressively expands the query using bridging entities extracted from previously retrieved contexts. We evaluated TIGRAG on three widely adopted multi-hop Question Answering (QA) benchmarks. Experimental results demonstrated that our framework consistently outperforms dense retrieval and graph-based RAG methods in both retrieval and downstream QA tasks, while substantially reducing indexing time, inference latency, and prompt footprint.",
           "authors": [
-            "Liangkai Hang",
-            "Junjie Yao",
-            "Zhiyu Li",
-            "Feiyu Xiong",
-            "Hongkang Yang",
-            "Zhi-Qin John Xu"
-          ],
-          "primary_category": "cs.AI",
-          "categories": [
-            "cs.AI"
-          ],
-          "published": "2026-06-16T13:53:48+00:00",
-          "link": "https://arxiv.org/pdf/2606.17945v1",
-          "tags": [
-            "keyword:llm-papers",
-            "query:llm-papers"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "small initialization improves LLM pretraining, especially on reasoning tasks",
-          "llm_evidence_cn": "小初始化改善LLM预训练，尤其在推理任务上",
-          "llm_evidence": "小初始化改善LLM预训练，尤其在推理任务上",
-          "canonical_evidence": "小初始化改善LLM预训练，尤其在推理任务上",
-          "llm_tldr_en": "Reducing initialization scale consistently improves LLM pretraining, with largest gains on reasoning-demanding tasks.",
-          "llm_tldr_cn": "大型语言模型的成功常归因于规模、数据和架构，但本文发现参数初始化为基因般的关键因素。减小初始化尺度能持续提升预训练效果，尤其在推理密集型任务上收益最大。进一步揭示平衡推理与训练的临界初始化，并指出小初始化驱动独特的发育轨迹。",
-          "llm_tldr": "大型语言模型的成功常归因于规模、数据和架构，但本文发现参数初始化为基因般的关键因素。减小初始化尺度能持续提升预训练效果，尤其在推理密集型任务上收益最大。进一步揭示平衡推理与训练的临界初始化，并指出小初始化驱动独特的发育轨迹。",
-          "llm_tags": [
-            "query:llm-papers"
-          ],
-          "matched_query_tag": "query:llm-papers",
-          "matched_query_text": "how to improve large language model reasoning",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.17945v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.19750v1",
-          "source": "arxiv",
-          "title": "Manifold Bandits: Bayesian Curriculum Learning over the Latent Geometry of Large Language Models",
-          "abstract": "Reinforcement learning (RL) is a central approach for improving reasoning capabilities in large language models (LLMs), where training efficiency depends critically on how problems are sampled during optimization. Existing adaptive curriculum learning methods typically prioritize prompts of intermediate difficulty, treating problem selection as a standard bandit problem with independent arms and overlooking the structured, heterogeneous nature of the task space. In this work, we frame problem sampling as a manifold-structured bandit problem with endogenous non-stationarity: problems are related through the model's latent representation space, and sampling decisions can steer how learning signals evolve across that space. To operationalize this perspective, we introduce Bayesian Manifold Curriculum (BMC), a structure-aware framework that organizes problems into a hierarchical task tree and applies Bayesian learning to guide sampling. Empirically, we find that different sampling strategies induce non-trivial tradeoffs between productivity (learning signal), diversity (coverage of the task manifold), and utility (evaluation relevance). These results show that prioritizing difficulty alone is insufficient for strong downstream performance, highlighting the importance of incorporating structure and type-awareness into problem sampling.",
-          "authors": [
-            "Darrien McKenzie",
-            "Nicklas Hansen",
-            "Xiaolong Wang"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI",
-            "cs.CL"
-          ],
-          "published": "2026-06-18T03:31:19+00:00",
-          "link": "https://arxiv.org/pdf/2606.19750v1",
-          "tags": [
-            "keyword:llm-papers",
-            "query:llm-papers"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Proposes manifold bandit curriculum learning to improve LLM reasoning via RL",
-          "llm_evidence_cn": "提出流形赌博机课程学习方法，通过强化学习改进LLM推理",
-          "llm_evidence": "提出流形赌博机课程学习方法，通过强化学习改进LLM推理",
-          "canonical_evidence": "提出流形赌博机课程学习方法，通过强化学习改进LLM推理",
-          "llm_tldr_en": "Frames problem sampling as a manifold-structured bandit problem for curriculum learning, improving RL training efficiency for LLM reasoning.",
-          "llm_tldr_cn": "该论文针对RL训练LLM推理时问题采样效率低、忽视任务空间结构化特性的问题，提出流形赌博机框架。它将问题选择建模为流形结构上的非平稳赌博机问题，利用模型潜在表示空间指导采样。该方法自适应调整问题难度分布，促进学习信号在表示空间的有效传播。实验表明该方法在推理任务上加速收敛并提升最终性能。",
-          "llm_tldr": "该论文针对RL训练LLM推理时问题采样效率低、忽视任务空间结构化特性的问题，提出流形赌博机框架。它将问题选择建模为流形结构上的非平稳赌博机问题，利用模型潜在表示空间指导采样。该方法自适应调整问题难度分布，促进学习信号在表示空间的有效传播。实验表明该方法在推理任务上加速收敛并提升最终性能。",
-          "llm_tags": [
-            "query:llm-papers"
-          ],
-          "matched_query_tag": "query:llm-papers",
-          "matched_query_text": "how to improve large language model reasoning",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.19750v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.18441v1",
-          "source": "arxiv",
-          "title": "Reasoning as Intersection: Consensus-Frame Alignment for Visual Focus in Video-MLLMs",
-          "abstract": "Reinforcement learning has improved the reasoning ability of large language models, but applying outcome-only rewards to video multimodal large language models (Video-MLLMs) provides limited guidance on which visual evidence should support the answer. Inspired by multisensory integration, where consistent cues can enhance the salience and reliability of perceptual estimates, we introduce Consensus Frame GRPO (CF-GRPO), a temporal-annotation-free process-level reward framework for evidence-aware video reasoning. CF-GRPO constructs a consensus frame prior from intrinsic video cues, including temporal coverage, scene-transition cues, and query-conditioned visual relevance. It then computes a model-side frame-use score from visual and response representations and optimizes their agreement through the Consensus Frame Reward (CFR). With salience-aware sparse aggregation and distribution sharpening, CFR provides a high-contrast reward signal without requiring human temporal annotations. Experiments show that VideoCFR achieves competitive performance across complex video reasoning benchmarks and improves several metrics over representative Video-MLLM and RL baselines, while the consensus prior provides an interpretable view of the evidence frames emphasized during training. The implementation is available at https://github.com/1Pansy/VideoCFR.",
-          "authors": [
-            "Chengwen Liu",
-            "Zhe Huang",
-            "Jisheng Dang",
-            "Hong Peng",
-            "Qi Tian",
-            "Tat-Seng Chua"
-          ],
-          "primary_category": "cs.CV",
-          "categories": [
-            "cs.CV"
-          ],
-          "published": "2026-06-16T19:42:54+00:00",
-          "link": "https://arxiv.org/pdf/2606.18441v1",
-          "tags": [
-            "keyword:llm-papers",
-            "query:llm-papers"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "improving video reasoning with process-level reward framework",
-          "llm_evidence_cn": "通过过程级奖励框架改进视频推理",
-          "llm_evidence": "通过过程级奖励框架改进视频推理",
-          "canonical_evidence": "通过过程级奖励框架改进视频推理",
-          "llm_tldr_en": "CF-GRPO introduces a process-level reward framework for video reasoning, using consensus frame prior to guide visual focus without temporal annotations.",
-          "llm_tldr_cn": "强化学习提升了大型语言模型的推理能力，但视频-多模态大语言模型仅依赖结果奖励缺乏对视觉证据的指导。受多感官整合启发，本文提出CF-GRPO，一种无需时序标注的过程级奖励框架，通过构建共识帧先验（包括时间覆盖、场景转换和查询相关性）来引导模型关注关键视觉证据。在视频推理任务上，CF-GRPO有效提升了证据感知能力。",
-          "llm_tldr": "强化学习提升了大型语言模型的推理能力，但视频-多模态大语言模型仅依赖结果奖励缺乏对视觉证据的指导。受多感官整合启发，本文提出CF-GRPO，一种无需时序标注的过程级奖励框架，通过构建共识帧先验（包括时间覆盖、场景转换和查询相关性）来引导模型关注关键视觉证据。在视频推理任务上，CF-GRPO有效提升了证据感知能力。",
-          "llm_tags": [
-            "query:llm-papers"
-          ],
-          "matched_query_tag": "query:llm-papers",
-          "matched_query_text": "how to improve large language model reasoning",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.18441v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.17905v1",
-          "source": "arxiv",
-          "title": "ChLogic: Evaluating Robustness of Logical Reasoning in Chinese Expressions",
-          "abstract": "Large language models perform increasingly well on standardized logical reasoning benchmarks, but whether this ability remains robust beyond English is unclear. We introduce ChLogic, an English--Chinese aligned benchmark that tests whether models preserve logical reasoning performance when the same latent logical structure is expressed in English and diverse Chinese surface realizations. Built from formal logical templates, the benchmark contains three data sets: (i) the General aligned set, derived from 60 General Propositions across nine template families; (ii) the Difficult aligned set, derived from 40 Difficult Problems; and (iii) the Chinese-only set, covering 15 language-specific phenomenon types. Each aligned item pairs one English reference expression with five Chinese realizations. Experiments on Qwen3, Ministral, and GLM models reveal a persistent English--Chinese performance gap. Back-translation from standard Chinese into English often improves performance on the General aligned set, but produces mixed effects on the Difficult aligned set, where Qwen3-32B and GLM-5.1 perform worse after translation. These results indicate that Chinese surface realization, translation artifacts, and model-specific behavior jointly affect multilingual logical reasoning. Overall, ChLogic provides a useful stress test for the robustness of multilingual reasoning.",
-          "authors": [
-            "Peixian Zhou",
-            "Yuxu Chen",
-            "Chaorui Zhang",
-            "Wei Han",
-            "Bo Bai",
-            "Xueyan Niu"
-          ],
-          "primary_category": "cs.CL",
-          "categories": [
-            "cs.CL"
-          ],
-          "published": "2026-06-16T13:28:57+00:00",
-          "link": "https://arxiv.org/pdf/2606.17905v1",
-          "tags": [
-            "keyword:llm-papers",
-            "query:llm-papers"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "evaluates robustness of logical reasoning in LLMs across languages",
-          "llm_evidence_cn": "评估大语言模型在不同语言中逻辑推理的鲁棒性",
-          "llm_evidence": "评估大语言模型在不同语言中逻辑推理的鲁棒性",
-          "canonical_evidence": "评估大语言模型在不同语言中逻辑推理的鲁棒性",
-          "llm_tldr_en": "Introduces ChLogic benchmark to test whether LLMs maintain logical reasoning performance across English and diverse Chinese expressions, revealing language-specific vulnerabilities.",
-          "llm_tldr_cn": "该论文提出ChLogic基准，通过英文与中文对齐的逻辑推理测试，评估大语言模型在不同语言表达下逻辑推理能力的鲁棒性。基准包含通用、困难及中文特有现象三个数据集，揭示模型在中文环境下的推理弱点，为提升多语言推理能力提供评测工具。",
-          "llm_tldr": "该论文提出ChLogic基准，通过英文与中文对齐的逻辑推理测试，评估大语言模型在不同语言表达下逻辑推理能力的鲁棒性。基准包含通用、困难及中文特有现象三个数据集，揭示模型在中文环境下的推理弱点，为提升多语言推理能力提供评测工具。",
-          "llm_tags": [
-            "query:llm-papers"
-          ],
-          "matched_query_tag": "query:llm-papers",
-          "matched_query_text": "how to improve large language model reasoning",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.17905v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.19264v1",
-          "source": "arxiv",
-          "title": "Structured Inference with Large Language Gibbs",
-          "abstract": "The knowledge encoded in large language models (LLMs) can serve as a substrate for structured reasoning over variables describing a complex world, but accessing this knowledge in a probabilistically coherent manner poses a difficult inference problem. We propose Large Language Gibbs, a scheme for structured probabilistic inference that uses conditional distributions of an LLM as transition operators. Rather than sampling structured objects through single-pass autoregressive generation, we iteratively resample individual variables conditioned on others using an LLM's next-token conditionals. This approach avoids order-dependent biases and produces a stationary distribution that reflects a compromise between all local conditionals. We apply this approach to sampling from synthetic distributions, consistent reasoning tasks, and Bayesian structure learning. The results suggest that the use of LLM conditionals in MCMC is a practical alternative to one-pass generation for structured probabilistic inference under a world prior accessible through noisy LLM conditionals.",
-          "authors": [
-            "Sanghyeok Choi",
-            "Henry Gouk",
-            "Esmeralda S. Whitammer"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.CL"
-          ],
-          "published": "2026-06-17T16:40:32+00:00",
-          "link": "https://arxiv.org/pdf/2606.19264v1",
-          "tags": [
-            "keyword:llm-papers",
-            "query:llm-papers"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Proposes Large Language Gibbs for structured probabilistic inference using LLM conditional distributions",
-          "llm_evidence_cn": "提出大语言吉布斯方法，利用LLM条件分布进行结构化概率推理",
-          "llm_evidence": "提出大语言吉布斯方法，利用LLM条件分布进行结构化概率推理",
-          "canonical_evidence": "提出大语言吉布斯方法，利用LLM条件分布进行结构化概率推理",
-          "llm_tldr_en": "Proposes a Gibbs sampling scheme that uses LLM conditional distributions as transition operators for structured reasoning, avoiding order biases.",
-          "llm_tldr_cn": "该论文针对LLM在结构化推理中单次自回归生成存在顺序偏差的问题，提出大语言吉布斯（Large Language Gibbs）方法。该方法利用LLM的条件分布作为转移算子，迭代重采样每个变量，产生反映所有局部条件折中的平稳分布。避免了顺序依赖，适用于需要结构化参数的推理任务。实验在合成数据上验证了其有效性。",
-          "llm_tldr": "该论文针对LLM在结构化推理中单次自回归生成存在顺序偏差的问题，提出大语言吉布斯（Large Language Gibbs）方法。该方法利用LLM的条件分布作为转移算子，迭代重采样每个变量，产生反映所有局部条件折中的平稳分布。避免了顺序依赖，适用于需要结构化参数的推理任务。实验在合成数据上验证了其有效性。",
-          "llm_tags": [
-            "query:llm-papers"
-          ],
-          "matched_query_tag": "query:llm-papers",
-          "matched_query_text": "how to improve large language model reasoning",
-          "matched_requirement_id": "req-2",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.19264v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.17053v1",
-          "source": "arxiv",
-          "title": "Context-Aware RL for Agentic and Multimodal LLMs",
-          "abstract": "Large language models (LLMs) often fail when answering requires identifying a small but decisive piece of evidence within a long or complex context, such as a single line in a tool trace or a subtle detail in an image. We propose ContextRL, a context-aware reinforcement learning (RL) method that improves long-horizon reasoning and multimodal performance through an \\emph{indirect} auxiliary objective. Instead of supervising only the final answer, ContextRL presents the model with a query, an answer, and two highly similar contexts, and rewards it for selecting the context that supports the query--answer pair, thereby encouraging fine-grained grounding. We construct contrastive context data in two domains: for coding agents, trajectories serve as contexts, yielding 1k pairs built via condition filtering; for multimodal reasoning, images serve as contexts, yielding 7K pairs built via generative editing and similarity search. ContextRL achieves average gains of +2.2% over standard GRPO on 5 long-horizon benchmarks, and +1.8% across 12 diverse visual question answering benchmarks. To disentangle the effect of the proposed objective from that of additional data, we compare against data-augmentation baselines that repurpose the same contrastive contexts as standard query--context--answer examples. These baselines provide little to no improvement, showing that the gains arise from the proposed context-selection objective rather than from the contrastive data alone.",
-          "authors": [
-            "Peiyang Xu",
-            "Bangzheng Li",
-            "Sijia Liu",
-            "Karthik R. Narasimhan",
-            "Pramod Viswanath",
-            "Prateek Mittal",
-            "Xingyu Fu"
+            "Gianluca Bonifazi",
+            "Christopher Buratti",
+            "Michele Marchetti",
+            "Federica Parlapiano",
+            "Giulia Quaglieri",
+            "Davide Traini",
+            "Domenico Ursino",
+            "Luca Virgili"
           ],
           "primary_category": "cs.CL",
           "categories": [
             "cs.CL",
-            "cs.CV"
+            "cs.IR"
           ],
-          "published": "2026-06-15T17:59:28+00:00",
-          "link": "https://arxiv.org/pdf/2606.17053v1",
+          "published": "2026-06-29T10:29:51+00:00",
+          "link": "https://arxiv.org/pdf/2606.30093v1",
           "tags": [
             "keyword:llm-papers",
+            "keyword:on-policy",
             "query:llm-papers"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Proposes ContextRL, a context-aware RL method to improve long-horizon reasoning for LLMs",
-          "llm_evidence_cn": "提出ContextRL，一种上下文感知强化学习方法，提升LLM的长程推理能力",
-          "llm_evidence": "提出ContextRL，一种上下文感知强化学习方法，提升LLM的长程推理能力",
-          "canonical_evidence": "提出ContextRL，一种上下文感知强化学习方法，提升LLM的长程推理能力",
-          "llm_tldr_en": "Proposes ContextRL, a reinforcement learning method with an indirect auxiliary objective that rewards context selection, improving long-horizon reasoning and multimodal grounding.",
-          "llm_tldr_cn": "该论文针对LLM在长上下文或复杂场景中难以定位关键证据的问题，提出ContextRL。它通过间接辅助目标，训练模型从相似上下文中识别支持查询-答案对的那个，从而增强细粒度推理。在编程智能体和多模态任务上，ContextRL显著提升了推理准确率。",
-          "llm_tldr": "该论文针对LLM在长上下文或复杂场景中难以定位关键证据的问题，提出ContextRL。它通过间接辅助目标，训练模型从相似上下文中识别支持查询-答案对的那个，从而增强细粒度推理。在编程智能体和多模态任务上，ContextRL显著提升了推理准确率。",
+          "llm_evidence_en": "improving LLM multi-hop reasoning via graph RAG",
+          "llm_evidence_cn": "通过图增强检索改进大语言模型多跳推理",
+          "llm_evidence": "通过图增强检索改进大语言模型多跳推理",
+          "canonical_evidence": "通过图增强检索改进大语言模型多跳推理",
+          "llm_tldr_en": "TIGRAG uses token co-occurrence graphs for efficient graph-augmented RAG, improving multi-hop reasoning without expensive LLM pipelines.",
+          "llm_tldr_cn": "标准RAG在多跳推理上表现不佳，图增强RAG依赖昂贵LLM管线。本文提出TIGRAG，基于滑动窗口共现统计构建令牌共现知识图，结合图语义和向量检索，高效提升多跳推理性能，同时大幅降低构建开销。",
+          "llm_tldr": "标准RAG在多跳推理上表现不佳，图增强RAG依赖昂贵LLM管线。本文提出TIGRAG，基于滑动窗口共现统计构建令牌共现知识图，结合图语义和向量检索，高效提升多跳推理性能，同时大幅降低构建开销。",
           "llm_tags": [
             "query:llm-papers"
           ],
@@ -249,15 +49,107 @@
           "matched_query_text": "how to improve large language model reasoning",
           "matched_requirement_id": "req-2",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.17053v1",
+          "paper_id": "2606.30093v1",
           "carry_days": 1
         }
       ]
     },
     "on-policy": {
-      "updated_date": "20260630",
+      "updated_date": "20260622-20260701",
       "carryover_days": 9,
       "items": []
+    },
+    "self-evolve": {
+      "updated_date": "20260622-20260701",
+      "carryover_days": 9,
+      "items": [
+        {
+          "id": "2606.29315v1",
+          "source": "arxiv",
+          "title": "Hierarchical Experimentalist Agents",
+          "abstract": "Large language models (LLMs) are increasingly used to take actions in the real world and support human decision-making, yet most agents rely on parametric knowledge, fixed post-training data, retrieval, or search. This paradigm breaks down in novel domains and for sophisticated queries that cannot be answered from prior knowledge alone. Knowing the laws of physics, for instance, does not by itself enable LLMs to answer queries or complete long-horizon tasks in a complex physical system. To address this, we introduce Hierarchical Experimentalist Agents (HExA), an in-context self-improvement framework to learn from active experimentation. HExA iteratively designs and refines query-relevant experiments, learns a reusable library of composable skills from experience, and integrates experimental evidence to answer queries or take actions. HExA is training-free, compatible with any black-box model, and does not require external supervision, oracles, or offline data. To evaluate active experimentation, we introduce Interphyre, a tool-calling benchmark built on the PHYRE 2D procedural physics environment, where agents propose interventions and test hypotheses through simulation APIs. Experiments show that current LLM agents struggle in these settings, especially on the hardest levels of Interphyre. Claude Sonnet 4.6 achieves only 2% success, while HExA improves the same model to up to 77% success. HExA also improves open-weight models and outperforms agentic baselines such as ReAct and Reflexion. Moreover, using only skills learned from easier levels and transferred without active experimentation, HExA achieves 44% success, demonstrating the reusability and generalization of its learned skills. Overall, HExA shows that learning through active experimentation can help agents discover useful knowledge, acquire reusable skills, and make efficient progress on novel long-horizon tasks.",
+          "authors": [
+            "Abhranil Chandra",
+            "Sankaran Vaidyanathan",
+            "Utsav Dhanuka",
+            "Varun Gandhi",
+            "Scott Niekum"
+          ],
+          "primary_category": "cs.AI",
+          "categories": [
+            "cs.AI",
+            "cs.LG"
+          ],
+          "published": "2026-06-28T10:21:55+00:00",
+          "link": "https://arxiv.org/pdf/2606.29315v1",
+          "tags": [
+            "keyword:llm-papers",
+            "keyword:on-policy",
+            "keyword:self-evolve",
+            "query:llm-papers",
+            "query:on-policy",
+            "query:self-evolve"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "LLM self-improvement via active experimentation",
+          "llm_evidence_cn": "LLM通过主动实验自我改进",
+          "llm_evidence": "LLM通过主动实验自我改进",
+          "canonical_evidence": "LLM通过主动实验自我改进",
+          "llm_tldr_en": "HExA introduces an in-context self-improvement framework for LLMs to learn from active experimentation, building reusable skills.",
+          "llm_tldr_cn": "论文提出层次化实验智能体（HExA），一个上下文内自我改进框架，使LLM能够通过主动实验学习。HExA迭代设计相关实验、从经验中学习可复用技能库，并整合实验经验。在需要超越先验知识的新颖领域和复杂查询中，该方法显著提升了LLM的表现。",
+          "llm_tldr": "论文提出层次化实验智能体（HExA），一个上下文内自我改进框架，使LLM能够通过主动实验学习。HExA迭代设计相关实验、从经验中学习可复用技能库，并整合实验经验。在需要超越先验知识的新颖领域和复杂查询中，该方法显著提升了LLM的表现。",
+          "llm_tags": [
+            "query:self-evolve"
+          ],
+          "matched_query_tag": "query:self-evolve",
+          "matched_query_text": "self-evolving agents that improve their own capabilities",
+          "matched_requirement_id": "req-6",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.29315v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.26327v1",
+          "source": "arxiv",
+          "title": "EVOM: Agentic Meta-Evolution of Actor-Critic Architectures for Reinforcement Learning",
+          "abstract": "In actor-critic reinforcement learning, network architectures are typically manually designed. Automating this design is challenging because each candidate must be trained before evaluation, and the design space is open-ended. To address these challenges, we introduce EVOM, an agentic meta-evolution framework for discovering high-performance actor-critic architectures. We frame architecture search as a bi-level optimization: an inner loop trains weights via the low-fidelity proximal policy optimization (PPO), while an outer loop drives meta-evolution by iteratively refining architecture programs. Crucially, this outer loop is powered by an LLM-based design agent that operates purely as an architecture designer, completely decoupled from policy execution and environment control. Experiments reveal that EVOM outperforms the manually designed baseline, an LLM-guided random search, and the state-of-the-art LLM-guided programmatic policy search method MLES, delivering superior performance on Ant-v4 and HalfCheetah-v4. Ablation studies validate that both the meta-evolution loop and the LLM Design Agent are indispensable for final performance.",
+          "authors": [
+            "Boyun Zhang",
+            "Chao Wang",
+            "Kai Wu"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.AI"
+          ],
+          "published": "2026-06-24T19:13:32+00:00",
+          "link": "https://arxiv.org/pdf/2606.26327v1",
+          "tags": [
+            "keyword:on-policy",
+            "keyword:self-evolve",
+            "query:on-policy",
+            "query:self-evolve"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Agentic meta-evolution framework for discovering actor-critic architectures via LLM-based designer",
+          "llm_evidence_cn": "提出基于智能体元进化的演员-评论家架构搜索框架",
+          "llm_evidence": "提出基于智能体元进化的演员-评论家架构搜索框架",
+          "canonical_evidence": "提出基于智能体元进化的演员-评论家架构搜索框架",
+          "llm_tldr_en": "EVOM uses an LLM-based agent to drive meta-evolution of actor-critic architectures combined with PPO training.",
+          "llm_tldr_cn": "演员-评论家RL的架构通常手动设计，自动化面临训练成本高和搜索空间大。提出EVOM，一种智能体元进化框架，利用LLM设计代理在外层优化架构程序，内层使用PPO训练权重。该方法解耦了架构设计与参数学习。实验发现高性能架构具有网络深度和跳连接等共性模式。该工作展示了智能体进化在架构搜索中的应用。",
+          "llm_tldr": "演员-评论家RL的架构通常手动设计，自动化面临训练成本高和搜索空间大。提出EVOM，一种智能体元进化框架，利用LLM设计代理在外层优化架构程序，内层使用PPO训练权重。该方法解耦了架构设计与参数学习。实验发现高性能架构具有网络深度和跳连接等共性模式。该工作展示了智能体进化在架构搜索中的应用。",
+          "llm_tags": [
+            "query:self-evolve"
+          ],
+          "matched_query_tag": "query:self-evolve",
+          "matched_query_text": "frameworks for agent evolution and self modification",
+          "matched_requirement_id": "req-8",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.26327v1",
+          "carry_days": 1
+        }
+      ]
     }
   }
 }

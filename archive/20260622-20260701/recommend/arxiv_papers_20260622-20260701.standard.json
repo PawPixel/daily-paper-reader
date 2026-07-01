@@ -1,0 +1,1607 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-07-01T02:44:04.853728+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 3,
+    "deep_divecandidates": 29,
+    "deep_cap": 8,
+    "deep_selected": 21,
+    "quick_candidates": 25,
+    "quick_skim_target": 13,
+    "quick_selected": 13
+  },
+  "deep_dive": [
+    {
+      "id": "2606.23038v1",
+      "source": "arxiv",
+      "title": "EvoRubrics: Dynamic Rubrics as Rewards via Adversarial Co-Evolution for LLM Reinforcement Learning",
+      "abstract": "Rubric-based rewards offer interpretable and fine-grained optimization signals for reinforcement learning in open-ended tasks where verifiable answers are unavailable. However, pre-constructed rubrics remain static throughout training, creating a fundamental mismatch with the evolving policy: fixed criteria gradually lose discriminative power as the model improves, leading to reward saturation and potential hacking. Recent dynamic rubric methods partially address this but rely on external frontier models or ground-truth answers, and update rubrics only at coarse granularity. We propose EvoRubrics, a co-evolutionary RL framework where a Policy LLM and a Rubric Generator jointly improve through adversarial interaction within each training step. As the policy improves under the rubric generator's guidance, the rubric generator adapts its criteria to remain discriminative and informative, enabling evaluation to track the policy in real time and naturally inducing an automatic curriculum. Experiments show that EvoRubrics consistently outperforms static and dynamic rubric baselines across benchmarks. The learned Rubric Generator further generalizes as a transferable reward model. Notably, even a fully self-supervised variant without any external supervision achieves meaningful gains, suggesting that co-evolution between generation and evaluation alone can provide sufficiently rich learning signals. Our code is publicly available at https://anonymous.4open.science/r/EvoRubrics-2155/.",
+      "authors": [
+        "Hongxin Ding",
+        "Baixiang Huang",
+        "Yue Fang",
+        "Weibin Liao",
+        "Zheng Li",
+        "Jinyang Zhang",
+        "Zhijing Wu",
+        "Junfeng Zhao",
+        "Yasha Wang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T08:46:23+00:00",
+      "link": "https://arxiv.org/pdf/2606.23038v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Adversarial co-evolution of policy LLM and rubric generator for LLM reinforcement learning",
+      "llm_evidence_cn": "提出策略LLM与评分生成器对抗协同进化，用于LLM强化学习",
+      "llm_evidence": "提出策略LLM与评分生成器对抗协同进化，用于LLM强化学习",
+      "canonical_evidence": "提出策略LLM与评分生成器对抗协同进化，用于LLM强化学习",
+      "llm_tldr_en": "EvoRubrics proposes a co-evolutionary RL framework where a Policy LLM and Rubric Generator improve each other adversarially to enhance LLM reasoning.",
+      "llm_tldr_cn": "基于评分卡的奖励在LLM强化学习中面临静态标准失效的问题。提出EvoRubrics，一种协同进化RL框架，策略LLM和评分生成器通过对抗互动共同提升，评分卡随策略进化动态更新。在开放任务中，该方法有效缓解奖励饱和，提升推理能力。该工作将进化思想引入LLM强化学习。",
+      "llm_tldr": "基于评分卡的奖励在LLM强化学习中面临静态标准失效的问题。提出EvoRubrics，一种协同进化RL框架，策略LLM和评分生成器通过对抗互动共同提升，评分卡随策略进化动态更新。在开放任务中，该方法有效缓解奖励饱和，提升推理能力。该工作将进化思想引入LLM强化学习。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23112v1",
+      "source": "arxiv",
+      "title": "Self-Evolution for Multi-Turn Tool-Calling Agents via Divergence-Point Preference Learning",
+      "abstract": "Multi-turn tool-using agents must coordinate long-horizon tool sequences while tracking dialogue state and policy constraints. Existing approaches often separate inference-time orchestration from parameter-level learning, leaving tool selection weakly structured and preference updates vulnerable to train--deployment prompt mismatch. For within-benchmark self-improvement, ToolGraph combines schema-derived topology, transition weights estimated from successful rollouts, and history-aware controls for write prerequisites and repeated-search loops. We then construct 161 preference pairs by locating divergence points via state-based matching and prefix-based alignment, filtered through action-correctness annotations, and train DPO under the same ToolGraph context used at inference. Across 375 tau2-bench tasks, ToolGraph raises the weighted average reward from 0.304 to 0.338 (+11.2% relative), while ToolGraph+DPO reaches 0.355 (+16.8% over the baseline), with the DPO gain concentrated in airline and retail. Fine-grained diagnostics further show that roughly half of telecom trajectories exhaust the step budget before action execution and that chosen reward positivity is the most useful checkpoint signal across our 16 evaluated DPO configurations.",
+      "authors": [
+        "Jiaqiang Tang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-22T09:56:44+00:00",
+      "link": "https://arxiv.org/pdf/2606.23112v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Self-evolution for multi-turn tool-calling agents using divergence-point preference learning",
+      "llm_evidence_cn": "通过分歧点偏好学习实现多轮工具调用智能体的自进化",
+      "llm_evidence": "通过分歧点偏好学习实现多轮工具调用智能体的自进化",
+      "canonical_evidence": "通过分歧点偏好学习实现多轮工具调用智能体的自进化",
+      "llm_tldr_en": "Proposes a self-evolution framework for tool-calling agents using divergence-point preference learning and DPO.",
+      "llm_tldr_cn": "多轮工具调用智能体需要协调长程工具序列。现有方法分离推理和参数学习。提出自进化框架，通过状态匹配和前缀对齐定位分歧点，构建偏好对并训练DPO。在基准上实现自改进。该方法展示了智能体通过偏好学习自我进化的有效性。",
+      "llm_tldr": "多轮工具调用智能体需要协调长程工具序列。现有方法分离推理和参数学习。提出自进化框架，通过状态匹配和前缀对齐定位分歧点，构建偏好对并训练DPO。在基准上实现自改进。该方法展示了智能体通过偏好学习自我进化的有效性。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.23687v1",
+      "source": "arxiv",
+      "title": "Randomized YaRN Improves Length Generalization for Long-Context Reasoning",
+      "abstract": "Large language models (LLMs) are typically pretrained on short sequences and then extended to work on longer sequences with additional training. However, such LLMs still struggle to further generalize to very long sequences. We propose Randomized YaRN, a training method that improves length generalization by combining YaRN-based positional extrapolation with randomized positional encoding and a length curriculum. During training on short context data, tokens are assigned YaRN positional encodings sampled from a larger position range, exposing the model to out-of-distribution positional representations even on short-context inputs. We evaluate Randomized YaRN on two challenging long-context reasoning benchmarks, BABILong and Multi-Round Coreference Resolution (MRCR). When training on data with <8K context, Randomized YaRN consistently improves reasoning performance on context lengths from 16K to 128K and outperforms standard fine-tuning, with the largest gains appearing at far out-of-distribution lengths. Our results suggest that progressively exposing models to OOD positional distributions provides an effective recipe for generalizable long-context reasoning.",
+      "authors": [
+        "Manas Mehta",
+        "Fangcong Yin",
+        "Greg Durrett"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-22T17:59:53+00:00",
+      "link": "https://arxiv.org/pdf/2606.23687v1",
+      "tags": [
+        "keyword:llm-papers",
+        "query:llm-papers"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improves length generalization for long-context reasoning",
+      "llm_evidence_cn": "改进长上下文推理的长度泛化",
+      "llm_evidence": "改进长上下文推理的长度泛化",
+      "canonical_evidence": "改进长上下文推理的长度泛化",
+      "llm_tldr_en": "Proposes Randomized YaRN to improve LLM length generalization for long-context reasoning by combining YaRN extrapolation with randomized positional encodings and length curriculum, evaluated on BABILong and Multi-Round Coreference.",
+      "llm_tldr_cn": "大型语言模型在短序列上预训练后难以泛化到极长序列。本文提出Randomized YaRN训练方法，通过结合YaRN位置外推、随机位置编码和长度课程，在短上下文训练中让模型接触更大范围的位置表示，从而提升长上下文推理能力。在BABILong和多轮指代消解基准上验证了有效性，为LLM长序列推理提供了实用改进。",
+      "llm_tldr": "大型语言模型在短序列上预训练后难以泛化到极长序列。本文提出Randomized YaRN训练方法，通过结合YaRN位置外推、随机位置编码和长度课程，在短上下文训练中让模型接触更大范围的位置表示，从而提升长上下文推理能力。在BABILong和多轮指代消解基准上验证了有效性，为LLM长序列推理提供了实用改进。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24151v1",
+      "source": "arxiv",
+      "title": "Metis: Bridging Text and Code Memory for Self-Evolving Agents",
+      "abstract": "Self-evolving agents improve over time by distilling experience from past executions and reusing it in future tasks. Existing systems represent such experience either as natural-language text injected into the agent context or as code exposed as callable tools. However, the choice between these representations is typically made at design time rather than derived from the characteristics of the experience itself, leaving the trade-offs between them poorly understood. We present the first controlled study that isolates text memory and code memory over an identical set of experiences. Our results show that the two forms exhibit complementary trade-offs in construction cost, execution efficiency, and transferability, such that neither representation alone is sufficient. Guided by these findings, we propose Metis, a self-evolving agent system built on a hierarchical dual-representation memory. Metis organizes textual experience into execution plans, environment facts, and common pitfalls, and selectively crystallizes recurring plans into validated callable tools. This design combines the broad applicability of text memory with the execution efficiency of code memory while incurring tool-generation cost only when justified by repeated reuse. We evaluate Metis on AppWorld, a challenging benchmark for interactive agents. The results show that Metis improves task accuracy by up to 20.6% over ReAct while reducing execution cost by up to 22.8%. Compared with representative self-evolving agent systems, Metis consistently achieves a better balance between accuracy, execution efficiency, and memory-construction cost.",
+      "authors": [
+        "Zijie Dai",
+        "Siuhin He",
+        "Hui Li",
+        "Qihui Zhou",
+        "Jiajun Li",
+        "Mingcong Song",
+        "Guoping Long",
+        "Hongjie Si",
+        "Xin Yao",
+        "Lin Zhang",
+        "James Cheng",
+        "Xiao Yan"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-06-23T05:17:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.24151v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Self-evolving agents with experience distillation",
+      "llm_evidence_cn": "自我进化智能体与经验蒸馏",
+      "llm_evidence": "自我进化智能体与经验蒸馏",
+      "canonical_evidence": "自我进化智能体与经验蒸馏",
+      "llm_tldr_en": "Metis compares text and code memory for self-evolving agents, showing complementary trade-offs in cost, efficiency, and transferability.",
+      "llm_tldr_cn": "论文针对自我进化智能体中的经验表示问题，首次控制实验比较了文本记忆与代码记忆。结果显示两种表示在构建成本、执行效率和可迁移性上具有互补的权衡，单一表示不足以在所有维度最优。Metis为智能体如何根据经验特征自动选择记忆表示提供了关键见解。",
+      "llm_tldr": "论文针对自我进化智能体中的经验表示问题，首次控制实验比较了文本记忆与代码记忆。结果显示两种表示在构建成本、执行效率和可迁移性上具有互补的权衡，单一表示不足以在所有维度最优。Metis为智能体如何根据经验特征自动选择记忆表示提供了关键见解。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24428v1",
+      "source": "arxiv",
+      "title": "Escaping the Self-Confirmation Trap: An Execute-Distill-Verify Paradigm for Agentic Experience Learning",
+      "abstract": "Experience-driven self-evolution is critical for large language model (LLM) agents to improve through open-world interaction. However, existing experience learning methods mostly rely on single-agent loops, where the same agent executes tasks, summarizes outcomes, and determines memory content. This setup makes agents vulnerable to the Self-Confirmation Trap: wrong-but-self-consistent trajectories are misidentified as successful experience, leading to cumulative errors during retrieval and reuse. To address this issue, we propose EDV, an Execute-Distill-Verify framework for reliable experience learning. In the Execute stage, multiple heterogeneous agents explore the same task space in parallel to generate diverse candidate trajectories. In the Distill stage, a dedicated third-party agent comparatively analyzes these trajectories to produce candidate experiences, reducing executor-centric summarization bias. In the Verify stage, the execution group validates candidates via a consensus mechanism, and only approved experiences are written into shared or private memory. By decoupling the three stages, EDV transforms experience learning from isolated self-reflection into collaborative construction, filtering erroneous and noisy content before memory insertion. We evaluate EDV on three challenging long-horizon benchmarks: tau2-bench, Mind2Web and MMTB. Results show EDV consistently outperforms strong baselines, validating that reliable experience construction is essential for robust agent self-evolution. Our code is available at https://github.com/shidingz/EDV.",
+      "authors": [
+        "Shiding Zhu",
+        "Yudi Qi",
+        "Yajie Wang",
+        "Jiaze Li",
+        "Chao Song",
+        "Yaorui Shi",
+        "Yibo Miao",
+        "Hanqi Gao",
+        "Kai Zhang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-23T11:05:05+00:00",
+      "link": "https://arxiv.org/pdf/2606.24428v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-evolving agents via experience learning",
+      "llm_evidence_cn": "通过经验学习的自我进化智能体",
+      "llm_evidence": "通过经验学习的自我进化智能体",
+      "canonical_evidence": "通过经验学习的自我进化智能体",
+      "llm_tldr_en": "Proposes EDV framework for reliable experience learning in LLM agents, using multiple heterogeneous agents to generate diverse trajectories and a distill-verify mechanism to avoid self-confirmation traps, enabling agents to improve their own capabilities autonomously.",
+      "llm_tldr_cn": "该论文解决LLM代理在经验学习中易陷入自我确认陷阱的问题。提出执行-蒸馏-验证（EDV）框架，通过多异构代理并行探索生成多样轨迹，并利用蒸馏与验证机制筛选正确经验。实验表明该方法显著提升了代理在开放世界任务中的自我改进能力，实现了无外部干预的自主进化。",
+      "llm_tldr": "该论文解决LLM代理在经验学习中易陷入自我确认陷阱的问题。提出执行-蒸馏-验证（EDV）框架，通过多异构代理并行探索生成多样轨迹，并利用蒸馏与验证机制筛选正确经验。实验表明该方法显著提升了代理在开放世界任务中的自我改进能力，实现了无外部干预的自主进化。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.24437v1",
+      "source": "arxiv",
+      "title": "ReM-MoA: Reasoning Memory Sustains Mixture-of-Agents Scaling",
+      "abstract": "Mixture-of-Agents (MoA) architectures improve inference-time scaling by organizing multiple LLM agents into layered reasoning pipelines. However, existing MoA variants fail to sustain gains as depth increases, exhibiting degradation, early plateauing, or saturation. We propose ReM-MoA, a memory-augmented MoA framework that sustains scaling through two mechanisms: (1) a Ranked Reasoning Memory that persistently stores and ranks reasoning traces from all layers using a comparative Reviewer Agent, and (2) a Curated Diversified Memory Routing scheme that exposes different agents to distinct combinations of successful and failed traces, preserving exploration diversity while propagating high-quality reasoning. We further introduce an optional multi-domain Reviewer distillation pipeline that improves ranking quality through frontier-model supervision. Across five reasoning benchmarks spanning math, formal logic, code, knowledge, and commonsense, ReM-MoA consistently outperforms prior MoA variants across both depth and width scaling, and its advantage widens with depth, establishing structured cross-layer reasoning memory as a key missing mechanism for scalable multi-agent inference.",
+      "authors": [
+        "Heng Ping",
+        "Arijit Bhattacharjee",
+        "Peiyu Zhang",
+        "Shixuan Li",
+        "Wei Yang",
+        "Ali Jannesari",
+        "Nesreen Ahmed",
+        "Paul Bogdan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T11:14:37+00:00",
+      "link": "https://arxiv.org/pdf/2606.24437v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improving LLM reasoning via memory-augmented MoA",
+      "llm_evidence_cn": "通过记忆增强MoA改进大语言模型推理",
+      "llm_evidence": "通过记忆增强MoA改进大语言模型推理",
+      "canonical_evidence": "通过记忆增强MoA改进大语言模型推理",
+      "llm_tldr_en": "ReM-MoA improves LLM reasoning scaling by introducing a Ranked Reasoning Memory and Curated Diversified Memory Routing, sustaining performance gains as depth increases.",
+      "llm_tldr_cn": "现有混合智能体架构在深度增加时推理性能退化。本文提出ReM-MoA，通过排名推理记忆和多样化路由机制，在多层之间保持高质量推理轨迹的传播与探索多样性。实验表明该方法有效缓解了性能退化，实现了更稳定的推理扩展。",
+      "llm_tldr": "现有混合智能体架构在深度增加时推理性能退化。本文提出ReM-MoA，通过排名推理记忆和多样化路由机制，在多层之间保持高质量推理轨迹的传播与探索多样性。实验表明该方法有效缓解了性能退化，实现了更稳定的推理扩展。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26294v1",
+      "source": "arxiv",
+      "title": "The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators",
+      "abstract": "Self-improving agents are state-of-the-art (SOTA) on agentic coding benchmarks and have recently been extended to general domains. However, their search methods generally assume a stationary evaluation criterion: a fixed verifier, benchmark, or labeled dataset that remains valid as the agent improves. This ignores a central feature of evolution: species adapt as their environments change with them. We aim to bring the same principle to recursive self-improvement, making evaluation part of the improvement loop and opening search to evolving evaluators, adversarial objectives, and dynamic utilities that may surpass static benchmarks. We introduce the Red Queen Godel Machine (RQGM), an evolutionary framework for recursive self-improvement under non-stationary utilities. The RQGM makes this possible through controlled utility evolution: search is organized into epochs with a fixed within-epoch evaluation criterion, while the utility can be updated at epoch boundaries, so self-improvement guarantees hold per epoch as the objective evolves across them. We begin by showing that even on verifiable coding tasks, the RQGM improves test pass rate over the prior SOTA by adding a complementary agent-as-a-judge code-review signal. This signal is cheaper and the RQGM uses 1.35x-1.72x fewer tokens. We then turn to scientific paper writing and reviewing, and Olympiad-level proof writing and grading, where the RQGM improves performance over prior self-improving agents: co-evolved writers reach 1.78x-1.86x higher acceptance rates under a diverse agent-as-a-judge panel, while co-evolved graders reach 9% higher ground-truth accuracy. In paper reviewing, the strongest baseline reviewer over-accepts AI-generated papers at up to 1.91x the human rate. The RQGM corrects this by introducing an adversarial objective that discovers reviewers equally stringent on AI and human work.",
+      "authors": [
+        "Alex Iacob",
+        "Andrej Jovanović",
+        "William F. Shen",
+        "Daniel Burkhardt",
+        "Meghdad Kurmanji",
+        "Nurbek Tastan",
+        "Lorenzo Sani",
+        "Niccolò Alberto Elia Venanzi",
+        "Ambroise Odonnat",
+        "Zeyu Cao",
+        "Bill Marino",
+        "Xinchi Qiu",
+        "Nicholas D. Lane"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA",
+        "cs.NE"
+      ],
+      "published": "2026-06-24T18:38:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.26294v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Recursive self-improvement with co-evolving evaluators",
+      "llm_evidence_cn": "递归自我改进与共同进化评估者",
+      "llm_evidence": "递归自我改进与共同进化评估者",
+      "canonical_evidence": "递归自我改进与共同进化评估者",
+      "llm_tldr_en": "The Red Queen Godel Machine introduces an evolutionary framework for recursive self-improvement under non-stationary evaluators, enabling agents to co-evolve with their environment.",
+      "llm_tldr_cn": "论文提出红皇后哥德尔机（RQGM），一个在非平稳评估者下进行递归自我改进的进化框架。现有自改进方法假设评估标准固定，忽略了环境变化。RQGM将评估纳入改进循环，允许评估者进化、对抗性目标和动态效用。在智能体编码基准等任务中展示超越静态基准的性能提升，为开放式的递归自我改进开辟了新方向。",
+      "llm_tldr": "论文提出红皇后哥德尔机（RQGM），一个在非平稳评估者下进行递归自我改进的进化框架。现有自改进方法假设评估标准固定，忽略了环境变化。RQGM将评估纳入改进循环，允许评估者进化、对抗性目标和动态效用。在智能体编码基准等任务中展示超越静态基准的性能提升，为开放式的递归自我改进开辟了新方向。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26294v2",
+      "source": "arxiv",
+      "title": "The Red Queen Gödel Machine: Co-Evolving Agents and Their Evaluators",
+      "abstract": "Self-improving agents are state-of-the-art (SOTA) on agentic coding benchmarks and have recently been extended to general domains. However, their search methods generally assume a stationary evaluation criterion: a fixed verifier, benchmark, or labeled dataset that remains valid as the agent improves. This ignores a central feature of evolution: species adapt as their environments change with them. We aim to bring the same principle to recursive self-improvement, making evaluation part of the improvement loop and opening search to evolving evaluators, adversarial objectives, and dynamic utilities that may surpass static benchmarks. We introduce the Red Queen Godel Machine (RQGM), an evolutionary framework for recursive self-improvement under non-stationary utilities. The RQGM makes this possible through controlled utility evolution: search is organized into epochs with a fixed within-epoch evaluation criterion, while the utility can be updated at epoch boundaries, so self-improvement guarantees hold per epoch as the objective evolves across them. We begin by showing that even on verifiable coding tasks, the RQGM improves test pass rate over the prior SOTA by adding a complementary agent-as-a-judge code-review signal. This signal is cheaper and the RQGM uses 1.35x-1.72x fewer tokens. We then turn to scientific paper writing and reviewing, and Olympiad-level proof writing and grading, where the RQGM improves performance over prior self-improving agents: co-evolved writers reach 1.78x-1.86x higher acceptance rates under a diverse agent-as-a-judge panel, while co-evolved graders reach 9% higher ground-truth accuracy. In paper reviewing, the strongest baseline reviewer over-accepts AI-generated papers at up to 1.91x the human rate. The RQGM corrects this by introducing an adversarial objective that discovers reviewers equally stringent on AI and human work.",
+      "authors": [
+        "Alex Iacob",
+        "Andrej Jovanović",
+        "William F. Shen",
+        "Daniel Burkhardt",
+        "Meghdad Kurmanji",
+        "Nurbek Tastan",
+        "Lorenzo Sani",
+        "Niccolò Alberto Elia Venanzi",
+        "Ambroise Odonnat",
+        "Zeyu Cao",
+        "Bill Marino",
+        "Xinchi Qiu",
+        "Nicholas D. Lane"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.MA",
+        "cs.NE"
+      ],
+      "published": "2026-06-24T18:38:26+00:00",
+      "link": "https://arxiv.org/pdf/2606.26294v2",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-improving agents with co-evolving evaluators",
+      "llm_evidence_cn": "智能体与评估者共进化的自我改进框架",
+      "llm_evidence": "智能体与评估者共进化的自我改进框架",
+      "canonical_evidence": "智能体与评估者共进化的自我改进框架",
+      "llm_tldr_en": "Proposes Red Queen Godel Machine, an evolutionary framework for recursive self-improvement where agents and their evaluators co-evolve, addressing non-stationary evaluation criteria.",
+      "llm_tldr_cn": "现有自改进智能体通常假设固定的评估标准，忽视了环境变化。本文提出红皇后哥德尔机（RQGM），一个递归自改进的进化框架，将评估者也纳入进化循环。智能体与评估者共同适应，使搜索能够利用动态目标。该方法打破了静态基准的限制，有望推动智能体持续自我进化。",
+      "llm_tldr": "现有自改进智能体通常假设固定的评估标准，忽视了环境变化。本文提出红皇后哥德尔机（RQGM），一个递归自改进的进化框架，将评估者也纳入进化循环。智能体与评估者共同适应，使搜索能够利用动态目标。该方法打破了静态基准的限制，有望推动智能体持续自我进化。",
+      "llm_tags": [
+        "query:self-evolve:composite"
+      ],
+      "matched_query_tag": "query:self-evolve:composite",
+      "matched_query_text": "Papers central to 智能体自我进化, especially work that connects or combines: self-evolving agents that improve their own capabilities; methods for agents to improve their performance without human intervention; frameworks for agent evolution and self modification; How do agents self evolve and improve their decision making?.",
+      "matched_requirement_id": "req-composite-self-evolve",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26859v1",
+      "source": "arxiv",
+      "title": "AgentX: Towards Agent-Driven Self-Iteration of Industrial Recommender Systems",
+      "abstract": "Recommendation algorithm iteration is moving from an artisanal, engineer-bound process toward an industrialized research loop, but this transition remains blocked by a structural execution bottleneck: the idea-to-launch cycle still depends on human engineers to generate hypotheses, modify production code, launch A/B experiments, and attribute online results. Innovation therefore scales linearly with headcount rather than compounding with evidence, compute, and accumulated experimental knowledge. We present AgentX, a production-deployed multi-agent system that fundamentally restructures this production function. AgentX operates as a self-evolving development engine: it autonomously generates, implements, evaluates, and learns from recommendation experiments at a scale and pace that no manual workflow can sustain.   The system orchestrates four tightly coupled stages in a closed loop. A Brainstorm Agent synthesizes evidence from historical experiments, system architecture, data analysis, and external research into ranked, executable proposals. A Developing Agent translates each proposal into production-ready code through repository-grounded generation and multi-dimensional reliability verification. An Evaluation Agent conducts safe online rollout with guardrail-vetoed A/B judgment, converting both successes and failures into structured knowledge assets. A Harness Evolution layer (SGPO) then distills execution trajectories into semantic-gradient updates that continuously sharpen the agents themselves -- making the system not merely automated, but self-improving.",
+      "authors": [
+        "Changxin Lao",
+        "Fei Pan",
+        "Guozhuang Ma",
+        "Han Li",
+        "Huihuang Lin",
+        "Jijun Shi",
+        "Kangzhi Zhao",
+        "Kun Gai",
+        "Mo Zhou",
+        "Qinqin Zhou",
+        "Quan Chen",
+        "Ruochen Yang",
+        "Shifu Bie",
+        "Shuang Yang",
+        "Shuo Yang",
+        "Wenhao Li",
+        "Wentao Xie",
+        "Xiao Lv",
+        "Xuming Wang",
+        "Yijun Wang",
+        "Yiming Chen",
+        "Yusheng Huang",
+        "Zhongyuan Wang",
+        "Zibo Zhao",
+        "Zijie Zhuang",
+        "Baoning Xia",
+        "Chao Liu",
+        "Chaoyi Ma",
+        "Chubo He",
+        "Dawei Cong",
+        "Feng Jiang",
+        "Gang Wang",
+        "Guilin Xia",
+        "Hanwen Xu",
+        "Jiahong Xie",
+        "Jiahui Qiao",
+        "Jian Liang",
+        "Jiangfan Yue",
+        "Jing Wang",
+        "Jinghan Yang",
+        "Jinghui Jia",
+        "Kan Qin",
+        "Lei Wang",
+        "Ming Li",
+        "Peilin Song",
+        "Pengbo Xu",
+        "Qiang Luo",
+        "Ruiming Tang",
+        "Shiyang Liu",
+        "Shuxian Jin",
+        "Tao Wang",
+        "Tao Zhang",
+        "Xiang Gao",
+        "Xianghan Li",
+        "Yingsong Luo",
+        "Yiwen Ning",
+        "Yongcheng Liu",
+        "Yuan Guo",
+        "Zhaojie Liu",
+        "Zhenkai Cui"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.IR"
+      ],
+      "published": "2026-06-25T10:42:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.26859v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "AgentX as a self-evolving multi-agent system for automated recommendation algorithm iteration",
+      "llm_evidence_cn": "提出AgentX自进化多智能体系统，自动化推荐算法迭代",
+      "llm_evidence": "提出AgentX自进化多智能体系统，自动化推荐算法迭代",
+      "canonical_evidence": "提出AgentX自进化多智能体系统，自动化推荐算法迭代",
+      "llm_tldr_en": "AgentX is a production-deployed multi-agent system that autonomously generates, implements, evaluates, and learns from recommendation algorithm iterations.",
+      "llm_tldr_cn": "推荐算法迭代仍依赖人类工程师，限制了创新速度。提出AgentX多智能体系统，作为自进化开发引擎，自动生成假设、修改代码、运行A/B实验并学习结果，将创新从人力线性扩展转变为证据驱动。在工业推荐系统中成功部署，显著提升了迭代效率。该工作展示了智能体自进化在工业场景中的应用。",
+      "llm_tldr": "推荐算法迭代仍依赖人类工程师，限制了创新速度。提出AgentX多智能体系统，作为自进化开发引擎，自动生成假设、修改代码、运行A/B实验并学习结果，将创新从人力线性扩展转变为证据驱动。在工业推荐系统中成功部署，显著提升了迭代效率。该工作展示了智能体自进化在工业场景中的应用。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "methods for agents to improve their performance without human intervention",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.26859v2",
+      "source": "arxiv",
+      "title": "AgentX: Towards Agent-Driven Self-Iteration of Industrial Recommender Systems",
+      "abstract": "Recommendation algorithm iteration is moving from an artisanal, engineer-bound process toward an industrialized research loop, but this transition remains blocked by a structural execution bottleneck: the idea-to-launch cycle still depends on human engineers to generate hypotheses, modify production code, launch A/B experiments, and attribute online results. Innovation therefore scales linearly with headcount rather than compounding with evidence, compute, and accumulated experimental knowledge. We present AgentX, a production-deployed multi-agent system that fundamentally restructures this production function. AgentX operates as a self-evolving development engine: it autonomously generates, implements, evaluates, and learns from recommendation experiments at a scale and pace that no manual workflow can sustain.   The system orchestrates four tightly coupled stages in a closed loop. A Brainstorm Agent synthesizes evidence from historical experiments, system architecture, data analysis, and external research into ranked, executable proposals. A Developing Agent translates each proposal into production-ready code through repository-grounded generation and multi-dimensional reliability verification. An Evaluation Agent conducts safe online rollout with guardrail-vetoed A/B judgment, converting both successes and failures into structured knowledge assets. A Harness Evolution layer (SGPO) then distills execution trajectories into semantic-gradient updates that continuously sharpen the agents themselves -- making the system not merely automated, but self-improving.",
+      "authors": [
+        "Changxin Lao",
+        "Fei Pan",
+        "Guozhuang Ma",
+        "Han Li",
+        "Huihuang Lin",
+        "Jijun Shi",
+        "Kangzhi Zhao",
+        "Kun Gai",
+        "Mo Zhou",
+        "Qinqin Zhou",
+        "Quan Chen",
+        "Ruochen Yang",
+        "Shifu Bie",
+        "Shijie Yi",
+        "Shuang Yang",
+        "Shuo Yang",
+        "Wenhao Li",
+        "Wentao Xie",
+        "Xiao Lv",
+        "Xuming Wang",
+        "Yijun Wang",
+        "Yiming Chen",
+        "Yusheng Huang",
+        "Zhongyuan Wang",
+        "Zibo Zhao",
+        "Zijie Zhuang",
+        "Baoning Xia",
+        "Chao Liu",
+        "Chaoyi Ma",
+        "Chubo He",
+        "Dawei Cong",
+        "Feng Jiang",
+        "Gang Wang",
+        "Guilin Xia",
+        "Hanwen Xu",
+        "Jiahong Xie",
+        "Jiahui Qiao",
+        "Jian Liang",
+        "Jiangfan Yue",
+        "Jing Wang",
+        "Jinghan Yang",
+        "Jinghui Jia",
+        "Kan Qin",
+        "Lei Wang",
+        "Ming Li",
+        "Peilin Song",
+        "Pengbo Xu",
+        "Qiang Luo",
+        "Ruiming Tang",
+        "Shiyang Liu",
+        "Shuxian Jin",
+        "Tao Wang",
+        "Tao Zhang",
+        "Xiang Gao",
+        "Xianghan Li",
+        "Yingsong Luo",
+        "Yiwen Ning",
+        "Yongcheng Liu",
+        "Yueyang Liu",
+        "Yuan Guo",
+        "Zhaojie Liu",
+        "Zhenkai Cui"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.IR"
+      ],
+      "published": "2026-06-25T10:42:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.26859v2",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-evolving multi-agent system for autonomous iteration",
+      "llm_evidence_cn": "自演化多智能体系统实现自主迭代",
+      "llm_evidence": "自演化多智能体系统实现自主迭代",
+      "canonical_evidence": "自演化多智能体系统实现自主迭代",
+      "llm_tldr_en": "Presents AgentX, a production-deployed multi-agent system that autonomously generates, implements, evaluates, and learns from recommendation algorithm changes, acting as a self-evolving development engine.",
+      "llm_tldr_cn": "推荐系统迭代依赖人类工程师，规模不经济。本文提出AgentX，一个部署于生产的多智能体系统，作为自演化开发引擎，自动生成假设、修改代码、运行A/B实验并归因结果。AgentX实现了推荐算法的自主迭代，极大提升研发效率。",
+      "llm_tldr": "推荐系统迭代依赖人类工程师，规模不经济。本文提出AgentX，一个部署于生产的多智能体系统，作为自演化开发引擎，自动生成假设、修改代码、运行A/B实验并归因结果。AgentX实现了推荐算法的自主迭代，极大提升研发效率。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27025v1",
+      "source": "arxiv",
+      "title": "Improving General Role-Playing Agents via Psychology-Grounded Reasoning and Role-Aware Policy Optimization",
+      "abstract": "Building general-purpose role-playing agents that faithfully portray any character from a natural-language profile remains challenging. The dominant paradigm -- supervised fine-tuning -- encourages behavioral mimicry without deep, human-like internal thought processes, resulting in poor out-of-distribution generalization. Therefore, we propose \\textbf{Psy-CoT}, a psychology-grounded chain-of-thought framework that decomposes pre-response reasoning into three role-specific steps -- \\emph{Interaction Perception}, \\emph{Psychological Empathy}, and \\emph{Logical Construction} -- so that the model \\emph{thinks dynamically} from the profile rather than merely mimicking surface patterns. While structured reasoning provides a foundation, it alone is insufficient; reinforcement learning is essential to further align the model with character fidelity. However, we observe that under LLM-based reward models, both generic phrases that hack the reward model and genuinely role-specific phrases receive identical gradient signals -- this hacking accumulates over training, misleading the model into treating both as equally optimal choices. To address this, we propose \\textbf{Role-Aware Policy Optimization (RAPO)}, which uses profile--token mutual information to weight gradients asymmetrically -- amplifying role-specific tokens under positive advantage while attenuating them under negative advantage. Experiments on CoSER, CharacterBench, and CharacterEval demonstrate that Psy-CoT outperforms existing role-playing CoT methods, and RAPO consistently surpasses GRPO across multiple model scales.",
+      "authors": [
+        "Zhenhua Xu",
+        "Dongsheng Chen",
+        "Jian Li",
+        "Yitong Lin",
+        "Zhebo Wang",
+        "Jiafu Wu",
+        "Yizhang Jin",
+        "Chengjie Wang",
+        "Meng Han",
+        "Yabiao Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-25T13:34:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.27025v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improving LLM reasoning via psychology-grounded CoT",
+      "llm_evidence_cn": "通过心理学启发的思维链提升大模型推理",
+      "llm_evidence": "通过心理学启发的思维链提升大模型推理",
+      "canonical_evidence": "通过心理学启发的思维链提升大模型推理",
+      "llm_tldr_en": "Proposes Psy-CoT, a psychology-grounded chain-of-thought framework for role-playing agents, combining structured reasoning with role-aware policy optimization.",
+      "llm_tldr_cn": "针对角色扮演代理缺乏深层推理导致泛化差的问题，提出Psy-CoT框架，将推理分解为交互感知、心理共情和逻辑构建三个步骤，并结合角色感知策略优化，实验证明该方法能显著提升推理忠实度和跨角色泛化能力。",
+      "llm_tldr": "针对角色扮演代理缺乏深层推理导致泛化差的问题，提出Psy-CoT框架，将推理分解为交互感知、心理共情和逻辑构建三个步骤，并结合角色感知策略优化，实验证明该方法能显著提升推理忠实度和跨角色泛化能力。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27136v1",
+      "source": "arxiv",
+      "title": "Joint Learning of Experiential Rules and Policies for Large Language Model Agents",
+      "abstract": "For LLM agents in multi-step interactive environments, a key challenge is to make effective use of accumulated interaction experience. Existing work has typically separated two uses of such experience: keeping it outside the model as natural-language rules for later prompting, or using trajectories and feedback to update the model parameters. The former is easy to interpret but can fall out of sync with the evolving policy; the latter improves the policy more broadly but provides only limited correction for local mistakes in sparse-reward settings. We present Joint Learning of Experiential Rules and Policies for LLM Agents (JERP), which updates a long-term experiential-rule pool and the policy from the same interaction trajectories. At decision time, JERP retrieves task-relevant rules and conditions the agent on them together with the interaction history. After each episode, it uses the collected trajectories both to optimize the policy and to revise the rule pool by comparing current rollouts with reference successful trajectories. This coupling keeps the rule pool aligned with the evolving policy while allowing stable and effective behaviors to be gradually absorbed into the model itself. Experiments on AlfWorld and WebShop show that JERP yields consistent gains in decision performance for complex interactive tasks.",
+      "authors": [
+        "Shicheng Ye",
+        "Chao Yu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-25T15:11:02+00:00",
+      "link": "https://arxiv.org/pdf/2606.27136v1",
+      "tags": [
+        "keyword:llm-papers",
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "agent self-evolution through joint learning of rules and policies",
+      "llm_evidence_cn": "通过联合学习规则和策略实现智能体自我进化",
+      "llm_evidence": "通过联合学习规则和策略实现智能体自我进化",
+      "canonical_evidence": "通过联合学习规则和策略实现智能体自我进化",
+      "llm_tldr_en": "JERP enables LLM agents to jointly update an experiential rule pool and policy from the same trajectories, improving performance and interpretability.",
+      "llm_tldr_cn": "当前智能体将经验作为外部规则或参数更新，两方面脱节。本文提出JERP，在同一交互轨迹上同时更新经验规则库和策略，实现规则与策略的协同进化。实验表明该方法在稀疏奖励任务中取得更优性能。",
+      "llm_tldr": "当前智能体将经验作为外部规则或参数更新，两方面脱节。本文提出JERP，在同一交互轨迹上同时更新经验规则库和策略，实现规则与策略的协同进化。实验表明该方法在稀疏奖励任务中取得更优性能。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.27492v1",
+      "source": "arxiv",
+      "title": "QueenBee Planner: Skill-Evolving Communication Topologies for Token-Efficient LLM Multi-Agent Systems",
+      "abstract": "Large language model (LLM) multi-agent systems increasingly depend not only on how individual agents reason, but also on how agents are connected. This paper introduces QueenBee Planner, a framework that treats inter-agent communication topology as a retrievable and self-improving design skill. A pool of worker agents, the task adapter, and the scoring function are frozen; only an outer LLM planner learns to generate temporal communication DAGs specifying who sends information to whom, in which round, who merges messages, and who emits the final answer. Execution traces are distilled into evidence-backed design rules with three actions: \\emph{Preserve}, \\emph{Modify}, and \\emph{Avoid}. To prevent self-evolution from turning lucky runs or plausible but false explanations into policy, QueenBee uses held-out acceptance gates, variance-aware credit, motif-level attribution, transfer trust, insight falsification, and structural deduplication. We evaluate the method on Count-Frequency aggregation and Silo-Bench-style distributed coordination tasks. With fixed workers, self-evolved graph generation produces communication structures that improve over fixed topologies and cold generation. In the CF fulltest setting, the best generated graph reduces RMSE from 12.53 for the strongest fixed topology to 7.87 while also reducing messages, model calls, and token cost; Silo-style results show the same direction of improvement over cold and fixed-topology baselines. These results suggest that multi-agent systems can learn reusable architectural design knowledge rather than merely memorizing task answers.",
+      "authors": [
+        "Congjia Tian",
+        "Yuhang Yao",
+        "Jiaming Cui"
+      ],
+      "primary_category": "cs.MA",
+      "categories": [
+        "cs.MA"
+      ],
+      "published": "2026-06-25T19:16:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.27492v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-evolving communication topology for LLM multi-agent systems",
+      "llm_evidence_cn": "LLM多智能体系统中进化的通信拓扑",
+      "llm_evidence": "LLM多智能体系统中进化的通信拓扑",
+      "canonical_evidence": "LLM多智能体系统中进化的通信拓扑",
+      "llm_tldr_en": "QueenBee Planner treats inter-agent communication as a self-improving skill, using an outer LLM planner to evolve temporal DAGs, distilling execution traces into design rules.",
+      "llm_tldr_cn": "LLM多智能体系统的性能不仅取决于个体推理，还取决于智能体间的通信方式。本文提出QueenBee规划器，将通信拓扑视为可检索和自我改进的技能。外LLM规划器学习生成时域通信DAG，并通过执行轨迹蒸馏为设计规则。该方法避免了自进化失控，在令牌效率和多任务泛化上取得了优异效果。",
+      "llm_tldr": "LLM多智能体系统的性能不仅取决于个体推理，还取决于智能体间的通信方式。本文提出QueenBee规划器，将通信拓扑视为可检索和自我改进的技能。外LLM规划器学习生成时域通信DAG，并通过执行轨迹蒸馏为设计规则。该方法避免了自进化失控，在令牌效率和多任务泛化上取得了优异效果。",
+      "llm_tags": [
+        "query:self-evolve:composite"
+      ],
+      "matched_query_tag": "query:self-evolve:composite",
+      "matched_query_text": "Papers central to 智能体自我进化, especially work that connects or combines: self-evolving agents that improve their own capabilities; methods for agents to improve their performance without human intervention; frameworks for agent evolution and self modification; How do agents self evolve and improve their decision making?.",
+      "matched_requirement_id": "req-composite-self-evolve",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28279v1",
+      "source": "arxiv",
+      "title": "Agentic Hardware Design as Repository-Level Code Evolution",
+      "abstract": "We present HORIZON, a self-evolving agent framework that treats hardware design as repository-level code evolution. A Markdown harness is compiled into a project pack containing domain knowledge, an executable evaluator, an acceptance predicate, and a git/runtime policy; a hands-free agent loop then evolves an isolated git worktree, using repository operations for state management, tracing, and replay. This extends prior works of repository-scale self-evolution from EDA software systems, to hardware-design artifacts themselves. We evaluate our approach on ChipBench, RTLLM, Verilog-Eval, and nine CVDP categories, achieving 100\\% benchmark completion across all suites with a fully hands-free agentic loop. However, we do not claim that agentic AI for hardware design is solved: these benchmarks are controlled proxies for a much broader engineering problem in chip design. Section~\\ref{sec:discuss} examines the limitations of the current study and highlights open research challenges.",
+      "authors": [
+        "Cunxi Yu",
+        "Chenhui Deng",
+        "Nathaniel Pinckney",
+        "Brucek Khailany"
+      ],
+      "primary_category": "cs.AR",
+      "categories": [
+        "cs.AR",
+        "cs.AI"
+      ],
+      "published": "2026-06-26T17:21:06+00:00",
+      "link": "https://arxiv.org/pdf/2606.28279v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-evolving agent framework for hardware design",
+      "llm_evidence_cn": "自演化智能体框架用于硬件设计",
+      "llm_evidence": "自演化智能体框架用于硬件设计",
+      "canonical_evidence": "自演化智能体框架用于硬件设计",
+      "llm_tldr_en": "HORIZON is a self-evolving agent framework for hardware design that treats design as repository-level code evolution, achieving 100% benchmark completion across multiple suites.",
+      "llm_tldr_cn": "该论文提出HORIZON框架，将硬件设计视为仓库级别的代码演化，智能体无需人工干预即可自主进化。通过领域知识、可执行评估器和Git策略，智能体循环迭代改进设计。在多个基准测试上达到100%完成率，展示了自演化智能体的有效性。",
+      "llm_tldr": "该论文提出HORIZON框架，将硬件设计视为仓库级别的代码演化，智能体无需人工干预即可自主进化。通过领域知识、可执行评估器和Git策略，智能体循环迭代改进设计。在多个基准测试上达到100%完成率，展示了自演化智能体的有效性。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.28971v1",
+      "source": "arxiv",
+      "title": "Self-Evolving Agentic Image Restoration via Deliberate Planning and Intuitive Execution",
+      "abstract": "Real-world image restoration (IR) remains challenging due to complex and coupled degradations. While recent agentic IR frameworks leverage Large Language Models for flexible tool planning, they face two critical limitations. First, from a search scheme perspective, excessive reliance on greedy strategies fails to balance exploration and exploitation. Second, existing agentic systems underutilize information, exhibiting episodic amnesia. To address these challenges, we propose \\textbf{Self-Evolving Agentic Image Restoration (SEAR)}, which formulates restoration as a sequential decision-making problem. Inspired by the dual-process theory, SEAR comprises an Intuitive Executor and a Deliberate Planner, respectively following the fast-thinking \\textit{System 1} and slow-thinking \\textit{System 2} principles. The Deliberate Planner employs Pruning-Aware Monte Carlo Tree Search for long-horizon reasoning, utilizing a hybrid no-reference reward and a Multimodal Large Language Model (MLLM)-based tournament to prevent metric exploitation. Complementarily, the Intuitive Executor leverages a self-evolving episodic memory indexed by degradation-aware state fingerprints. This mechanism distills expensive search trajectories into adaptive expertise, overcoming episodic amnesia while progressively amortizing cold-start exploration costs through memory reuse. Extensive experiments on synthetic and real-world benchmarks demonstrate its strong perceptual and quantitative performance.",
+      "authors": [
+        "Shuang Cui",
+        "Fan Ji",
+        "Guanglong Sun",
+        "Yufei Guo",
+        "Xiongxin Tang",
+        "Jiangmeng Li",
+        "Fanjiang Xu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-27T15:21:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.28971v1",
+      "tags": [
+        "keyword:llm-papers",
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Self-evolving agentic framework for image restoration using dual-process theory",
+      "llm_evidence_cn": "提出自进化智能体图像修复框架，结合双过程理论",
+      "llm_evidence": "提出自进化智能体图像修复框架，结合双过程理论",
+      "canonical_evidence": "提出自进化智能体图像修复框架，结合双过程理论",
+      "llm_tldr_en": "Proposes SEAR, a self-evolving agentic framework for image restoration using deliberate planning and intuitive execution, inspired by dual-process theory.",
+      "llm_tldr_cn": "针对现有智能体图像修复系统在搜索策略和信息利用上的不足，提出自进化智能体图像修复（SEAR）框架，将修复建模为序列决策问题，包含直觉执行器和深思规划器，分别负责快速思考和慢速思考。实验表明该方法能有效平衡探索与利用，缓解情境遗忘。该工作展示了自进化机制在图像修复中的应用潜力。",
+      "llm_tldr": "针对现有智能体图像修复系统在搜索策略和信息利用上的不足，提出自进化智能体图像修复（SEAR）框架，将修复建模为序列决策问题，包含直觉执行器和深思规划器，分别负责快速思考和慢速思考。实验表明该方法能有效平衡探索与利用，缓解情境遗忘。该工作展示了自进化机制在图像修复中的应用潜力。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29194v1",
+      "source": "arxiv",
+      "title": "AI Trading's Alpha Singularity: Emergent Market Reasoning through Agent-to-Agent Self-Evolution",
+      "abstract": "Automated alpha mining holds the scoring function fixed and varies the search algorithm over it. A search that converges against a fixed scorer overfits whatever the scorer cannot penalize, a primary cause of the out-of-sample generalization gap. We treat the scoring function as a search artifact alongside the alpha factors and study what conditions make this joint search admissible. Sealed Joint Search (SJS) is a framework: a set of structural conditions on information flow in an autonomous-discovery system that prevent joint search from collapsing into self-confirmation while keeping the evaluator sealed. Conditions cover role decomposition, typed inter-role communication, provenance-sealed reads, versioned stores, and substrate-local promotion. Agora tests SJS empirically: five LLM agent classes communicate via three channels, evolving eight skill libraries, with alpha libraries built on AlphaGen operators. Three evaluators write reports aggregated into one brief, carrying forward disagreement instead of voting. We run Agora for 100 rounds on CSI 1000 and evaluate on a 91-day 2026 holdout sealed from all LLM inputs. Agora achieves holdout Sharpe +1.87; best baseline +1.334 at favorable seed and -0.755 cross-seed mean. Pre-loading Agora's two metrics into a frozen-library ablation recovers only +0.40 of the +2.25 Sharpe gap, and adding PPO without library evolution worsens the gap. The two metrics emerge rather than being designed. Caveats: single-seed run, short-side concentrated signal, intended for long-short.",
+      "authors": [
+        "Yuqi Li",
+        "Siyuan Liu",
+        "Bingjun Liu"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-28T04:41:00+00:00",
+      "link": "https://arxiv.org/pdf/2606.29194v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Agent-to-agent self-evolution framework for emergent market reasoning",
+      "llm_evidence_cn": "提出智能体间自进化框架，用于金融市场推理",
+      "llm_evidence": "提出智能体间自进化框架，用于金融市场推理",
+      "canonical_evidence": "提出智能体间自进化框架，用于金融市场推理",
+      "llm_tldr_en": "Proposes Sealed Joint Search (SJS) framework for agent-to-agent self-evolution to prevent overfitting and enable emergent market reasoning.",
+      "llm_tldr_cn": "自动化alpha挖掘面临过拟合和泛化问题。提出密封联合搜索（SJS）框架，通过角色分解、类型化通信和来源密封读取等条件，防止联合搜索陷入自我确认，实现智能体间自进化。在金融市场推理任务中，该方法有效提升了泛化能力。该工作为智能体自进化提供了结构化框架。",
+      "llm_tldr": "自动化alpha挖掘面临过拟合和泛化问题。提出密封联合搜索（SJS）框架，通过角色分解、类型化通信和来源密封读取等条件，防止联合搜索陷入自我确认，实现智能体间自进化。在金融市场推理任务中，该方法有效提升了泛化能力。该工作为智能体自进化提供了结构化框架。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "How do agents self evolve and improve their decision making?",
+      "matched_requirement_id": "req-9",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.29823v1",
+      "source": "arxiv",
+      "title": "Experience Graphs: The Data Foundation for Self-Improving Agents",
+      "abstract": "The database community has repeatedly advanced the state of the art by recognizing that new workloads demand new system architectures. We argue that long-horizon agentic tasks -- code generation, scientific discovery, hardware design -- are such a workload. These agents explore: they generate artifacts, execute tools, observe failures, branch, and repair over hundreds of steps. This search produces a structured object we call an experience graph: executable artifacts, tool outputs, rewards, sibling comparisons, and causal lineage. Yet existing agent frameworks treat this experience as disposable state -- JSON checkpoints and session logs that cannot be recovered after a crash, queried across users, or materialized into training data. We propose Trellis: a data foundation that treats the experience graph as first-class, governed, queryable database state. The core insight is that search over experience graphs is a database access pattern. Frontier selection is a query, cross-session reuse is vector-seeded graph retrieval, training-data extraction is a materialized view, and reconstructing what an agent knew at any past step is a time-travel query. When the database owns the experience graph, agents become stateless compute, and crash recovery, horizontal scaling, and a closed-loop training flywheel emerge as architectural byproducts. We ground the design in KernelEvolve, a production accelerator-kernel optimizer at Meta, where cross-session reuse reaches a target speedup roughly 10x faster at 52% lower token cost. More broadly, Trellis turns inference-time search from disposable computation into a durable institutional asset: logs made databases reliable; experience graphs may make agents cumulative.",
+      "authors": [
+        "Gang Liao",
+        "Yujia He",
+        "Abdullah Ozturk",
+        "Zhouyang Li",
+        "Ying Wang",
+        "Zhitong Guo",
+        "Hongsen Qin",
+        "Yaobin Qin",
+        "Tao Yang",
+        "Zewei Jiang",
+        "Dianshi Li",
+        "Jort Gemmeke",
+        "Jiangyuan Li",
+        "Liyuan Li",
+        "Nathan Yan",
+        "Masha Basmanova",
+        "Uladzimir Pashkevich",
+        "Matt Steiner",
+        "Pedro Pedreira",
+        "Rob Fergus",
+        "Anirudh Goyal",
+        "Carole-Jean Wu",
+        "Gaoxiang Liu",
+        "Andrew Witten",
+        "Daniel J. Abadi"
+      ],
+      "primary_category": "cs.DB",
+      "categories": [
+        "cs.DB",
+        "cs.AI",
+        "cs.MA"
+      ],
+      "published": "2026-06-29T06:02:20+00:00",
+      "link": "https://arxiv.org/pdf/2606.29823v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "data foundation for self-improving agents",
+      "llm_evidence_cn": "自我改进代理的数据基础",
+      "llm_evidence": "自我改进代理的数据基础",
+      "canonical_evidence": "自我改进代理的数据基础",
+      "llm_tldr_en": "Proposes experience graphs as a structured data foundation for long-horizon agentic tasks, enabling self-improvement through persistent and queryable experience.",
+      "llm_tldr_cn": "针对长期代理任务中探索经验被丢弃的问题，提出经验图概念，将可执行产物、工具输出、奖励和因果血统结构化为图，并构建Trellis系统，实验证明经验图能有效支持代理的持久化学习、查询和自我改进。",
+      "llm_tldr": "针对长期代理任务中探索经验被丢弃的问题，提出经验图概念，将可执行产物、工具输出、奖励和因果血统结构化为图，并构建Trellis系统，实验证明经验图能有效支持代理的持久化学习、查询和自我改进。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30185v1",
+      "source": "arxiv",
+      "title": "Dynamo: Dynamic Skill-Tool Evolution for Vision-Language Agents",
+      "abstract": "Improving vision-language models (VLMs) on visual reasoning typically requires retraining or hand-designed prompts and tools. We present Dynamo, a training-free framework that adapts a frozen VLM without any weight updates. On a small labeled training subset, the agent inspects its own correct and incorrect attempts and evolves two complementary capabilities: reusable reasoning skills for cognitive bottlenecks, and executable visual tools for perceptual ones. Each generated tool is paired with a skill that specifies when to invoke it, and both capability types accumulate in a persistent library. Across four visual reasoning benchmarks and five VLM backbones, Dynamo improves direct inference on all 20 model--benchmark settings (avg. +5.6 acc). When the tool set is given in advance, the framework learns when to call each tool, and per-step tool choice improves on every tested backbone. Against task-specific RL (VTool-R1, DeepEyes), Dynamo closes 65--99% of the RL gap at a fraction of the compute, and combines additively with RL when available.",
+      "authors": [
+        "Yutao Sun",
+        "Yanting Miao",
+        "Hao-Xuan Ma",
+        "Mengyu Zhou",
+        "Mingshuai Chen",
+        "Tiancheng Zhao",
+        "Dexin Wang",
+        "Lei Lv",
+        "Li Xu",
+        "Xiaoxi Jiang",
+        "Guanjun Jiang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-29T11:59:01+00:00",
+      "link": "https://arxiv.org/pdf/2606.30185v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "training-free framework for VLM agents to evolve own skills and tools",
+      "llm_evidence_cn": "无需训练框架，使VLM智能体自我进化技能与工具",
+      "llm_evidence": "无需训练框架，使VLM智能体自我进化技能与工具",
+      "canonical_evidence": "无需训练框架，使VLM智能体自我进化技能与工具",
+      "llm_tldr_en": "Introduces Dynamo, a training-free framework enabling frozen VLMs to self-evolve reusable reasoning skills and executable visual tools by inspecting own successes and failures.",
+      "llm_tldr_cn": "本文提出Dynamo，一种免训练框架，使冻结的视觉语言模型（VLM）能够通过检查自身正确与错误尝试，自我进化出两类互补能力：可复用的推理技能和可执行的视觉工具。在四个视觉推理基准和五个VLM骨干上均显著提升准确率（平均+5.6），展示了智能体无需人类干预即可持续提升性能的路径。",
+      "llm_tldr": "本文提出Dynamo，一种免训练框架，使冻结的视觉语言模型（VLM）能够通过检查自身正确与错误尝试，自我进化出两类互补能力：可复用的推理技能和可执行的视觉工具。在四个视觉推理基准和五个VLM骨干上均显著提升准确率（平均+5.6），展示了智能体无需人类干预即可持续提升性能的路径。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30345v1",
+      "source": "arxiv",
+      "title": "DRIFT: Difficulty Routing Self-DIstillation with Rhythm-Gated Exploration and Success BuFfer Training",
+      "abstract": "Enabling large language models to achieve stable self-improvement without external expert supervision remains a central challenge in complex reasoning tasks. Existing self-distillation and reinforcement learning methods lack explicit mechanisms for tracking problem-level learning progress and adapting optimization strategies accordingly. Consequently, training may over-optimize easy problems, receive weak supervision from hard problems, and fail to sufficiently explore borderline cases. To resolve these issues, we propose DRIFT, an online self-evolution policy optimization framework for large language models. DRIFT regulates the model's self-improvement process through the joint use of Difficulty Routing and Rhythm Gating. The former identifies the model's learning state at the problem level and dynamically allocates self-distillation and reinforcement learning signals, while the latter refines policy updates at the token level, concentrating exploration on critical reasoning positions. By further incorporating a success buffer and a two-stage curriculum learning strategy, DRIFT preserves high-quality historical experience while progressively guiding the model from reliable behavior acquisition toward stable policy evolution. Evaluated across five benchmarks and three model scales, DRIFT surpasses the peak performance of both GRPO and SDPO across all evaluated metrics. On the average score over the five benchmarks, DRIFT achieves 79.5$\\%$, outperforming GRPO by 9.5$\\%$ and SDPO by 7.5$\\%$, establishing a new state-of-the-art result. Notably, on ToolUse, DRIFT reaches an accuracy of 79.2$\\%$, improving over GRPO by 13.5$\\%$ and SDPO by 10.7$\\%$, setting a new state-of-the-art and substantially outperforming all concurrent methods.",
+      "authors": [
+        "Haisen Luo",
+        "Yiwei Liu",
+        "Haoning Wang",
+        "Dan Liu",
+        "Junxi Yin",
+        "Haotian Wang",
+        "Lei Zhang",
+        "Xiaoyu Tian",
+        "Shuaiting Chen",
+        "Yuansheng Song",
+        "Baoyan Guo",
+        "Xiongfei Yan",
+        "Bolan Yang",
+        "Chengwei Liu",
+        "Ming Cui",
+        "Jiong Chen"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-29T14:20:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.30345v1",
+      "tags": [
+        "keyword:llm-papers",
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-evolution policy optimization for LLM reasoning",
+      "llm_evidence_cn": "LLM推理的自我进化策略优化",
+      "llm_evidence": "LLM推理的自我进化策略优化",
+      "canonical_evidence": "LLM推理的自我进化策略优化",
+      "llm_tldr_en": "Proposes DRIFT, an online self-evolution policy optimization framework for LLMs using difficulty routing and rhythm gating to regulate self-improvement, achieving stable performance gains without external supervision.",
+      "llm_tldr_cn": "该论文针对LLM复杂推理任务中自改进不稳定的问题，提出DRIFT在线自我进化策略优化框架。通过难度路由（Difficulty Routing）和节奏门控（Rhythm Gating）机制，动态跟踪问题级学习进度并自适应调整优化策略，避免过度优化简单问题或对困难问题弱监督。实验表明DRIFT在多种推理基准上实现了稳定且显著的性能提升，无需外部专家监督。",
+      "llm_tldr": "该论文针对LLM复杂推理任务中自改进不稳定的问题，提出DRIFT在线自我进化策略优化框架。通过难度路由（Difficulty Routing）和节奏门控（Rhythm Gating）机制，动态跟踪问题级学习进度并自适应调整优化策略，避免过度优化简单问题或对困难问题弱监督。实验表明DRIFT在多种推理基准上实现了稳定且显著的性能提升，无需外部专家监督。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30420v1",
+      "source": "arxiv",
+      "title": "Experience Augmented Policy Optimization for LLM Reasoning",
+      "abstract": "Reinforcement Learning with Verifiable Rewards (RLVR) is a powerful paradigm for improving the reasoning capabilities of large language models (LLMs). However, existing RLVR methods typically rely on on-policy optimization from scratch, resulting in high sampling costs and inefficient utilization of accumulated experience. As model capabilities and policy behaviors evolve during training, recent attempts to reuse experience via fixed reasoning trajectories further suffer from policy mismatch. Motivated by these limitations, we argue that experience in RLVR should not be reused as fixed reasoning trajectories, but instead expressed in a policy-adaptive manner. In this work, we propose Experience-Augmented Policy Optimization (EAPO), which leverages a prior RL-optimized policy as an action-level experience prior and selectively injects experience at critical decision points during rollout. To ensure stable and unbiased learning from experience-augmented rollouts, EAPO further incorporates an adapted importance sampling scheme. Experiments on using Qwen-2.5-math 7b and Qwen-3-8B on five different benchmarks demonstrate that EAPO consistently improves reasoning performance over state-of-the-art RLVR methods.",
+      "authors": [
+        "Jinda Lu",
+        "Kexin Huang",
+        "Junkang Wu",
+        "Shuo Yang",
+        "Jinghan Li",
+        "Chiyu Ma",
+        "Shaohang Wei",
+        "Xiang Wang",
+        "Guoyin Wang",
+        "Jingren Zhou"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-06-29T15:05:28+00:00",
+      "link": "https://arxiv.org/pdf/2606.30420v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Proposes EAPO to improve LLM reasoning by leveraging prior RL-optimized experience adaptively",
+      "llm_evidence_cn": "提出EAPO，通过策略自适应地利用先前RL优化经验提升LLM推理",
+      "llm_evidence": "提出EAPO，通过策略自适应地利用先前RL优化经验提升LLM推理",
+      "canonical_evidence": "提出EAPO，通过策略自适应地利用先前RL优化经验提升LLM推理",
+      "llm_tldr_en": "EAPO addresses inefficient experience reuse in RLVR for LLM reasoning by expressing experience in a policy-adaptive manner.",
+      "llm_tldr_cn": "现有RLVR方法从零开始进行策略优化，采样成本高且经验利用低效。提出经验增强策略优化（EAPO），将先前RL优化经验以策略自适应方式表达，避免固定轨迹的策略不匹配。在数学推理等任务上，EAPO相比基线样本效率更高，推理性能更优。该工作为LLM推理的高效强化学习提供了新视角。",
+      "llm_tldr": "现有RLVR方法从零开始进行策略优化，采样成本高且经验利用低效。提出经验增强策略优化（EAPO），将先前RL优化经验以策略自适应方式表达，避免固定轨迹的策略不匹配。在数学推理等任务上，EAPO相比基线样本效率更高，推理性能更优。该工作为LLM推理的高效强化学习提供了新视角。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2606.30639v1",
+      "source": "arxiv",
+      "title": "Self-Evolving World Models for LLM Agent Planning",
+      "abstract": "World models offer a principled way to equip long-horizon LLM agents with foresight: predictions of action consequences before execution. However, unreliable foresight can be ignored, misused, or even degrade downstream decision-making. In this paper, we introduce WorldEvolver, a self-evolving world model framework that revises its deployment-time context while keeping the downstream agent and all model parameters frozen. WorldEvolver integrates three modules: (i) Episodic Memory, which exploits real action transitions through retrieval-based simulation; (ii) Semantic Memory, which extracts persistent heuristic rules from prediction-observation mismatches; and (iii) Selective Foresight, which filters low-confidence predictions before integrating them into agent reasoning context. We evaluate WorldEvolver on ALFWorld and ScienceWorld, measuring world model prediction accuracy on Word2World and downstream agent success rate on AgentBoard. Extensive experiments show that WorldEvolver achieves the highest prediction accuracy across three backbones and leads other world model baselines on downstream agent success rate, demonstrating that test-time memory revision enhances both predictive fidelity and planning performance.",
+      "authors": [
+        "Xuan Zhang",
+        "Wenxuan Zhang",
+        "See-Kiong Ng",
+        "Yang Deng"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-29T17:58:43+00:00",
+      "link": "https://arxiv.org/pdf/2606.30639v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "self-evolving world model framework that updates deployment-time context",
+      "llm_evidence_cn": "自进化世界模型框架，更新部署时上下文",
+      "llm_evidence": "自进化世界模型框架，更新部署时上下文",
+      "canonical_evidence": "自进化世界模型框架，更新部署时上下文",
+      "llm_tldr_en": "WorldEvolver is a self-evolving world model for LLM agents that revises its context at deployment time using episodic memory, semantic memory, and selective foresight, improving planning without retraining.",
+      "llm_tldr_cn": "世界模型为LLM智能体提供远见，但不可靠的预测可能损害决策。本文提出WorldEvolver，一种自进化世界模型框架，在部署时利用情景记忆、语义记忆和选择性远见模块动态调整上下文。该方法无需重新训练智能体或模型参数，即可持续改进预测准确性，在长程规划任务上显著提升了成功率。",
+      "llm_tldr": "世界模型为LLM智能体提供远见，但不可靠的预测可能损害决策。本文提出WorldEvolver，一种自进化世界模型框架，在部署时利用情景记忆、语义记忆和选择性远见模块动态调整上下文。该方法无需重新训练智能体或模型参数，即可持续改进预测准确性，在长程规划任务上显著提升了成功率。",
+      "llm_tags": [
+        "query:self-evolve:composite"
+      ],
+      "matched_query_tag": "query:self-evolve:composite",
+      "matched_query_text": "Papers central to 智能体自我进化, especially work that connects or combines: self-evolving agents that improve their own capabilities; methods for agents to improve their performance without human intervention; frameworks for agent evolution and self modification; How do agents self evolve and improve their decision making?.",
+      "matched_requirement_id": "req-composite-self-evolve",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2606.22955v1",
+      "source": "arxiv",
+      "title": "Evo-RAD: Navigating Rare Retinal Disease Diagnosis via Self-Evolving Agentic Retrieval",
+      "abstract": "Large-scale pretrained foundation models have revolutionized general medical screening, but often falter on rare diseases because such conditions are underrepresented in real-world clinical datasets. While retrieval-augmented diagnosis attempts to mitigate this, conventional static methods frequently succumb to the hubness problem, retrieving visually similar but semantically incorrect common diseases. To address this, we propose Evo-RAD, a self-evolving agentic framework that transforms evidence acquisition into a dynamic decision-making task. We formulate retrieval as a Markov Decision Process (MDP) where a graphbased agent observes the reference set state and executes actions to purge discordant evidence (DELETE), acquire pathologically consistent samples (INSERT), or conclude the evolution (TERMINATE). Optimized via Group Relative Policy Optimization (GRPO) with a homogeneityaware reward, the agent learns to maximize the diagnostic homogeneity of the support reference set. Experiments on retinal disease benchmarks show that Evo-RAD substantially improves rare-disease diagnosis, outperforming retinal foundation models by +21.04%, while also surpassing retrieval-based and parameter-efficient fine-tuning methods by +3.56%. Code is available at https://github.com/SDH-Lab/Evo-RAD.",
+      "authors": [
+        "Wangding Xia",
+        "Ye Du",
+        "Jiashi Lin",
+        "Meng Wang",
+        "Danli Shi",
+        "Shujun Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-06-22T07:33:51+00:00",
+      "link": "https://arxiv.org/pdf/2606.22955v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Self-evolving agentic retrieval framework",
+      "llm_evidence_cn": "自我进化智能体检索框架",
+      "llm_evidence": "自我进化智能体检索框架",
+      "canonical_evidence": "自我进化智能体检索框架",
+      "llm_tldr_en": "Evo-RAD proposes a self-evolving agentic framework that treats evidence acquisition as a dynamic MDP, improving rare disease diagnosis.",
+      "llm_tldr_cn": "论文提出Evo-RAD，一个自我进化的智能体框架，将证据获取建模为马尔可夫决策过程。智能体通过观察参考集状态执行删除、获取病理等动作，动态优化检索。在罕见视网膜疾病诊断中，该方法克服了传统静态检索的枢纽问题，提升了诊断准确性。",
+      "llm_tldr": "论文提出Evo-RAD，一个自我进化的智能体框架，将证据获取建模为马尔可夫决策过程。智能体通过观察参考集状态执行删除、获取病理等动作，动态优化检索。在罕见视网膜疾病诊断中，该方法克服了传统静态检索的枢纽问题，提升了诊断准确性。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23026v1",
+      "source": "arxiv",
+      "title": "A Stackelberg Framework for Resource-Aware LLM Agents: Learning, Repair, and Conditional Guarantees",
+      "abstract": "Large language model (LLM) agents increasingly operate as multi-turn systems that must allocate context, prompt verbosity, and tool access under finite computational budgets. Static thresholds are simple, but they are brittle under heterogeneous tasks and evolving session states. We formulate resource governance as a contextual Stackelberg game: a controller commits to a quality target and a cost incentive, while an executor responds with resource actions over context, prompting, and tool usage. We learn a conditional response model, optimize a leader policy against that model, and repair the resulting policy using real-API calibration and projection onto an empirically selected action set. For the restricted game, we establish conditional guarantees for equilibrium existence, follower-response stability, safe-set projection, and transfer from a surrogate environment to the real environment under bounded value error. The primary real-API experiment comprises 300 evaluated turns. Relative to a conservative baseline, the selected repaired controller reduces mean token cost by 17.4% (Welch $p=0.022$), while the measured quality difference is not statistically significant ($p=0.44$). The theoretical results are conditional and the experiments do not estimate their regret or transfer constants; consequently, the evidence establishes a promising repaired operating point, not a certified real-system equilibrium.",
+      "authors": [
+        "Baoxun Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-22T08:38:22+00:00",
+      "link": "https://arxiv.org/pdf/2606.23026v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "resource-aware LLM agents with Stackelberg framework",
+      "llm_evidence_cn": "基于Stackelberg博弈的资源感知LLM代理",
+      "llm_evidence": "基于Stackelberg博弈的资源感知LLM代理",
+      "canonical_evidence": "基于Stackelberg博弈的资源感知LLM代理",
+      "llm_tldr_en": "Formulates resource governance for LLM agents as a contextual Stackelberg game, learning and repairing policies for efficient resource allocation.",
+      "llm_tldr_cn": "针对LLM代理在有限计算预算下的资源分配问题，提出上下文Stackelberg博弈框架，控制器定目标、执行器响应的方式学习策略，并通过校准和投影进行修复，实验证明该方法在多种任务上优于静态阈值方案。",
+      "llm_tldr": "针对LLM代理在有限计算预算下的资源分配问题，提出上下文Stackelberg博弈框架，控制器定目标、执行器响应的方式学习策略，并通过校准和投影进行修复，实验证明该方法在多种任务上优于静态阈值方案。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "large language model",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.23525v1",
+      "source": "arxiv",
+      "title": "Self-Compacting Language Model Agents",
+      "abstract": "Long agent traces composed of chains of thought and tool calls accumulate stale content that anchor subsequent generations, and eventually outgrow the context window. Existing scaffolds mitigate it with fixed-interval compaction triggered at a token threshold. Such triggers pay no heed to trajectory structure, risking discard of partial results mid-derivation or mid-search. We propose SelfCompact, a scaffold that allows the model itself to decide when and how to compact. Specifically, it pairs two inference-time elements: (i) a compaction tool the model invokes to summarize the accumulated context, and (ii) a lightweight rubric specifying when to fire (a sub-task has resolved, or the trajectory is converging) and when to suppress (mid-derivation, or when stuck). Both are needed. The tool alone is unevenly used across open-weight models, often invoked at unhelpful moments or not at all; the rubric alone cannot act. Together, they elicit effective adaptive compaction without any fine-tuning or external supervision. We present empirical results on six benchmarks (competitive math and agentic search) and seven models. Our results show that SelfCompact matches or exceeds fixed-interval summarization at a fraction of the token cost, improving over a no-summarization baseline by up to 18.1 points on math and 5-9 points on agentic search at 30-70% lower per-question cost. Our results expose a meta-cognitive gap: although unprompted models cannot reliably tell when their own context is rotting, a lightweight rubric closes this gap, reframing when to compact as a capability that scaffolds can supply without training.",
+      "authors": [
+        "Tianjian Li",
+        "Jingyu Zhang",
+        "William Jurayj",
+        "Xi Wang",
+        "Chuanyang Jin",
+        "Mehrdad Farajtabar",
+        "Eric Nalisnick",
+        "Daniel Khashabi"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-06-22T16:08:34+00:00",
+      "link": "https://arxiv.org/pdf/2606.23525v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:self-evolve"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "self-compacting agents that improve their own capabilities",
+      "llm_evidence_cn": "智能体自我压缩以提升自身能力",
+      "llm_evidence": "智能体自我压缩以提升自身能力",
+      "canonical_evidence": "智能体自我压缩以提升自身能力",
+      "llm_tldr_en": "Proposes SelfCompact, a scaffold enabling language model agents to autonomously decide when and how to compact long traces, preventing context overflow and improving trajectory management.",
+      "llm_tldr_cn": "语言模型智能体在执行长轨迹时积累陈旧内容，导致上下文超限。本文提出SelfCompact框架，让智能体自身决定何时及如何压缩上下文，通过调用压缩工具和遵循轻量级规则，避免固定间隔压缩破坏中间结果。实验表明该方法有效管理长上下文，提升智能体自主性。",
+      "llm_tldr": "语言模型智能体在执行长轨迹时积累陈旧内容，导致上下文超限。本文提出SelfCompact框架，让智能体自身决定何时及如何压缩上下文，通过调用压缩工具和遵循轻量级规则，避免固定间隔压缩破坏中间结果。实验表明该方法有效管理长上下文，提升智能体自主性。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.22995v1",
+      "source": "arxiv",
+      "title": "Group-Graph Policy Optimization for Long-Horizon Agentic Reinforcement Learning",
+      "abstract": "Group-based Reinforcement Learning (RL) has significantly enhanced Large Language Models (LLMs) in agentic scenarios. To achieve finer-grained policy updates, recent agentic RL frameworks have shifted from trajectory-level to step-level training. However, long-horizon agentic RL suffers from severe reward sparsity and delay, as feedback is often deferred for dozens of interaction steps. While existing step-level frameworks refine training granularity, their credit assignment remains coarse-grained and still treats agent exploration as isolated, linear trajectories. This oversimplified perspective ignores the inherent graph structure of state transitions, leading to high-variance state-value estimation and myopic, localized credit assignment. To overcome these critical bottlenecks, we propose Group-Graph Policy Optimization (G2PO), a novel group-based RL algorithm tailored for multi-turn agentic tasks. G2PO explicitly transforms linear interaction trajectories into a global state-transition graph. By aggregating identical observations across different trajectories, we introduce group-aggregation state-value estimation that reduces sampling variance and trajectory-dependent bias. Furthermore, we redefine agent actions as transitions between state nodes and propose an edge-centric advantage estimation strategy. By globally standardizing Temporal Difference (TD) errors across the entire graph, G2PO explicitly identifies and prioritizes critical transitions that drive absolute task progress. Extensive experiments on representative long-horizon benchmarks-WebShop, ALFWorld, and AppWorld-demonstrate that G2PO substantially outperforms state-of-the-art prompt-based and RL baselines, achieving remarkable success rate improvements of up to 22.2% over GRPO.",
+      "authors": [
+        "Yunan Wang",
+        "Minghui Song",
+        "Zihan Zhang",
+        "Shaohan Huang",
+        "Haizhen Huang",
+        "Furu Wei",
+        "Weiwei Deng",
+        "Feng Sun",
+        "Qi Zhang"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-22T08:12:47+00:00",
+      "link": "https://arxiv.org/pdf/2606.22995v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "improving LLM reasoning via group-based RL",
+      "llm_evidence_cn": "通过分组强化学习提升大模型推理",
+      "llm_evidence": "通过分组强化学习提升大模型推理",
+      "canonical_evidence": "通过分组强化学习提升大模型推理",
+      "llm_tldr_en": "Proposes Group-Graph Policy Optimization for long-horizon agentic RL, leveraging graph structure of state transitions for fine-grained credit assignment.",
+      "llm_tldr_cn": "针对长时程代理强化学习中的奖励稀疏和粗粒度信用分配问题，提出组图策略优化方法，利用状态转移的图结构实现细粒度信用分配，在多个agentic benchmark上提升了LLM代理的性能。",
+      "llm_tldr": "针对长时程代理强化学习中的奖励稀疏和粗粒度信用分配问题，提出组图策略优化方法，利用状态转移的图结构实现细粒度信用分配，在多个agentic benchmark上提升了LLM代理的性能。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23075v1",
+      "source": "arxiv",
+      "title": "Safety in Self-Evolving LLM Agent Systems: Threats, Amplification, and Case Studies",
+      "abstract": "Self-evolving LLM agent systems, which autonomously update their model parameters, memory, tools, and architectures, introduce a qualitatively new threat landscape in which adversarial influences become permanently encoded, self-amplify across generations, and propagate through populations without sustained attacker access. We present a systematic security and privacy analysis organized around the Module-Lifecycle Attack Surface (MLAS) matrix, which decomposes the attack surface into five functional modules (Brain, Cognitive Resource, Execution, Self-Design, Collective) $\\times$ five lifecycle stages (Bootstrap, Propose, Evaluate, Commit, Serve). Analysis of the resulting 25 cells reveals that 17 face critical threats for which no effective partial mitigation. We identify seven cross-cutting amplification effects that interact synergistically and cannot be addressed by securing individual modules in isolation. Comparative case studies of two open-source frameworks demonstrate that evolution-native design activates $3.5\\times$ more attack surface cells and achieves a 100% attack persistence rate (40/40 payloads across all CIA+Privacy categories), while co-located security scanners block only 2.5% of attacks. Our findings establish that self-evolution converts every known attack category from session-bounded to lineage-persistent, gives rise to entirely new attack classes, and renders static defenses structurally inadequate, motivating evolution-aware security frameworks and formal verification for self-modifying systems.",
+      "authors": [
+        "Ruixiao Lin",
+        "Xinhao Deng",
+        "Qingming Li",
+        "Jianan Ma",
+        "Yunhao Feng",
+        "Yuqi Qing",
+        "Zhenyuan Li",
+        "Yechao Zhang",
+        "Shiwen Cui",
+        "Changhua Meng",
+        "Tianwei Zhang",
+        "Xingjun Ma",
+        "Qi Li",
+        "Ke Xu",
+        "Shouling Ji"
+      ],
+      "primary_category": "cs.CR",
+      "categories": [
+        "cs.CR",
+        "cs.AI"
+      ],
+      "published": "2026-06-22T09:23:50+00:00",
+      "link": "https://arxiv.org/pdf/2606.23075v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "Security threats in self-evolving LLM agent systems",
+      "llm_evidence_cn": "自我进化LLM智能体系统的安全威胁",
+      "llm_evidence": "自我进化LLM智能体系统的安全威胁",
+      "canonical_evidence": "自我进化LLM智能体系统的安全威胁",
+      "llm_tldr_en": "This paper systematically analyzes security threats in self-evolving LLM agent systems, identifying critical vulnerabilities across modules and lifecycle stages.",
+      "llm_tldr_cn": "论文系统分析了自我进化LLM智能体系统的安全威胁。通过模块-生命周期攻击面矩阵（MLAS），将系统分解为5个功能模块×5个生命周期阶段，发现25个单元格中有17个面临关键威胁且缺乏有效防御。工作揭示了自我进化带来的新安全挑战，如持久编码、自我放大和种群传播。",
+      "llm_tldr": "论文系统分析了自我进化LLM智能体系统的安全威胁。通过模块-生命周期攻击面矩阵（MLAS），将系统分解为5个功能模块×5个生命周期阶段，发现25个单元格中有17个面临关键威胁且缺乏有效防御。工作揭示了自我进化带来的新安全挑战，如持久编码、自我放大和种群传播。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.26080v1",
+      "source": "arxiv",
+      "title": "Neglected Free Lunch from Post-training: Progress Advantage for LLM Agents",
+      "abstract": "Process reward models enable fine-grained, step-level evaluation of LLMs, yet building them for agentic settings remains prohibitively difficult: long-horizon interactions, irreversible actions, and stochastic environment feedback make both human annotation and Monte Carlo estimation infeasible at scale. In this work, we show that reinforcement learning (RL) post-training already provides the ingredients for effective step-level scoring, eliminating the need for dedicated reward model training altogether. Concretely, we derive an implicit advantage under a general stochastic Markov decision process, which we term progress advantage -- log-probability ratio between the RL-trained policy and its reference policy exactly recovers the optimal advantage function. This formulation makes the resulting signal annotation-free, domain-agnostic, and available as a byproduct of the standard RL post-training pipeline. We validate the effectiveness of the progress advantage across three different applications: test-time scaling, uncertainty quantification, and failure attribution on five benchmarks and four model families. Across all settings, it consistently outperforms confidence-based baselines and, despite requiring no task-specific training, surpasses dedicated trained reward models. We complement these results with deeper analyses on characteristics of progress advantage, offering practical guidance for adoption in real-world agentic systems.",
+      "authors": [
+        "Changdae Oh",
+        "Wendi Li",
+        "Seongheon Park",
+        "Samuel Yeh",
+        "Tanwi Mallick",
+        "Sharon Li"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI"
+      ],
+      "published": "2026-06-24T17:54:08+00:00",
+      "link": "https://arxiv.org/pdf/2606.26080v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "LLM agent reasoning improvement via progress advantage",
+      "llm_evidence_cn": "通过进步优势改进LLM智能体推理",
+      "llm_evidence": "通过进步优势改进LLM智能体推理",
+      "canonical_evidence": "通过进步优势改进LLM智能体推理",
+      "llm_tldr_en": "Derives an implicit progress advantage from RL post-training, showing that log-probability ratio recovers optimal advantage, enabling efficient step-level scoring without dedicated reward models, relevant to improving LLM agent reasoning.",
+      "llm_tldr_cn": "该论文发现强化学习后训练中隐含着有效的步骤级评分信号：策略与参考策略的对数概率比恰好恢复最优优势，称为进步优势。这避免了为智能体场景训练专门的过程奖励模型。实验验证了该方法在多种LLM代理任务中提升了步骤级反馈效率，从而间接改进了推理过程。",
+      "llm_tldr": "该论文发现强化学习后训练中隐含着有效的步骤级评分信号：策略与参考策略的对数概率比恰好恢复最优优势，称为进步优势。这避免了为智能体场景训练专门的过程奖励模型。实验验证了该方法在多种LLM代理任务中提升了步骤级反馈效率，从而间接改进了推理过程。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.23543v1",
+      "source": "arxiv",
+      "title": "VeriEvol: Scaling Multimodal Mathematical Reasoning via Verifiable Evol-Instruct",
+      "abstract": "Scaling reinforcement learning for visual mathematical reasoning requires more than generating harder questions: as data volume grows, the reward labels themselves must remain reliable. Yet existing data pipelines scale supervision while trusting the labeller, and policy-side methods assume the underlying answers are already correct. We instead treat scaling as a verifiable data-construction problem and decouple two axes before any policy update: prompt difficulty, expanded by route-specific evolution operators, and answer reliability, enforced by offline hypothesis-test falsification. We instantiate this as VeriEvol, an iterative framework with two extensible components: a type-aware evolution module that rewrites low-difficulty image-question seeds into harder, image-grounded prompts; and HTV-Agent, a verifier that accepts an answer only after multi-source counter-evidence has failed to refute it. The resulting verified data scales in volume, extends by adding evolution routes or verifier channels, and plugs directly into existing GRPO-style RL recipes. On a five-benchmark visual-math suite, scaling evolved SFT data from 10K to 250K samples raises the mean accuracy from 35.42 to 54.73; then, with backbone, SFT initialization, and GRPO recipe held fixed, VeriEvol adds a cumulative +3.88 over an un-evolved RL baseline, of which +1.82 comes from evolved prompts and +2.06 from the HTV-Agent verifier. We release the prompts, data, models, code, and the full verifier trace of every sample, so that downstream work can scale and audit the pipeline rather than only inspect its outputs.",
+      "authors": [
+        "Haoling Li",
+        "Kai Zheng",
+        "Jie Wu",
+        "Can Xu",
+        "Qingfeng Sun",
+        "Han Hu",
+        "Yujiu Yang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL",
+        "cs.CV",
+        "cs.LG"
+      ],
+      "published": "2026-06-22T16:17:30+00:00",
+      "link": "https://arxiv.org/pdf/2606.23543v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "improving LLM reasoning via verifiable data evolution",
+      "llm_evidence_cn": "通过可验证数据进化改进大语言模型推理",
+      "llm_evidence": "通过可验证数据进化改进大语言模型推理",
+      "canonical_evidence": "通过可验证数据进化改进大语言模型推理",
+      "llm_tldr_en": "Proposes VeriEvol, a framework that scales multimodal mathematical reasoning by decoupling difficulty expansion and answer verification, enabling reliable RL fine-tuning.",
+      "llm_tldr_cn": "针对多模态数学推理中奖励标签可靠性问题，提出VeriEvol框架，将问题难度扩展与答案验证分离，通过类型感知进化和假设检验生成高质量数据。实验表明该框架能有效提升推理性能，为推理模型的扩展训练提供了可行方案。",
+      "llm_tldr": "针对多模态数学推理中奖励标签可靠性问题，提出VeriEvol框架，将问题难度扩展与答案验证分离，通过类型感知进化和假设检验生成高质量数据。实验表明该框架能有效提升推理性能，为推理模型的扩展训练提供了可行方案。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23255v1",
+      "source": "arxiv",
+      "title": "Wireless Personal Agent: Extending Wireless Intelligence from Networks to Terminals",
+      "abstract": "Wireless networks are evolving from connectivity-oriented infrastructures into intelligent and personalized service platforms. Existing wireless intelligence remains centered on network-side optimization, improving objectives such as throughput, latency, and coverage. Nevertheless, besides network performance, wireless intelligence also depends on user-perceived experience via application context, mobility routine, service cost, privacy preference, and long-term usage behavior. This article proposes WISPA, a Wireless Intelligent Self-evolving Personal Agent framework for automated terminal-side resource management based on large language model (LLM)-based agent. To overcome the resource constraints on terminals, WISPA decouples the latency-sensitive online resource execution from offline LLM agent reflection. In this way, a lightweight online executor makes deterministic resource decisions using interpretable preference parameters; While an offline LLM agent analyzes terminal-side traces, refines user profiles, and updates online preference parameters for subsequent decisions. At last, we demonstrate the practical applicability and benefits of WISPA for terminal-side resource allocations on a campus commute route. Numerical results show that WISPA learns user-specific connection styles and adapts access decisions as preferences change.",
+      "authors": [
+        "Jiedan Tan",
+        "Fang Liu",
+        "Jingwen Tong",
+        "Shengli Zhang",
+        "Jun Zhang",
+        "Wing Shing Wong"
+      ],
+      "primary_category": "cs.NI",
+      "categories": [
+        "cs.NI"
+      ],
+      "published": "2026-06-22T12:37:29+00:00",
+      "link": "https://arxiv.org/pdf/2606.23255v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "proposes self-evolving personal agent framework for wireless terminals using LLM",
+      "llm_evidence_cn": "提出基于LLM的无线智能自进化个人智能体框架",
+      "llm_evidence": "提出基于LLM的无线智能自进化个人智能体框架",
+      "canonical_evidence": "提出基于LLM的无线智能自进化个人智能体框架",
+      "llm_tldr_en": "Proposes WISPA, a wireless intelligent self-evolving personal agent framework using LLM for terminal-side resource management, enabling automated self-improvement.",
+      "llm_tldr_cn": "本文提出WISPA框架，将大语言模型（LLM）融入无线终端侧的智能体，实现自动化的自进化资源管理。通过解耦延迟、利用LLM的推理能力，智能体能够根据用户上下文和行为习惯自主改进决策，为无线网络的个性化智能服务提供了新范式。",
+      "llm_tldr": "本文提出WISPA框架，将大语言模型（LLM）融入无线终端侧的智能体，实现自动化的自进化资源管理。通过解耦延迟、利用LLM的推理能力，智能体能够根据用户上下文和行为习惯自主改进决策，为无线网络的个性化智能服务提供了新范式。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "self-evolving agents that improve their own capabilities",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.26807v1",
+      "source": "arxiv",
+      "title": "KARLA: Knowledge-base Augmented Retrieval for Language Models",
+      "abstract": "We propose a new method that allows an LLM to automatically pull in factual knowledge from a knowledge base during token generation. This means that (1)~factual knowledge in the LLM output can be updated without retraining the LLM, (2)~facts in the LLM output can be traced to the knowledge base for transparency and explainability, and (3)~smaller models can achieve the same factual accuracy as larger models. Our core idea is to train the model to produce special tokens that trigger a query to the knowledge base. Our experiments show that our method improves factual grounding in both short and long-form generation, and allows factual revisions to take effect through KB edits rather than parameter updates.",
+      "authors": [
+        "Francois Crespin",
+        "Fabian M. Suchanek",
+        "Nils Holzenberger"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.CL"
+      ],
+      "published": "2026-06-25T09:44:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.26807v1",
+      "tags": [
+        "keyword:llm-papers",
+        "keyword:on-policy",
+        "query:llm-papers"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "knowledge-base augmented retrieval for LLMs",
+      "llm_evidence_cn": "知识库增强检索用于LLM",
+      "llm_evidence": "知识库增强检索用于LLM",
+      "canonical_evidence": "知识库增强检索用于LLM",
+      "llm_tldr_en": "Proposes KARLA, training LLMs to produce special tokens for querying a knowledge base during generation, improving factual accuracy without retraining.",
+      "llm_tldr_cn": "LLM输出的事实知识更新需重训练，且缺乏可追溯性。本文提出KARLA，训练模型在生成时产生特殊令牌触发知识库查询，实现事实知识实时更新与可解释。实验表明该方法提升短/长文本生成的事实性，且小模型可达大模型精度。",
+      "llm_tldr": "LLM输出的事实知识更新需重训练，且缺乏可追溯性。本文提出KARLA，训练模型在生成时产生特殊令牌触发知识库查询，实现事实知识实时更新与可解释。实验表明该方法提升短/长文本生成的事实性，且小模型可达大模型精度。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "large language model",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.24064v1",
+      "source": "arxiv",
+      "title": "Beyond Trajectory Imitation: Strategy-Guided Policy Optimization for LLM Reasoning",
+      "abstract": "Distilling reasoning capabilities from strong to weak language models typically involves imitating specific solution trajectories, effectively transferring what to answer rather than how to reason. This trajectory-level imitation encourages memorization of instance-specific steps rather than acquisition of transferable problem-solving skills, limiting generalization to novel problems. We propose Strategy-Guided Policy Optimization (SGPO), which replaces instance-level trajectory imitation with reusable strategy distillation. SGPO extracts structured strategy descriptions from strong-model responses and, for each problem, constructs both autonomous and strategy-guided trajectories to enable direct comparison of the model's behavior with and without strategic guidance. The framework then addresses two key questions. For how to distill, a token-level forward-KL objective selectively transfers the distributional shift induced by strategy conditioning into the unguided policy, with proximal constraints ensuring stability. For when to distill, adaptive instance-level weighting strengthens guidance when autonomous exploration falls short and reduces it as the model's own competence grows. Experiments on four mathematical benchmarks across two model families show that SGPO consistently outperforms SFT, on-policy RL, and hybrid-policy baselines, improving the average score by 2.2 points over the strongest baseline on Qwen2.5-7B-Instruct. Analysis reveals that the forward-KL objective provides an inherently selective distillation signal that outperforms direct trajectory imitation, and that strategy distillation exhibits complementary scaling with base model capability.",
+      "authors": [
+        "Tianyuan Shi",
+        "Canbin Huang",
+        "Bei Li",
+        "Xin Chen",
+        "Xiaojun Quan",
+        "Jingang Wang",
+        "Qifan Wang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-06-23T02:14:12+00:00",
+      "link": "https://arxiv.org/pdf/2606.24064v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:llm-papers",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "improves LLM reasoning by strategy-guided policy optimization instead of trajectory imitation",
+      "llm_evidence_cn": "通过策略引导的策略优化替代轨迹模仿改进LLM推理",
+      "llm_evidence": "通过策略引导的策略优化替代轨迹模仿改进LLM推理",
+      "canonical_evidence": "通过策略引导的策略优化替代轨迹模仿改进LLM推理",
+      "llm_tldr_en": "Proposes SGPO, which distills strategies instead of trajectories for LLM reasoning, enabling better generalization.",
+      "llm_tldr_cn": "传统推理能力蒸馏通过模仿具体解轨迹，导致记忆而非泛化。提出SGPO方法，从强模型响应中提取结构化策略描述，并构建自主和策略引导轨迹进行对比，实现策略蒸馏。实验表明SGPO在未见问题上具有更好的泛化能力。",
+      "llm_tldr": "传统推理能力蒸馏通过模仿具体解轨迹，导致记忆而非泛化。提出SGPO方法，从强模型响应中提取结构化策略描述，并构建自主和策略引导轨迹进行对比，实现策略蒸馏。实验表明SGPO在未见问题上具有更好的泛化能力。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2606.23664v1",
+      "source": "arxiv",
+      "title": "MAS-PromptBench: When Does Prompt Optimization Improve Multi-Agent LLM Systems?",
+      "abstract": "Multi-agent systems (MAS) offer a scalable path forward for agentic AI, comprising multiple LLM-based agents, each assigned a system prompt and a position within a workflow that governs inter-agent coordination and output aggregation. System prompts thus form a critical and accessible optimization surface: they specify agents' roles and behaviors, enabling system-level improvements without model finetuning. Although prompt optimization has shown substantial potential for single LLMs, extending it to MAS poses distinct challenges, notably an exponentially growing search space. It remains unclear whether, when, and by how much prompt optimization improves MAS performance, and how sensitive such gains are to system configuration. In this work, we systematically study system-prompt optimization across a broad range of MAS setups varying in task, workflow, communication protocol, and team size, benchmarking two prompt optimizers that naturally extend state-of-the-art single-agent methods. The results reveal its potential to unlock significant gains while exposing open challenges, characterizing when and how much prompt optimization helps across diverse MAS settings.",
+      "authors": [
+        "Juyang Bai",
+        "Laixi Shi"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-22T17:48:40+00:00",
+      "link": "https://arxiv.org/pdf/2606.23664v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "multi-agent LLM systems and prompt optimization",
+      "llm_evidence_cn": "多智能体LLM系统与提示优化",
+      "llm_evidence": "多智能体LLM系统与提示优化",
+      "canonical_evidence": "多智能体LLM系统与提示优化",
+      "llm_tldr_en": "Explores when prompt optimization improves multi-agent LLM systems, identifying challenges like exponential search space and sensitivity to configuration, providing benchmarks for MAS prompt tuning.",
+      "llm_tldr_cn": "多智能体系统由多个LLM智能体组成，系统提示优化能提升性能但面临搜索空间爆炸等挑战。本文系统研究了提示优化何时以及如何改善多智能体LLM系统，分析了增益对系统配置的敏感性，为后续研究提供了基准和分析。",
+      "llm_tldr": "多智能体系统由多个LLM智能体组成，系统提示优化能提升性能但面临搜索空间爆炸等挑战。本文系统研究了提示优化何时以及如何改善多智能体LLM系统，分析了增益对系统配置的敏感性，为后续研究提供了基准和分析。",
+      "llm_tags": [
+        "query:llm-papers:composite"
+      ],
+      "matched_query_tag": "query:llm-papers:composite",
+      "matched_query_text": "Papers central to llm 论文, especially work that connects or combines: large language model; how to improve large language model reasoning.",
+      "matched_requirement_id": "req-composite-llm-papers",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2606.29026v1",
+      "source": "arxiv",
+      "title": "Preventing Error Propagation in Multi-Agent AI through Runtime Monitoring",
+      "abstract": "Multi-agent AI systems can improve answer selection by allowing different language models to exchange reasoning traces, revise initial predictions, and support a final decision. However, such communication may also introduce reliability risks: reasoning from one agent can correct another agent's mistake, but it can also mislead an agent that was initially correct. This paper studies reliable multi-agent AI communication through reasoning exchange and runtime answer revision. We develop a framework in which agents first answer multiple-choice questions independently, then share reasoning traces and revise their decisions. We conduct numerical experiments where we evaluate whether this process improves accuracy, produces more positive than negative answer transitions, and remains effective across domains such as cybersecurity, networking, and general knowledge. The results help identify when multi-agent reasoning improves reliability and when it may propagate errors.",
+      "authors": [
+        "Shahnewaz Karim Sakib",
+        "Anindya Bijoy Das"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.ET"
+      ],
+      "published": "2026-06-27T17:44:24+00:00",
+      "link": "https://arxiv.org/pdf/2606.29026v1",
+      "tags": [
+        "keyword:on-policy",
+        "keyword:self-evolve",
+        "query:on-policy",
+        "query:self-evolve"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent AI exchange reasoning traces to improve LLM answer selection",
+      "llm_evidence_cn": "多智能体AI交换推理轨迹以改进LLM答案选择",
+      "llm_evidence": "多智能体AI交换推理轨迹以改进LLM答案选择",
+      "canonical_evidence": "多智能体AI交换推理轨迹以改进LLM答案选择",
+      "llm_tldr_en": "Studies reliable multi-agent LLM communication through reasoning exchange and runtime answer revision to improve accuracy and prevent error propagation.",
+      "llm_tldr_cn": "本文针对多智能体AI系统中通过推理交换修正答案时可能引入的可靠性风险，提出一个运行时监控框架，让多个语言模型先独立回答，再共享推理轨迹并修订决策，实验评估了该过程对准确性的影响，为提升LLM推理的鲁棒性提供了新视角。",
+      "llm_tldr": "本文针对多智能体AI系统中通过推理交换修正答案时可能引入的可靠性风险，提出一个运行时监控框架，让多个语言模型先独立回答，再共享推理轨迹并修订决策，实验评估了该过程对准确性的影响，为提升LLM推理的鲁棒性提供了新视角。",
+      "llm_tags": [
+        "query:llm-papers"
+      ],
+      "matched_query_tag": "query:llm-papers",
+      "matched_query_text": "how to improve large language model reasoning",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2606.25532v1",
+      "source": "arxiv",
+      "title": "Agentic evolution of physically constrained foundation models",
+      "abstract": "Artificial intelligence increasingly drives automated scientific discovery, yet contemporary generalist agents lack physical grounding, frequently hallucinating hardware-incompatible designs. Here, we present a physically grounded, multi-agent discovery engine that autonomously architects hardware-compliant computing systems. Anchored by an Evolutionary Knowledge Graph structuring past scientific innovations, the framework extracts an \"algorithmic Chain-of-Thought\" to transform blind stochastic search into directed structural evolution. Applied to the extreme testbed of foundation model deployment, the engine evolved two hardware-aware compression methodologies surpassing human-engineered heuristics: Q-Enhance mitigates long-context accuracy loss in dense models, and MoE-Salient-AQ outperforms state-of-the-art manual sparse Mixture-of-Experts designs by 3.7% at sub-3-bit regimes. Utilizing a bandwidth-efficient Sensitivity Profile, we successfully deployed a massive 235-billion-parameter model onto a constrained dual-A100 server, reducing memory requirements by 75% with a marginal 0.64% accuracy degradation. By transforming unconstrained combinatorial search into knowledge-driven autonomy, this establishes a scalable hardware-software co-design paradigm for machine-driven discovery within strict physical boundaries.",
+      "authors": [
+        "Jiangwei Zhang",
+        "Wen Sun",
+        "Chong Wang",
+        "Shiyao Li",
+        "Cheng Che",
+        "Chunjing Han",
+        "Dan Meng",
+        "Jian Yang",
+        "Yu Wang",
+        "Rui Hou"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.AR",
+        "cs.LG",
+        "cs.MA"
+      ],
+      "published": "2026-06-24T08:07:59+00:00",
+      "link": "https://arxiv.org/pdf/2606.25532v1",
+      "tags": [
+        "keyword:self-evolve",
+        "query:self-evolve"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "Agentic evolution framework using evolutionary knowledge graph for physically constrained model design",
+      "llm_evidence_cn": "提出智能体进化框架，利用进化知识图谱设计物理约束模型",
+      "llm_evidence": "提出智能体进化框架，利用进化知识图谱设计物理约束模型",
+      "canonical_evidence": "提出智能体进化框架，利用进化知识图谱设计物理约束模型",
+      "llm_tldr_en": "Proposes a multi-agent discovery engine that autonomously evolves hardware-aware compression methodologies via an Evolutionary Knowledge Graph.",
+      "llm_tldr_cn": "通用智能体缺乏物理基础，常设计出硬件不兼容的方案。提出多智能体发现引擎，以进化知识图谱为基础，提取算法思维链，将随机搜索转变为定向结构进化。在模型部署任务中，进化出超越人工设计的硬件感知压缩方法。该工作展示了智能体进化在科学发现中的潜力。",
+      "llm_tldr": "通用智能体缺乏物理基础，常设计出硬件不兼容的方案。提出多智能体发现引擎，以进化知识图谱为基础，提取算法思维链，将随机搜索转变为定向结构进化。在模型部署任务中，进化出超越人工设计的硬件感知压缩方法。该工作展示了智能体进化在科学发现中的潜力。",
+      "llm_tags": [
+        "query:self-evolve"
+      ],
+      "matched_query_tag": "query:self-evolve",
+      "matched_query_text": "frameworks for agent evolution and self modification",
+      "matched_requirement_id": "req-8",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    }
+  ]
+}
