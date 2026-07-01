@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-07-01T02:44:04.856056+00:00",
-  "updated_date": "20260622-20260701",
+  "generated_at": "2026-07-01T21:41:02.876405+00:00",
+  "updated_date": "20260701",
   "carryover_days": 9,
   "tag_states": {
     "llm-papers": {
@@ -55,101 +55,14 @@
       ]
     },
     "on-policy": {
-      "updated_date": "20260622-20260701",
+      "updated_date": "20260701",
       "carryover_days": 9,
       "items": []
     },
     "self-evolve": {
-      "updated_date": "20260622-20260701",
+      "updated_date": "20260701",
       "carryover_days": 9,
-      "items": [
-        {
-          "id": "2606.29315v1",
-          "source": "arxiv",
-          "title": "Hierarchical Experimentalist Agents",
-          "abstract": "Large language models (LLMs) are increasingly used to take actions in the real world and support human decision-making, yet most agents rely on parametric knowledge, fixed post-training data, retrieval, or search. This paradigm breaks down in novel domains and for sophisticated queries that cannot be answered from prior knowledge alone. Knowing the laws of physics, for instance, does not by itself enable LLMs to answer queries or complete long-horizon tasks in a complex physical system. To address this, we introduce Hierarchical Experimentalist Agents (HExA), an in-context self-improvement framework to learn from active experimentation. HExA iteratively designs and refines query-relevant experiments, learns a reusable library of composable skills from experience, and integrates experimental evidence to answer queries or take actions. HExA is training-free, compatible with any black-box model, and does not require external supervision, oracles, or offline data. To evaluate active experimentation, we introduce Interphyre, a tool-calling benchmark built on the PHYRE 2D procedural physics environment, where agents propose interventions and test hypotheses through simulation APIs. Experiments show that current LLM agents struggle in these settings, especially on the hardest levels of Interphyre. Claude Sonnet 4.6 achieves only 2% success, while HExA improves the same model to up to 77% success. HExA also improves open-weight models and outperforms agentic baselines such as ReAct and Reflexion. Moreover, using only skills learned from easier levels and transferred without active experimentation, HExA achieves 44% success, demonstrating the reusability and generalization of its learned skills. Overall, HExA shows that learning through active experimentation can help agents discover useful knowledge, acquire reusable skills, and make efficient progress on novel long-horizon tasks.",
-          "authors": [
-            "Abhranil Chandra",
-            "Sankaran Vaidyanathan",
-            "Utsav Dhanuka",
-            "Varun Gandhi",
-            "Scott Niekum"
-          ],
-          "primary_category": "cs.AI",
-          "categories": [
-            "cs.AI",
-            "cs.LG"
-          ],
-          "published": "2026-06-28T10:21:55+00:00",
-          "link": "https://arxiv.org/pdf/2606.29315v1",
-          "tags": [
-            "keyword:llm-papers",
-            "keyword:on-policy",
-            "keyword:self-evolve",
-            "query:llm-papers",
-            "query:on-policy",
-            "query:self-evolve"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "LLM self-improvement via active experimentation",
-          "llm_evidence_cn": "LLM通过主动实验自我改进",
-          "llm_evidence": "LLM通过主动实验自我改进",
-          "canonical_evidence": "LLM通过主动实验自我改进",
-          "llm_tldr_en": "HExA introduces an in-context self-improvement framework for LLMs to learn from active experimentation, building reusable skills.",
-          "llm_tldr_cn": "论文提出层次化实验智能体（HExA），一个上下文内自我改进框架，使LLM能够通过主动实验学习。HExA迭代设计相关实验、从经验中学习可复用技能库，并整合实验经验。在需要超越先验知识的新颖领域和复杂查询中，该方法显著提升了LLM的表现。",
-          "llm_tldr": "论文提出层次化实验智能体（HExA），一个上下文内自我改进框架，使LLM能够通过主动实验学习。HExA迭代设计相关实验、从经验中学习可复用技能库，并整合实验经验。在需要超越先验知识的新颖领域和复杂查询中，该方法显著提升了LLM的表现。",
-          "llm_tags": [
-            "query:self-evolve"
-          ],
-          "matched_query_tag": "query:self-evolve",
-          "matched_query_text": "self-evolving agents that improve their own capabilities",
-          "matched_requirement_id": "req-6",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.29315v1",
-          "carry_days": 1
-        },
-        {
-          "id": "2606.26327v1",
-          "source": "arxiv",
-          "title": "EVOM: Agentic Meta-Evolution of Actor-Critic Architectures for Reinforcement Learning",
-          "abstract": "In actor-critic reinforcement learning, network architectures are typically manually designed. Automating this design is challenging because each candidate must be trained before evaluation, and the design space is open-ended. To address these challenges, we introduce EVOM, an agentic meta-evolution framework for discovering high-performance actor-critic architectures. We frame architecture search as a bi-level optimization: an inner loop trains weights via the low-fidelity proximal policy optimization (PPO), while an outer loop drives meta-evolution by iteratively refining architecture programs. Crucially, this outer loop is powered by an LLM-based design agent that operates purely as an architecture designer, completely decoupled from policy execution and environment control. Experiments reveal that EVOM outperforms the manually designed baseline, an LLM-guided random search, and the state-of-the-art LLM-guided programmatic policy search method MLES, delivering superior performance on Ant-v4 and HalfCheetah-v4. Ablation studies validate that both the meta-evolution loop and the LLM Design Agent are indispensable for final performance.",
-          "authors": [
-            "Boyun Zhang",
-            "Chao Wang",
-            "Kai Wu"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI"
-          ],
-          "published": "2026-06-24T19:13:32+00:00",
-          "link": "https://arxiv.org/pdf/2606.26327v1",
-          "tags": [
-            "keyword:on-policy",
-            "keyword:self-evolve",
-            "query:on-policy",
-            "query:self-evolve"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "Agentic meta-evolution framework for discovering actor-critic architectures via LLM-based designer",
-          "llm_evidence_cn": "提出基于智能体元进化的演员-评论家架构搜索框架",
-          "llm_evidence": "提出基于智能体元进化的演员-评论家架构搜索框架",
-          "canonical_evidence": "提出基于智能体元进化的演员-评论家架构搜索框架",
-          "llm_tldr_en": "EVOM uses an LLM-based agent to drive meta-evolution of actor-critic architectures combined with PPO training.",
-          "llm_tldr_cn": "演员-评论家RL的架构通常手动设计，自动化面临训练成本高和搜索空间大。提出EVOM，一种智能体元进化框架，利用LLM设计代理在外层优化架构程序，内层使用PPO训练权重。该方法解耦了架构设计与参数学习。实验发现高性能架构具有网络深度和跳连接等共性模式。该工作展示了智能体进化在架构搜索中的应用。",
-          "llm_tldr": "演员-评论家RL的架构通常手动设计，自动化面临训练成本高和搜索空间大。提出EVOM，一种智能体元进化框架，利用LLM设计代理在外层优化架构程序，内层使用PPO训练权重。该方法解耦了架构设计与参数学习。实验发现高性能架构具有网络深度和跳连接等共性模式。该工作展示了智能体进化在架构搜索中的应用。",
-          "llm_tags": [
-            "query:self-evolve"
-          ],
-          "matched_query_tag": "query:self-evolve",
-          "matched_query_text": "frameworks for agent evolution and self modification",
-          "matched_requirement_id": "req-8",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.26327v1",
-          "carry_days": 1
-        }
-      ]
+      "items": []
     }
   }
 }
